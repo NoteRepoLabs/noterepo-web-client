@@ -1,3 +1,9 @@
+import { hasCookie } from 'cookies-next'
+import { redirect } from 'next/navigation'
+
 export default function Home() {
-  return (<h1>Home</h1>)
+   if (!hasCookie('authenticated')) {
+      redirect('/signin')
+   }
+   return <h1>Home</h1>
 }
