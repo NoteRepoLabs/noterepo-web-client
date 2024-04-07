@@ -6,6 +6,9 @@ export const metadata: Metadata = {
    title: 'NoteRepo',
    description:
       'A collaborative effort to make sharing lecture materials easier.',
+   icons: {
+      shortcut: '/shortcut-icon.svg',
+   },
 }
 
 const satoshi = localFont({
