@@ -27,7 +27,7 @@ export default function Home() {
             id="field-email-address"
             value={email}
             placeholder="Email"
-            required={false}
+            required={true}
             onChange={(e) => setEmail(e.target.value)}
          />
          <section className="mt-6 mb-6">
