@@ -1,4 +1,4 @@
-type FilledButtonProps = {
+interface FilledButtonProps {
    text: string
    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
