@@ -15,8 +15,9 @@ export default function Header({ content }: HeaderProps) {
                   : 'NoteRepoDark.svg'
             }`}
             alt="Logo"
-            width={240}
-            height={94}
+            width={180}
+            height={72}
+            className="md:w-[240px] md:h-[94px]"
          />
          <p
             className={`mt-6 text-center font-bold text-base md:text-lg ${
