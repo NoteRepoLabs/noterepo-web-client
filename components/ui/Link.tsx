@@ -3,7 +3,7 @@ interface LinkProps {
    href?: string
    text: string
    style?: React.CSSProperties
-   onClick?: (e: React.ChangeEvent<HTMLLinkElement>) => void
+   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 export default function Link({ underlined, href, text, style, onClick }: LinkProps) {

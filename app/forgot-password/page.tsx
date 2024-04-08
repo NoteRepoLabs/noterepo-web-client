@@ -17,7 +17,7 @@ export default function Home() {
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Forgot Your Password?
          </h1>
-         <p className="text-center font-medium text-lg text-neutral-500 dark:text-neutral-300 mb-8">
+         <p className="text-center font-medium text-lg text-neutral-500 dark:text-neutral-300 mb-12">
             We&apos;ll email you a link to reset your password if you already
             have an account with us.
          </p>
@@ -30,7 +30,7 @@ export default function Home() {
             required={false}
             onChange={(e) => setEmail(e.target.value)}
          />
-         <section className="action-links">
+         <section className="mt-6 mb-6">
             <Link
                underlined={true}
                href=""
