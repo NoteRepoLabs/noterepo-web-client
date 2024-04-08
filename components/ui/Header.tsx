@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { getCookie } from 'cookies-next'
 import Image from 'next/image'
 
 type HeaderProps = {
@@ -10,7 +10,7 @@ export default function Header({ content }: HeaderProps) {
       <>
          <Image
             src={`/img/${
-               cookies().get('theme')?.value != 'dark'
+               getCookie('theme') != 'dark'
                   ? 'NoteRepoLight.svg'
                   : 'NoteRepoDark.svg'
             }`}
@@ -21,7 +21,7 @@ export default function Header({ content }: HeaderProps) {
          />
          <p
             className={`mt-6 text-center font-bold text-base md:text-lg ${
-               cookies().get('theme')?.value != 'dark'
+               getCookie('theme') != 'dark'
                   ? 'text-neutral-500'
                   : 'text-neutral-300'
             }`}
