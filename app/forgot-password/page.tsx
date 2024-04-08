@@ -7,10 +7,10 @@ import { useState } from 'react'
 
 export default function Home() {
    const [email, setEmail] = useState('')
-    const sendResetEmail = () => {
-        // [TODO]: Make server requests
-        console.log("email:", email)
-    }
+   const sendResetEmail = () => {
+      // [TODO]: Make server requests
+      console.log('email:', email)
+   }
 
    return (
       <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen md:h-auto">
@@ -37,9 +37,13 @@ export default function Home() {
                text="Resend Link"
                style={{ marginRight: '8px' }}
             />
-            <Link underlined={true} href="/signin" text="Sign In Instead" />
-            <FilledButton text="Send Email" onClick={sendResetEmail} />
+            <Link underlined={true} href="/signin" text="Sign In Instead" />    
          </section>
+         <FilledButton
+               text="Send Email"
+               onClick={sendResetEmail}
+               styles={{ width: '100%' }}
+            />
       </section>
    )
 }
