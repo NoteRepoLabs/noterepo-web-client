@@ -6,12 +6,13 @@ type HeaderProps = {
 }
 
 export default function Header({ content }: HeaderProps) {
-   const isLightTheme = cookies().get("theme")?.value === 'light'
    return (
       <section className="max-w-4xl my-8 md:mx-auto mx-4 flex flex-col justify-center items-center">
          <Image
             src={`/img/${
-               isLightTheme ? 'NoteRepoLight.svg' : 'NoteRepoDark.svg'
+               cookies().get('theme')?.value != 'dark'
+                  ? 'NoteRepoLight.svg'
+                  : 'NoteRepoDark.svg'
             }`}
             alt="Logo"
             width={240}
@@ -19,7 +20,9 @@ export default function Header({ content }: HeaderProps) {
          />
          <p
             className={`mt-6 text-center font-bold text-lg ${
-               isLightTheme ? 'text-neutral-500' : 'text-neutral-300'
+               cookies().get('theme')?.value != 'dark'
+                  ? 'text-neutral-500'
+                  : 'text-neutral-300'
             }`}
          >
             {content}

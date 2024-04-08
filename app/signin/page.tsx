@@ -1,9 +1,9 @@
 import Header from '@/components/ui/Header'
-import { cookieStore } from '@/util/store'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export default function Home() {
-   if (cookieStore.has('authenticated')) {
+   if (cookies().has('authenticated')) {
       redirect('/')
    }
    const signInInformation =

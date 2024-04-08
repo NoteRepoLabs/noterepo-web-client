@@ -1,7 +1,7 @@
-import localFont from 'next/font/local'
 import type { Metadata } from 'next'
-import './globals.css'
+import localFont from 'next/font/local'
 import { cookies } from 'next/headers'
+import './globals.css'
 
 export const metadata: Metadata = {
    title: 'NoteRepo',
@@ -31,9 +31,8 @@ export default function RootLayout({
 }: Readonly<{
    children: React.ReactNode
 }>) {
-   const theme = cookies().get('theme')?.value || 'light'
    return (
-      <html lang="en" className={theme}>
+      <html lang="en" className={cookies().get('theme')?.value || 'light'}>
          <body className={`${satoshi.variable} font-sans`}>{children}</body>
       </html>
    )
