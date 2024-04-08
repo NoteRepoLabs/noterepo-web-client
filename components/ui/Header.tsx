@@ -1,4 +1,4 @@
-import { theme } from '@/util/theme'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 
 type HeaderProps = {
@@ -6,7 +6,7 @@ type HeaderProps = {
 }
 
 export default function Header({ content }: HeaderProps) {
-   const isLightTheme = theme === 'light'
+   const isLightTheme = cookies().get("theme")?.value === 'light'
    return (
       <section className="max-w-4xl my-8 md:mx-auto mx-4 flex flex-col justify-center items-center">
          <Image
@@ -19,7 +19,7 @@ export default function Header({ content }: HeaderProps) {
          />
          <p
             className={`mt-6 text-center font-bold text-lg ${
-               theme === 'light' ? 'text-neutral-500' : 'text-neutral-300'
+               isLightTheme ? 'text-neutral-500' : 'text-neutral-300'
             }`}
          >
             {content}

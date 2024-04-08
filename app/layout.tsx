@@ -1,8 +1,7 @@
-import { cookieStore } from '@/util/store'
 import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import './globals.css'
-import { theme } from '@/util/theme'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
    title: 'NoteRepo',
@@ -32,6 +31,7 @@ export default function RootLayout({
 }: Readonly<{
    children: React.ReactNode
 }>) {
+   const theme = cookies().get('theme')?.value || 'light'
    return (
       <html lang="en" className={theme}>
          <body className={`${satoshi.variable} font-sans`}>{children}</body>
