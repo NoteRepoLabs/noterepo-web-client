@@ -19,7 +19,7 @@ export default function Header({ content }: HeaderProps) {
             height={94}
          />
          <p
-            className={`mt-6 text-center font-bold text-lg ${
+            className={`mt-6 text-center font-bold text-base md:text-lg ${
                cookies().get('theme')?.value != 'dark'
                   ? 'text-neutral-500'
                   : 'text-neutral-300'
