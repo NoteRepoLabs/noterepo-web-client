@@ -1,4 +1,4 @@
-import { theme } from '@/app/layout'
+import { theme } from '@/util/theme'
 import Image from 'next/image'
 
 type HeaderProps = {

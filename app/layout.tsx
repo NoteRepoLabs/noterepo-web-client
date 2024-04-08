@@ -2,6 +2,7 @@ import { cookieStore } from '@/util/store'
 import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import './globals.css'
+import { theme } from '@/util/theme'
 
 export const metadata: Metadata = {
    title: 'NoteRepo',
@@ -25,8 +26,6 @@ const satoshi = localFont({
    ],
    variable: '--font-satoshi',
 })
-
-export const theme = cookieStore.get('app-theme')?.value || 'light'
 
 export default function RootLayout({
    children,
