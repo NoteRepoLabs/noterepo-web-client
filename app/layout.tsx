@@ -26,7 +26,7 @@ const satoshi = localFont({
    variable: '--font-satoshi',
 })
 
-export const theme = cookieStore.get('app-theme')?.value ?? 'light'
+export const theme = cookieStore.get('app-theme')?.value || 'light'
 
 export default function RootLayout({
    children,
@@ -35,9 +35,7 @@ export default function RootLayout({
 }>) {
    return (
       <html lang="en" className={theme}>
-         <body className={`${satoshi.variable} font-sans`}>
-            {children}
-         </body>
+         <body className={`${satoshi.variable} font-sans`}>{children}</body>
       </html>
    )
 }
