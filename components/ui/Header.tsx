@@ -26,8 +26,8 @@ export default function Header({ content }: HeaderProps) {
             <Image
                src={fallBackTheme}
                alt="Logo"
-               width={180}
-               height={72}
+               width={200}
+               height={80}
                className="md:w-[240px] md:h-[94px]"
             />
          )}
