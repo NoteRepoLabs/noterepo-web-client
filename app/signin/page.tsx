@@ -18,12 +18,11 @@ export default function Home() {
    }
 
    const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-      // [TODO]
+      // [TODO]: Make server requests
       console.log({
          email,
          password,
       })
-      //   alert('Submit Triggered')
    }
 
    const signInInformation =
