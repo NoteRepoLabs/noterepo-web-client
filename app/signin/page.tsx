@@ -3,6 +3,7 @@
 import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
+import Link from '@/components/ui/Link'
 import { getCookie } from 'cookies-next'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
@@ -54,7 +55,7 @@ export default function Home() {
                   setPassword(e.target.value)
                }
             />
-            <p><a href="/forgot-password" className="text-neutral-500 underline font-semibold dark:text-neutral-300">Forgot Password?</a></p>
+            <p><Link underlined={true} href={'/forgot-password'} text={'Forgot Password?'} /></p>
             <FilledButton text="Sign In" onClick={onSubmit} />
          </section>
       </section>
