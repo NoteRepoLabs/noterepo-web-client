@@ -15,7 +15,7 @@ const config: Config = {
          'neutral-300': '#A1A7B5',
          'neutral-200': '#DBDBDD',
          'neutral-100': '#FFFFFF',
-         'vibrant-green': '#30F094'
+         'vibrant-green': '#30F094',
       },
       extend: {
          fontFamily: {
@@ -24,5 +24,6 @@ const config: Config = {
       },
    },
    plugins: [],
+   darkMode: 'class',
 }
 export default config

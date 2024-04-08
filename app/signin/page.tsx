@@ -23,7 +23,7 @@ export default function Home() {
          email,
          password,
       })
-    //   alert('Submit Triggered')
+      //   alert('Submit Triggered')
    }
 
    const signInInformation =
