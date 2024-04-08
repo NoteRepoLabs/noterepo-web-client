@@ -33,17 +33,21 @@ export default function Home() {
          <section className="action-links">
             <Link
                underlined={true}
-               href="/resend"
+               href=""
                text="Resend Link"
-               style={{ marginRight: '8px' }}
+               style={{ marginRight: '12px' }}
+               onClick={(e) => {
+                  e.preventDefault()
+                  alert('Resend Link Not Implemented')
+               }}
             />
-            <Link underlined={true} href="/signin" text="Sign In Instead" />    
+            <Link underlined={true} href="/signin" text="Sign In Instead" />
          </section>
          <FilledButton
-               text="Send Email"
-               onClick={sendResetEmail}
-               styles={{ width: '100%' }}
-            />
+            text="Send Email"
+            onClick={sendResetEmail}
+            styles={{ width: '100%' }}
+         />
       </section>
    )
 }
