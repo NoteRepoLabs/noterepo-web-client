@@ -1,4 +1,5 @@
-import localFont from '@next/font/local'
+import { cookieStore } from '@/util/store'
+import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -25,14 +26,18 @@ const satoshi = localFont({
    variable: '--font-satoshi',
 })
 
+export const theme = cookieStore.get('app-theme')?.value ?? 'light'
+
 export default function RootLayout({
    children,
 }: Readonly<{
    children: React.ReactNode
 }>) {
    return (
-      <html lang="en">
-         <body className={`${satoshi.variable} font-sans`}>{children}</body>
+      <html lang="en" className={theme}>
+         <body className={`${satoshi.variable} font-sans`}>
+            {children}
+         </body>
       </html>
    )
 }

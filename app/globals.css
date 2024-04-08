@@ -2,21 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+}
+
 :root {
    --foreground-rgb: 9, 10, 14;
    --background-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-   :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-rgb: 9, 10, 14;
-   }
 }
 
-body {
+body,
+html body {
    color: rgb(var(--foreground-rgb));
    background: rgb(var(--background-rgb));
+}
+
+html.dark body {
+   color: rgb(255, 255, 255);
+   background: rgb(9, 10, 14);
 }
 
 @layer utilities {

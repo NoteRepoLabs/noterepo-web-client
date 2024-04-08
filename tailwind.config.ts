@@ -7,12 +7,16 @@ const config: Config = {
       './app/**/*.{js,ts,jsx,tsx,mdx}',
    ],
    theme: {
+      colors: {
+         'neutral-900': '#090A0E',
+         'neutral-700': '#0D0E13',
+         'neutral-500': '#66667B',
+         'neutral-300': '#A1A7B5',
+         'neutral-200': '#DBDBDD',
+         'neutral-100': '#FFFFFF',
+         'vibrant-green': '#30F094'
+      },
       extend: {
-         backgroundImage: {
-            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-            'gradient-conic':
-               'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-         },
          fontFamily: {
             sans: ['var(--font-satoshi)'],
          },
