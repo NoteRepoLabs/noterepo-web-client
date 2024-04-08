@@ -1,5 +1,6 @@
 'use client'
 
+import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
 import { getCookie } from 'cookies-next'
@@ -18,13 +19,18 @@ export default function Home() {
 
    const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
       // [TODO]
+      console.log({
+         email,
+         password,
+      })
+    //   alert('Submit Triggered')
    }
 
    const signInInformation =
       'This is a collaborative effort to make access to lecture and study materials easier. Sign in or create a new account to get started.'
 
    return (
-      <section className="max-w-3xl my-8 md:mx-auto mx-3 flex flex-col justify-center items-center">
+      <section className="max-w-2xl my-8 md:mx-auto mx-3 flex flex-col justify-center items-center">
          <Header content={signInInformation} />
          <section className="my-8 w-full">
             <InputField
@@ -49,7 +55,7 @@ export default function Home() {
                   setPassword(e.target.value)
                }
             />
-            <button onClick={onSubmit}>CLICK!</button>
+            <FilledButton text="Sign In" onClick={onSubmit} />
          </section>
       </section>
    )
