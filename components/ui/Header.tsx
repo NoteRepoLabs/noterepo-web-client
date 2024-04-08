@@ -7,7 +7,7 @@ type HeaderProps = {
 
 export default function Header({ content }: HeaderProps) {
    return (
-      <section className="max-w-4xl my-8 md:mx-auto mx-4 flex flex-col justify-center items-center">
+      <>
          <Image
             src={`/img/${
                cookies().get('theme')?.value != 'dark'
@@ -27,6 +27,6 @@ export default function Header({ content }: HeaderProps) {
          >
             {content}
          </p>
-      </section>
+      </>
    )
 }
