@@ -55,6 +55,7 @@ export default function Home() {
                   setPassword(e.target.value)
                }
             />
+            <p><a href="/forgot-password" className="text-neutral-500 underline font-semibold dark:text-neutral-300">Forgot Password?</a></p>
             <FilledButton text="Sign In" onClick={onSubmit} />
          </section>
       </section>
