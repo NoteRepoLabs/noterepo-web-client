@@ -35,6 +35,12 @@ export default function Home() {
          return
       }
 
+      if (password.length < 6) {
+         setIsPasswordError(true)
+         setErrorMsg('Passwords should be more than 6 characters long.')
+         return
+      }
+
       const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
       if (!emailPattern.test(email)) {
          setIsEmailError(true)
