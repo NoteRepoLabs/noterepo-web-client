@@ -17,7 +17,7 @@ export default function Home() {
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Welcome
          </h1>
-         <p className="text-center font-medium text-lg text-neutral-500 dark:text-neutral-300 mb-12">
+         <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mb-12">
             We&apos;re almost done setting up your account. Add a username to
             proceed.
          </p>

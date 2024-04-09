@@ -17,7 +17,7 @@ export default function Home() {
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Forgot Your Password?
          </h1>
-         <p className="text-center font-medium text-lg text-neutral-500 dark:text-neutral-300 mb-12">
+         <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mb-12">
             We&apos;ll email you a link to reset your password if you already
             have an account with us.
          </p>
@@ -44,7 +44,7 @@ export default function Home() {
             <Link underlined={true} href="/signin" text="Sign In Instead" />
          </section>
          <FilledButton
-            text="Send Email"
+            text="Send Link"
             onClick={sendResetEmail}
             styles={{ width: '100%' }}
          />
