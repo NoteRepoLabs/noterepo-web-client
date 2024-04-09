@@ -15,8 +15,9 @@ const config: Config = {
          'neutral-300': '#A1A7B5',
          'neutral-200': '#DBDBDD',
          'neutral-100': '#FFFFFF',
-         'highlight': '#282C3A',
+         highlight: '#282C3A',
          'vibrant-green': '#30F094',
+         'vibrant-red': '#F9587F',
       },
       extend: {
          fontFamily: {

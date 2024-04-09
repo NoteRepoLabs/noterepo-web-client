@@ -11,6 +11,9 @@ import { useState } from 'react'
 export default function Home() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
+   const [isEmailError, setIsEmailError] = useState(false)
+   const [isPasswordError, setIsPasswordError] = useState(false)
+   const [errorMsg, setErrorMsg] = useState('')
 
    // Redirect the user if they've already been authenticated
    // This prevents them from doing so twice
@@ -18,7 +21,27 @@ export default function Home() {
       redirect('/')
    }
 
+   // Some validation, then make requests to the server
    const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+      if (email == '') {
+         setIsEmailError(true)
+         setErrorMsg('Please fill the email field.')
+         return
+      }
+
+      if (password == '') {
+         setIsPasswordError(true)
+         setErrorMsg('Please fill the password field.')
+         return
+      }
+
+      const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      if (!emailPattern.test(email)) {
+         setIsEmailError(true)
+         setErrorMsg('Enter a valid email address.')
+         return
+      }
+
       // [TODO]: Make server requests
       console.log({
          email,
@@ -40,9 +63,12 @@ export default function Home() {
                value={email}
                placeholder="Email"
                required={true}
-               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+               error={isEmailError}
+               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setIsEmailError(false)
+                  setErrorMsg('')
                   setEmail(e.target.value)
-               }
+               }}
             />
             <InputField
                name="password-field"
@@ -50,12 +76,22 @@ export default function Home() {
                id="password-field"
                value={password}
                placeholder="Password"
+               error={isPasswordError}
                required={true}
-               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setIsPasswordError(false)
+                  setErrorMsg('')
                   setPassword(e.target.value)
-               }
+               }}
             />
-            <p><Link underlined={true} href={'/forgot-password'} text={'Forgot Password?'} /></p>
+            <p>
+               <Link
+                  underlined={true}
+                  href={'/forgot-password'}
+                  text={'Forgot Password?'}
+               />
+            </p>
+            <p className="mt-4 text-vibrant-red">{errorMsg}</p>
             <FilledButton text="Sign In" onClick={onSubmit} />
          </section>
       </section>
