@@ -9,7 +9,7 @@
 
 Web client for the NoteRepo backend written with NextJS and Typescript.
 
-NoteRepo is a collaborative effort to make access to our university course materials easier by uploading them in a central hub.
+[NoteRepo](https://noterepo-web.vercel.app/) is a collaborative effort to make access to our university course materials easier by uploading them in a central hub.
 
 ## Developer Notes
 
