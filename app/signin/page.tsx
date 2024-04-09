@@ -4,6 +4,7 @@ import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
+import { SERVER_URL } from '@/config/contants'
 import { getCookie } from 'cookies-next'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
@@ -22,7 +23,7 @@ export default function Home() {
    }
 
    // Some validation, then make requests to the server
-   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+   const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
       if (email == '') {
          setIsEmailError(true)
          setErrorMsg('Please fill the email field.')
@@ -48,11 +49,30 @@ export default function Home() {
          return
       }
 
-      // [TODO]: Make server requests
-      console.log({
-         email,
-         password,
+      const credentials = { email, password }
+      console.log(credentials)
+
+      await fetch(`${SERVER_URL}/sign-up`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+         }),
       })
+         .then(async (res) => {
+            if (!res.ok) {
+               setErrorMsg('Could not sign in, please retry later.')
+               return
+            }
+
+            await res.json().then((data) => console.log(data))
+         })
+         .catch(() => {
+            setErrorMsg('Could not reach the server at this time.')
+         })
    }
 
    const signInInformation =
