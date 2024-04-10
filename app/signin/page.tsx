@@ -6,12 +6,13 @@ import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
 import { SERVER_URL } from '@/config/constants'
 import { getCookie } from 'cookies-next'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import spinningAnimation from '@/animated/spinner.json'
 import Lottie from 'lottie-react'
 
 export default function Home() {
+   const router = useRouter()
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [errorMsg, setErrorMsg] = useState('')
@@ -79,7 +80,11 @@ export default function Home() {
                return
             }
 
-            await res.json().then((data) => console.log(data))
+            await res.json().then((data) => {
+               console.log(data)
+               window.location.href = '/verify-email'
+            //    router.push('/verify-email')
+            })
          })
          .catch(() => {
             setErrorMsg('Could not reach the server at this time.')
