@@ -1,15 +1,72 @@
 'use client'
 
+import spinningAnimation from '@/animated/spinner.json'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
-import { useState } from 'react'
+import { SERVER_URL } from '@/config/constants'
+import Lottie from 'lottie-react'
+import { useSearchParams } from 'next/navigation'
+import React, { useState } from 'react'
 
 export default function Home() {
    const [username, setUsername] = useState('')
-   const submitUsername = () => {
-      // [TODO]: Verify and make server requests
+   const [isPending, setIsPending] = useState(false)
+   const [errorMsg, setErrorMsg] = useState('')
+   const searchParams = useSearchParams()
+
+   const submitUsername = async (e: React.FormEvent<HTMLButtonElement>) => {
+      setIsPending(true)
+      if (!username) {
+         setErrorMsg('Please fill the username field.')
+         setIsPending(false)
+         return
+      }
+
       console.log('username:', username)
-      alert('Welcome!')
+      const userID = searchParams.get('userId')
+
+      if (!userID) {
+         setErrorMsg('Unable to verify account status, please sign in.')
+         setIsPending(false)
+         return
+      }
+
+      await fetch(`${SERVER_URL}/auth/setInitialUsername`, {
+         method: 'POST',
+         mode: 'cors',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+            username,
+            userID,
+         }),
+      })
+         .then(async (res) => {
+            if (!res.ok) {
+               await res.json().then((data) => {
+                  console.log(data)
+                  const msg = 'An error occurred while signing in.'
+                  setErrorMsg(msg)
+                  setIsPending(false)
+                  return
+               })
+            } else {
+               await res.json().then((data) => {
+                  console.log(data)
+                  setIsPending(false)
+                  setErrorMsg('')
+                  alert('Updated username!')
+                  return
+               })
+            }
+         })
+         .catch(() => {
+            setErrorMsg('Failed to process request.')
+            setIsPending(false)
+         })
+
+      setIsPending(false)
    }
 
    return (
@@ -28,9 +85,36 @@ export default function Home() {
             value={username}
             placeholder="Username"
             required={true}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+               setErrorMsg('')
+               setUsername(e.target.value)
+            }}
          />
-         <FilledButton text="Let's Go!" onClick={submitUsername} />
+         <div className="w-full">
+            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+         </div>
+         <FilledButton
+            text={isPending ? 'Setting Up' : "Let's Go!"}
+            icon={
+               isPending ? (
+                  <Lottie
+                     animationData={spinningAnimation}
+                     loop={true}
+                     height={'32px'}
+                     width={'32px'}
+                     rendererSettings={{
+                        preserveAspectRatio: 'xMidYMid slice',
+                     }}
+                  />
+               ) : null
+            }
+            onClick={(e) => {
+               if (!isPending) {
+                  submitUsername(e)
+               }
+            }}
+            disabled={isPending}
+         />
       </section>
    )
 }
