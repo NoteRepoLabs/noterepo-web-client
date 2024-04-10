@@ -8,13 +8,16 @@ import { SERVER_URL } from '@/config/constants'
 import { getCookie } from 'cookies-next'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
+import spinningAnimation from '@/animated/spinner.json'
+import Lottie from 'lottie-react'
 
 export default function Home() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
+   const [errorMsg, setErrorMsg] = useState('')
+   const [isPending, setIsPending] = useState(false)
    const [isEmailError, setIsEmailError] = useState(false)
    const [isPasswordError, setIsPasswordError] = useState(false)
-   const [errorMsg, setErrorMsg] = useState('')
 
    // Redirect the user if they've already been authenticated
    // This prevents them from doing so twice
@@ -24,21 +27,26 @@ export default function Home() {
 
    // Some validation, then make requests to the server
    const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+      setIsPending(true)
+
       if (email == '') {
          setIsEmailError(true)
          setErrorMsg('Please fill the email field.')
+         setIsPending(false)
          return
       }
 
       if (password == '') {
          setIsPasswordError(true)
          setErrorMsg('Please fill the password field.')
+         setIsPending(false)
          return
       }
 
       if (password.length < 6) {
          setIsPasswordError(true)
-         setErrorMsg('Passwords should be more than 6 characters long.')
+         setErrorMsg('Password should be more than 6 characters long.')
+         setIsPending(false)
          return
       }
 
@@ -46,6 +54,7 @@ export default function Home() {
       if (!emailPattern.test(email)) {
          setIsEmailError(true)
          setErrorMsg('Enter a valid email address.')
+         setIsPending(false)
          return
       }
 
@@ -54,6 +63,7 @@ export default function Home() {
 
       await fetch(`${SERVER_URL}/sign-up`, {
          method: 'POST',
+         mode: 'cors',
          headers: {
             'Content-Type': 'application/json',
          },
@@ -73,6 +83,7 @@ export default function Home() {
          .catch(() => {
             setErrorMsg('Could not reach the server at this time.')
          })
+         .finally(() => setIsPending(false))
    }
 
    const signInInformation =
@@ -117,8 +128,29 @@ export default function Home() {
                   text={'Forgot Password?'}
                />
             </p>
-            <p className="mt-4 text-vibrant-red">{errorMsg}</p>
-            <FilledButton text="Sign In" onClick={onSubmit} />
+            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+            <FilledButton
+               text="Sign In"
+               icon={
+                  isPending ? (
+                     <Lottie
+                        animationData={spinningAnimation}
+                        loop={true}
+                        height={'32px'}
+                        width={'32px'}
+                        rendererSettings={{
+                           preserveAspectRatio: 'xMidYMid slice',
+                        }}
+                     />
+                  ) : null
+               }
+               onClick={(e) => {
+                  if (!isPending) {
+                     onSubmit(e)
+                  }
+               }}
+               disabled={isPending}
+            />
          </section>
       </section>
    )
