@@ -1,18 +1,17 @@
 'use client'
 
+import spinningAnimation from '@/animated/spinner.json'
 import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
 import { SERVER_URL } from '@/config/constants'
 import { getCookie } from 'cookies-next'
-import { redirect, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import spinningAnimation from '@/animated/spinner.json'
 import Lottie from 'lottie-react'
+import { redirect } from 'next/navigation'
+import { useState } from 'react'
 
 export default function Home() {
-   const router = useRouter()
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [errorMsg, setErrorMsg] = useState('')
@@ -76,19 +75,20 @@ export default function Home() {
       })
          .then(async (res) => {
             if (!res.ok) {
-               setErrorMsg('Could not sign in, please retry later.')
-               return
+               await res.json().then((json) => {
+                  const msg =
+                     json.message ?? 'Could not sign in, please retry later.'
+                  setErrorMsg(msg)
+                  return
+               })
+            } else {
+               await res.json().then((data) => {
+                  console.log(data)
+                  window.location.href = '/verify-email'
+               })
             }
-
-            await res.json().then((data) => {
-               console.log(data)
-               window.location.href = '/verify-email'
-            //    router.push('/verify-email')
-            })
          })
-         .catch(() => {
-            setErrorMsg('Could not reach the server at this time.')
-         })
+         .catch(() => setErrorMsg('Could not reach the server at this time.'))
          .finally(() => setIsPending(false))
    }
 
