@@ -62,7 +62,7 @@ export default function Home() {
       const credentials = { email, password }
       console.log(credentials)
 
-      await fetch(`${SERVER_URL}/sign-up`, {
+      await fetch(`${SERVER_URL}/auth/sign-up`, {
          method: 'POST',
          mode: 'cors',
          headers: {
