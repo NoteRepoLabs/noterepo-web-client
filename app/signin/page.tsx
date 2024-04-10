@@ -136,7 +136,7 @@ export default function Home() {
             </p>
             <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
             <FilledButton
-               text="Sign In"
+               text={isPending ? "Signing In" : "Sign In"}
                icon={
                   isPending ? (
                      <Lottie
