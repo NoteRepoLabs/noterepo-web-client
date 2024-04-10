@@ -22,6 +22,12 @@ export default function Home() {
          return
       }
 
+      if (username.length > 15) {
+         setErrorMsg('Username cannot exceed 15 characters.')
+         setIsPending(false)
+         return
+      }
+
       console.log('username:', username)
       const userID = searchParams.get('userId')
 
@@ -31,16 +37,13 @@ export default function Home() {
          return
       }
 
-      await fetch(`${SERVER_URL}/auth/setInitialUsername`, {
+      await fetch(`${SERVER_URL}/auth/setInitialUsername/${userID}`, {
          method: 'POST',
          mode: 'cors',
          headers: {
             'Content-Type': 'application/json',
          },
-         body: JSON.stringify({
-            username,
-            userID,
-         }),
+         body: JSON.stringify({ username }),
       })
          .then(async (res) => {
             if (!res.ok) {
