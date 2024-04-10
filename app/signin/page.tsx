@@ -28,6 +28,7 @@ export default function Home() {
    // Some validation, then make requests to the server
    const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
       setIsPending(true)
+      setErrorMsg('')
 
       if (email == '') {
          setIsEmailError(true)
