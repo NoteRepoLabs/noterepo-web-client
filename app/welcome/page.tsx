@@ -50,7 +50,7 @@ export default function Home() {
             if (!res.ok) {
                await res.json().then((data) => {
                   console.log(data)
-                  const msg = 'An error occurred while signing in.'
+                  const msg = 'An error occurred while setting up.'
                   setErrorMsg(msg)
                   setIsPending(false)
                   return
