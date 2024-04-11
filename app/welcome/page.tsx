@@ -4,6 +4,7 @@ import spinningAnimation from '@/animated/spinner.json'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import { SERVER_URL } from '@/config/constants'
+import { setCookie } from 'cookies-next'
 import Lottie from 'lottie-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
@@ -59,7 +60,8 @@ export default function Home() {
                   console.log(data)
                   setIsPending(false)
                   setErrorMsg('')
-                  alert('Updated username!')
+                  setCookie('authenticated', true)
+                  window.location.href = '/'
                   return
                })
             }
