@@ -3,13 +3,23 @@
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
+import { EMAIL_PATTERN } from '@/config/constants'
 import { useState } from 'react'
 
 export default function Home() {
    const [email, setEmail] = useState('')
+   const [errorMsg, setErrorMsg] = useState('')
+   const [isPending, setIsPending] = useState(false)
+
    const sendResetEmail = () => {
-      // [TODO]: Make server requests
+      setIsPending(true)
       console.log('email:', email)
+      if (!EMAIL_PATTERN.test(email)) {
+         setErrorMsg('Enter your proper email address.')
+         setIsPending(false)
+         return
+      }
+      setIsPending(false)
    }
 
    return (
@@ -43,10 +53,14 @@ export default function Home() {
             />
             <Link underlined={true} href="/signin" text="Sign In Instead" />
          </section>
+         <div className="">
+            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+         </div>
          <FilledButton
             text="Send Link"
             onClick={sendResetEmail}
             styles={{ width: '100%' }}
+            disabled={isPending}
          />
       </section>
    )

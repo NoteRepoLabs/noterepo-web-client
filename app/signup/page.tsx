@@ -5,7 +5,7 @@ import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
-import { SERVER_URL } from '@/config/constants'
+import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants'
 import { getCookie } from 'cookies-next'
 import Lottie from 'lottie-react'
 import { redirect } from 'next/navigation'
@@ -51,8 +51,7 @@ export default function Home() {
          return
       }
 
-      const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-      if (!emailPattern.test(email)) {
+      if (!EMAIL_PATTERN.test(email)) {
          setIsEmailError(true)
          setErrorMsg('Enter a valid email address.')
          setIsPending(false)
@@ -128,7 +127,7 @@ export default function Home() {
                   setPassword(e.target.value)
                }}
             />
-            <p>
+            <p className="w-full flex justify-center mt-8">
                <Link
                   underlined={true}
                   href={'/signin'}
@@ -141,7 +140,7 @@ export default function Home() {
                   text={'Forgot Password?'}
                />
             </p>
-            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+            <p className="mt-4 text-vibrant-red font-bold text-center">{errorMsg}</p>
             <FilledButton
                text={isPending ? "Signing Up" : "Sign Up"}
                icon={
