@@ -3,17 +3,23 @@
 import spinningAnimation from '@/animated/spinner.json'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
+import { SERVER_URL } from '@/config/constants'
+import { setCookie } from 'cookies-next'
 import Lottie from 'lottie-react'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Home() {
+   const controller = new AbortController()
+   const signal = controller.signal
+   const searchParams = useSearchParams()
    const [password, setPassword] = useState('')
    const [passwordConfirmation, setPasswordConfirmation] = useState('')
    const [isPasswordError, setIsPasswordError] = useState(false)
    const [errorMsg, setErrorMsg] = useState('')
    const [isPending, setIsPending] = useState(false)
 
-   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+   const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
       e.preventDefault()
       setIsPending(true)
       if (password.length < 6 || passwordConfirmation.length < 6) {
@@ -30,9 +36,54 @@ export default function Home() {
          return
       }
 
-      alert('Reset Password Not Implemented')
+      const userID = searchParams.get('userId')
 
-      setIsPending(false)
+      if (!userID) {
+         setErrorMsg('Invalid request state.')
+         setIsPending(false)
+         return
+      }
+
+      const credentials = { password, confirmPassword: passwordConfirmation }
+      console.log(credentials)
+
+      try {
+         setTimeout(async () => {
+            throw new Error('abort')
+         }, 60 * 1000)
+         await fetch(`${SERVER_URL}/users/reset-password/${userID}`, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+            signal: signal,
+         }).then(async (res) => {
+            await res.json().then((data) => {
+               console.log(data)
+               if (data.status == 'fail') {
+                  setErrorMsg(data.message)
+                  return
+               }
+               setCookie('user', JSON.stringify(data.payload))
+               setCookie('authenticated', true)
+               setErrorMsg('')
+               window.location.href = '/'
+            })
+         })
+      } catch (e: any) {
+         console.log(e)
+         if (e.message == 'abort') {
+            controller.abort()
+            console.error('Aborting request.')
+            setErrorMsg('Could not reach the server at this time.')
+         }
+         setErrorMsg('Could not reset your password.')
+      } finally {
+         setIsPending(false)
+      }
    }
 
    return (
@@ -75,7 +126,7 @@ export default function Home() {
             />
             <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
             <FilledButton
-               text="Reset My Password"
+               text={isPending ? 'Resetting Password' : 'Reset My Password'}
                icon={
                   isPending ? (
                      <Lottie
