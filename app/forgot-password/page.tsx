@@ -1,9 +1,11 @@
 'use client'
 
+import spinningAnimation from '@/animated/spinner.json'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
-import { EMAIL_PATTERN } from '@/config/constants'
+import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants'
+import Lottie from 'lottie-react'
 import { useState } from 'react'
 
 export default function Home() {
@@ -11,15 +13,40 @@ export default function Home() {
    const [errorMsg, setErrorMsg] = useState('')
    const [isPending, setIsPending] = useState(false)
 
-   const sendResetEmail = () => {
+   const sendResetEmail = async (e: React.FormEvent<HTMLButtonElement>) => {
+      e.preventDefault()
       setIsPending(true)
-      console.log('email:', email)
+
       if (!EMAIL_PATTERN.test(email)) {
          setErrorMsg('Enter your proper email address.')
          setIsPending(false)
          return
       }
-      setIsPending(false)
+
+      console.log('email:', email)
+      await fetch(`${SERVER_URL}/users/forget-password`, {
+         method: 'POST',
+         mode: 'cors',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         credentials: 'include',
+         body: JSON.stringify({ email }),
+      })
+         .then(async (res) => {
+            await res.json().then((data) => {
+               if (data.status == 'fail') {
+                  setErrorMsg(data.message)
+                  return
+               }
+               console.log(data)
+               window.location.href = '/sent-reset-email'
+            })
+         })
+         .catch(() => {
+            setErrorMsg('Could not reset password at this time.')
+         })
+         .finally(() => setIsPending(false))
    }
 
    return (
@@ -57,9 +84,25 @@ export default function Home() {
             <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
          </div>
          <FilledButton
-            text="Send Link"
-            onClick={sendResetEmail}
-            styles={{ width: '100%' }}
+            text={isPending ? 'Sending Email' : 'Reset Password'}
+            icon={
+               isPending ? (
+                  <Lottie
+                     animationData={spinningAnimation}
+                     loop={true}
+                     height={'32px'}
+                     width={'32px'}
+                     rendererSettings={{
+                        preserveAspectRatio: 'xMidYMid slice',
+                     }}
+                  />
+               ) : null
+            }
+            onClick={(e) => {
+               if (!isPending) {
+                  sendResetEmail(e)
+               }
+            }}
             disabled={isPending}
          />
       </section>
