@@ -76,7 +76,7 @@ export default function Home() {
    }
 
    return (
-      <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen md:h-auto">
+      <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Welcome
          </h1>
@@ -97,7 +97,7 @@ export default function Home() {
             }}
          />
          <div className="w-full">
-            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+            <p className="mt-2 text-vibrant-red font-bold">{errorMsg}</p>
          </div>
          <FilledButton
             text={isPending ? 'Setting Up' : "Let's Go!"}

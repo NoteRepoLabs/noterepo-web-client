@@ -12,7 +12,7 @@ export default function Home() {
       console.log(getCookie('noterepo.auth.token'))
    }, [])
    return (
-      <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen md:h-auto">
+      <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Welcome Home
          </h1>

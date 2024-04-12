@@ -42,7 +42,7 @@ export default function RootLayout({
    const theme = getTheme() as string
    return (
       <html lang="en" className={theme} style={{ colorScheme: theme }}>
-         <body className={`${satoshi.variable} font-sans`}>
+         <body className={`${satoshi.variable} font-sans flex flex-col justify-center items-center`}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                {children}
             </ThemeProvider>
