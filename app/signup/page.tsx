@@ -68,6 +68,7 @@ export default function Home() {
          headers: {
             'Content-Type': 'application/json',
          },
+         credentials: 'include',
          body: JSON.stringify({
             email: credentials.email,
             password: credentials.password,
@@ -130,13 +131,19 @@ export default function Home() {
             <p>
                <Link
                   underlined={true}
+                  href={'/signin'}
+                  text={'Sign In'}
+                  style={{marginRight: "24px"}}
+               />
+               <Link
+                  underlined={true}
                   href={'/forgot-password'}
                   text={'Forgot Password?'}
                />
             </p>
             <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
             <FilledButton
-               text={isPending ? "Signing In" : "Sign In"}
+               text={isPending ? "Signing Up" : "Sign Up"}
                icon={
                   isPending ? (
                      <Lottie

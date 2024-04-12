@@ -1,10 +1,16 @@
-import { cookies } from 'next/headers'
+'use client'
+
+import { getCookie } from 'cookies-next'
 import { redirect } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
-   if (!cookies().get('authenticated')) {
-      redirect('/signin')
+   if (!getCookie('authenticated')) {
+      redirect('/signup')
    }
+   useEffect(() => {
+      console.log(getCookie('noterepo.auth.token'))
+   }, [])
    return (
       <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen md:h-auto">
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">

@@ -41,6 +41,7 @@ export default function Home() {
       await fetch(`${SERVER_URL}/auth/setInitialUsername/${userID}`, {
          method: 'POST',
          mode: 'cors',
+         credentials: 'include',
          headers: {
             'Content-Type': 'application/json',
          },
