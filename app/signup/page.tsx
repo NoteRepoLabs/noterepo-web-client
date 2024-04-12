@@ -6,7 +6,7 @@ import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants'
-import { getCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
 import Lottie from 'lottie-react'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
@@ -21,7 +21,7 @@ export default function Home() {
 
    // Redirect the user if they've already been authenticated
    // This prevents them from doing so twice
-   if (getCookie('authenticated')) {
+   if (getCookie('user')) {
       redirect('/')
    }
 
@@ -84,6 +84,13 @@ export default function Home() {
             } else {
                await res.json().then((data) => {
                   console.log(data)
+
+                  setCookie('user', {
+                    username: data.payload.username,
+                    isVerified: data.payload.isVerified,
+                    role: data.payload.role,
+                 })
+                 
                   window.location.href = '/verify-email'
                })
             }

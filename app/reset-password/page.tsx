@@ -67,8 +67,13 @@ export default function Home() {
                   setErrorMsg(data.message)
                   return
                }
-               setCookie('user', JSON.stringify(data.payload))
-               setCookie('authenticated', true)
+
+               setCookie('user', {
+                  username: data.payload.username,
+                  isVerified: data.payload.isVerified,
+                  role: data.payload.role,
+               })
+               
                setErrorMsg('')
                window.location.href = '/'
             })

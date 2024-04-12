@@ -61,7 +61,6 @@ export default function Home() {
                   console.log(data)
                   setIsPending(false)
                   setErrorMsg('')
-                  setCookie('authenticated', true)
                   window.location.href = '/'
                   return
                })
