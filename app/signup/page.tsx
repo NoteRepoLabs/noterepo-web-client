@@ -1,6 +1,7 @@
 'use client'
 
 import spinningAnimation from '@/animated/spinner.json'
+import ErrorText from '@/components/ui/ErrorText'
 import FilledButton from '@/components/ui/FilledButton'
 import Header from '@/components/ui/Header'
 import InputField from '@/components/ui/InputField'
@@ -147,7 +148,7 @@ export default function Home() {
                   text={'Forgot Password?'}
                />
             </p>
-            <p className="mt-4 text-vibrant-red font-bold text-center">{errorMsg}</p>
+            {errorMsg && <ErrorText errorMsg={errorMsg} />}
             <FilledButton
                text={isPending ? "Signing Up" : "Sign Up"}
                icon={
