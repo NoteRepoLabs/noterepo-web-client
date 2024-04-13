@@ -1,10 +1,10 @@
 'use client'
 
 import spinningAnimation from '@/animated/spinner.json'
+import ErrorText from '@/components/ui/ErrorText'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import { SERVER_URL } from '@/config/constants'
-import { setCookie } from 'cookies-next'
 import Lottie from 'lottie-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
@@ -95,9 +95,7 @@ export default function Home() {
                setUsername(e.target.value)
             }}
          />
-         <div className="w-full">
-            <p className="mt-2 text-vibrant-red font-bold">{errorMsg}</p>
-         </div>
+         {errorMsg && <ErrorText errorMsg={errorMsg} />}
          <FilledButton
             text={isPending ? 'Setting Up' : "Let's Go!"}
             icon={

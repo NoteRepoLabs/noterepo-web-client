@@ -1,6 +1,7 @@
 'use client'
 
 import spinningAnimation from '@/animated/spinner.json'
+import ErrorText from '@/components/ui/ErrorText'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
@@ -80,9 +81,7 @@ export default function Home() {
             />
             <Link underlined={true} href="/signin" text="Sign In Instead" />
          </section>
-         <div className="">
-            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
-         </div>
+         {errorMsg && <ErrorText errorMsg={errorMsg} />}
          <FilledButton
             text={isPending ? 'Sending Email' : 'Reset Password'}
             icon={

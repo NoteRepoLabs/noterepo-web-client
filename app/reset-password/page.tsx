@@ -1,6 +1,7 @@
 'use client'
 
 import spinningAnimation from '@/animated/spinner.json'
+import ErrorText from '@/components/ui/ErrorText'
 import FilledButton from '@/components/ui/FilledButton'
 import InputField from '@/components/ui/InputField'
 import { SERVER_URL } from '@/config/constants'
@@ -129,7 +130,7 @@ export default function Home() {
                   setPasswordConfirmation(e.target.value)
                }}
             />
-            <p className="mt-4 text-vibrant-red font-bold">{errorMsg}</p>
+            {errorMsg && <ErrorText errorMsg={errorMsg} />}
             <FilledButton
                text={isPending ? 'Resetting Password' : 'Reset My Password'}
                icon={
