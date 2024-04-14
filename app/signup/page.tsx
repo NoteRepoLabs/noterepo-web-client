@@ -8,6 +8,7 @@ import InputField from '@/components/ui/InputField'
 import Link from '@/components/ui/Link'
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants'
 import { getCookie, setCookie } from 'cookies-next'
+import { Eye, EyeSlash } from 'iconsax-react'
 import Lottie from 'lottie-react'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
@@ -15,6 +16,7 @@ import { useState } from 'react'
 export default function Home() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
+   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
    const [errorMsg, setErrorMsg] = useState('')
    const [isPending, setIsPending] = useState(false)
    const [isEmailError, setIsEmailError] = useState(false)
@@ -87,11 +89,11 @@ export default function Home() {
                   console.log(data)
 
                   setCookie('user', {
-                    username: data.payload.username,
-                    isVerified: data.payload.isVerified,
-                    role: data.payload.role,
-                 })
-                 
+                     username: data.payload.username,
+                     isVerified: data.payload.isVerified,
+                     role: data.payload.role,
+                  })
+
                   window.location.href = '/verify-email'
                })
             }
@@ -123,11 +125,29 @@ export default function Home() {
             />
             <InputField
                name="password-field"
-               type="password"
+               type={isPasswordVisible ? "text" : "password"}
                id="password-field"
                value={password}
                placeholder="Password"
                error={isPasswordError}
+               icon={
+                  password &&
+                  (isPasswordVisible ? (
+                     <EyeSlash
+                        size="24"
+                        color="#A1A7B5"
+                        className="absolute right-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                     />
+                  ) : (
+                     <Eye
+                        size="24"
+                        color="#A1A7B5"
+                        className="absolute right-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                     />
+                  ))
+               }
                required={true}
                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setIsPasswordError(false)
@@ -140,7 +160,7 @@ export default function Home() {
                   underlined={true}
                   href={'/signin'}
                   text={'Sign In'}
-                  style={{marginRight: "24px"}}
+                  style={{ marginRight: '24px' }}
                />
                <Link
                   underlined={true}
@@ -150,7 +170,7 @@ export default function Home() {
             </p>
             {errorMsg && <ErrorText errorMsg={errorMsg} />}
             <FilledButton
-               text={isPending ? "Signing Up" : "Sign Up"}
+               text={isPending ? 'Signing Up' : 'Sign Up'}
                icon={
                   isPending ? (
                      <Lottie
