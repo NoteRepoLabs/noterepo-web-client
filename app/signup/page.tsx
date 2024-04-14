@@ -24,7 +24,7 @@ export default function Page() {
 
    // Redirect the user if they've already been authenticated
    // This prevents them from doing so twice
-   if (getCookie('user')) {
+   if (getCookie('noterepo.auth.token')) {
       redirect('/')
    }
 
