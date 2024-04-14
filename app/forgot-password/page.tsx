@@ -69,16 +69,6 @@ export default function Home() {
             onChange={(e) => setEmail(e.target.value)}
          />
          <section className="mt-6 mb-6">
-            <Link
-               underlined={true}
-               href=""
-               text="Resend Link"
-               style={{ marginRight: '12px' }}
-               onClick={(e) => {
-                  e.preventDefault()
-                  alert('Resend Link Not Implemented')
-               }}
-            />
             <Link underlined={true} href="/signin" text="Sign In Instead" />
          </section>
          {errorMsg && <ErrorText errorMsg={errorMsg} />}
