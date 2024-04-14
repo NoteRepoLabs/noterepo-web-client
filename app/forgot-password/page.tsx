@@ -69,7 +69,7 @@ export default function Home() {
             onChange={(e) => setEmail(e.target.value)}
          />
          <section className="mt-6 mb-6">
-            <Link underlined={true} href="/signin" text="Sign In Instead" />
+            <Link underlined={true} href="/signup" text="Sign Up Instead" />
          </section>
          {errorMsg && <ErrorText errorMsg={errorMsg} />}
          <FilledButton
