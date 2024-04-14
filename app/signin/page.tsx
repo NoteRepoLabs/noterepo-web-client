@@ -97,12 +97,12 @@ export default function Home() {
    }
 
    return (
-      <section className="max-w-2xl !w-xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
+      <section className="!max-w-2xl !w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
          <h1 className="font-black text-3xl mb-6 text-neutral-900 dark:text-neutral-100">
             Sign In
          </h1>
-         <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mb-6">
-            Sign into your account to access your notes and materials.
+         <p className="mt-3 text-center font-bold text-base md:text-lg text-neutral-500 dark:text-neutral-300">
+            You&apos;re one step away from accessing all your lecture materials, sign into your account to continue.
          </p>
          <section className="my-8 w-full">
             <InputField

@@ -106,7 +106,7 @@ export default function Home() {
       'This is a collaborative effort to make access to lecture and study materials easier. Sign in or create a new account to get started.'
 
    return (
-      <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
+      <section className="!max-w-2xl !w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
          <Header content={signInInformation} />
          <section className="my-8 w-full">
             <InputField
