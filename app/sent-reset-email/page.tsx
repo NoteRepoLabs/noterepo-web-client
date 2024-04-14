@@ -4,7 +4,7 @@ import Link from "@/components/ui/Link"
 import { useRouter } from "next/navigation"
 import { Router } from "next/router"
 
-export default function Home() {
+export default function Page() {
     const router = useRouter()
 
     return (

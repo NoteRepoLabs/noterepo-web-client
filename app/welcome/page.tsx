@@ -9,7 +9,7 @@ import Lottie from 'lottie-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 
-export default function Home() {
+export default function Page() {
    const [username, setUsername] = useState('')
    const [isPending, setIsPending] = useState(false)
    const [errorMsg, setErrorMsg] = useState('')

@@ -10,7 +10,7 @@ import Lottie from 'lottie-react'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
-export default function Home() {
+export default function Page() {
    const controller = new AbortController()
    const signal = controller.signal
    const searchParams = useSearchParams()

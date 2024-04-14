@@ -11,7 +11,7 @@ import Lottie from 'lottie-react'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
 
-export default function Home() {
+export default function Page() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [errorMsg, setErrorMsg] = useState('')

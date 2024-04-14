@@ -9,7 +9,7 @@ import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants'
 import Lottie from 'lottie-react'
 import { useState } from 'react'
 
-export default function Home() {
+export default function Page() {
    const [email, setEmail] = useState('')
    const [errorMsg, setErrorMsg] = useState('')
    const [isPending, setIsPending] = useState(false)
