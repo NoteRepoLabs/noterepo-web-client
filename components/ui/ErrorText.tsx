@@ -7,7 +7,7 @@ interface ErrorTextProps {
 export default function ErrorText({ errorMsg }: ErrorTextProps) {
     return (
         <div className="flex items-center justify-center mt-6">
-            <Warning2 size="24" color="#F9587F" variant="Bold"/>
+            <Warning2 size="24" color="#FA4E81" variant="Bold"/>
             <p className="ml-2 text-vibrant-red font-bold text-center">{errorMsg}</p>
         </div>
     )

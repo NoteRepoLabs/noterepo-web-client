@@ -10,7 +10,7 @@ export default function Link({ underlined, href, text, style, onClick }: LinkPro
    return (
       <a
          href={href}
-         className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-300 dark:hover:text-neutral-200 font-semibold"
+         className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-300 dark:hover:text-neutral-200 font-semibold transition-colors"
          style={{
             textDecoration: underlined ? 'underline' : 'none',
             ...style,

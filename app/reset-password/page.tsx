@@ -47,7 +47,7 @@ export default function Page() {
 
       const credentials = { password, confirmPassword: passwordConfirmation }
       console.log(credentials)
-
+      
       try {
          setTimeout(async () => {
             throw new Error('abort')
@@ -101,7 +101,7 @@ export default function Page() {
             You&apos;re on this page because you chose to reset your password.
             Enter a new one to continue.
          </p>
-         <section className="my-8 w-full">
+         <form className="my-8 w-full">
             <InputField
                name="password-field"
                type="password"
@@ -153,7 +153,7 @@ export default function Page() {
                }}
                disabled={isPending}
             />
-         </section>
+         </form>
       </section>
    )
 }

@@ -21,13 +21,13 @@ export default function InputField(props: InputFieldProps) {
             placeholder={props.placeholder}
             required={props.required}
             onChange={props.onChange}
-            autoComplete="garbage"
+            autoComplete="off"
             spellCheck="false"
             inputMode={props.type === 'password' ? 'text' : 'none'}
-            className={`w-full border-[1.5px] py-3 pl-4 pr-12  md:py-4 md:rounded-2xl rounded-xl focus:outline-none font-bold bg-neutral-100 dark:bg-neutral-700  ${
+            className={`w-full border-[1.5px] py-3 pl-4 pr-12  md:py-4 md:rounded-2xl rounded-xl focus:outline-none font-bold bg-neutral-100 dark:bg-neutral-700 transition-colors  ${
                props.error
                   ? 'border-vibrant-red'
-                  : ' focus:border-neutral-700 border-neutral-300 dark:border-highlight dark:focus:border-neutral-500'
+                  : ' focus:border-neutral-700 border-neutral-300 dark:border-highlight dark:focus:border-neutral-200'
             }`}
          />
          <div>{props.icon && <>{props.icon}</>}</div>
