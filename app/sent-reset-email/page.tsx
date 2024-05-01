@@ -9,9 +9,9 @@ export default function Page() {
     const router = useRouter();
 
     return (
-        <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
-            <Image src="/icon/icon-email.svg" alt="" width={48} height={48} />
-            <h1 className="font-black text-3xl mt-6 text-neutral-900 dark:text-neutral-100">
+        <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen text-center">
+            <Image src="/icon/icon-email.svg" alt="" width={64} height={64} />
+            <h1 className="font-black text-2xl md:text-3xl mt-12 text-neutral-900 dark:text-neutral-100">
                 We&apos;ve Emailed You a Link
             </h1>
             <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mt-4">

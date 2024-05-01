@@ -8,9 +8,9 @@ const config: Config = {
    ],
    theme: {
       colors: {
-         'neutral-900': '#020507',
+         'neutral-900': '#090A0E',
          'neutral-800': '#181B26',
-         'neutral-700': '#080A0B',
+         'neutral-700': '#0D0E13',
          'neutral-500': '#66667B',
          'neutral-300': '#A1A7B5',
          'neutral-200': '#DBDBDD',

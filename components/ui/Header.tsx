@@ -32,7 +32,7 @@ export default function Header({ content }: HeaderProps) {
             />
          )}
          <p
-            className={`mt-0 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300`}
+            className={`mt-4 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300`}
          >
             {content}
          </p>

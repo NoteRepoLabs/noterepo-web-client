@@ -7,8 +7,8 @@
 }
 
 :root {
-   --foreground-rgb: 9, 10, 14;
-   --background-rgb: 255, 255, 255;
+    --foreground-rgb: 9, 10, 14;
+    --background-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,22 +16,22 @@
 
 body,
 html body {
-   color: rgb(var(--foreground-rgb));
-   background: rgb(var(--background-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb));
 }
 
 html.dark body {
-   color: rgb(255, 255, 255);
-   background: rgb(2, 5, 7);
+    color: rgb(255, 255, 255);
+    background: rgb(9, 10, 14);
 }
 
 input::-ms-reveal,
 input::-ms-clear {
-  display: none;
+    display: none;
 }
 
 @layer utilities {
-   .text-balance {
-      text-wrap: balance;
-   }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
