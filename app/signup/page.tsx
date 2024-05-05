@@ -25,7 +25,7 @@ export default function Page() {
     // Redirect the user if they've already been authenticated
     // This prevents them from doing so twice
     useEffect(() => {
-        if (getCookie('authtoken')) {
+        if (getCookie('user')) {
             redirect('/');
         }
     }, []);
