@@ -24,7 +24,7 @@ export default function Header({ content, aside }: HeaderProps) {
     return (
         <>
             {mounted && (
-                <div className="flex md:flex-row flex-col  items-center">
+                <div className="flex justify-center items-center">
                     <Image
                         src={fallBackTheme}
                         alt="Logo"
@@ -36,7 +36,7 @@ export default function Header({ content, aside }: HeaderProps) {
                 </div>
             )}
             <p
-                className={`mt-4 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300`}
+                className={`mt-2 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300`}
             >
                 {content}
             </p>
