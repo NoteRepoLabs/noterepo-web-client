@@ -21,7 +21,7 @@ export default function Page() {
     const [isPasswordError, setIsPasswordError] = useState(false);
 
     useEffect(() => {
-        if (getCookie('user')) {
+        if (getCookie('authtoken')) {
             redirect('/');
         }
     }, []);

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 export default function Home() {
     useEffect(() => {
-        if (!getCookie('user')) {
+        if (!getCookie('authtoken')) {
             redirect('/signup');
         }
     }, []);
