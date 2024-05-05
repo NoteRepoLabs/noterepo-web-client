@@ -10,7 +10,7 @@ import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
 import { getCookie, setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import { redirect } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
     const [email, setEmail] = useState('');
@@ -20,9 +20,11 @@ export default function Page() {
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
 
-    if (getCookie('user')) {
-        redirect('/');
-    }
+    useEffect(() => {
+        if (getCookie('user')) {
+            redirect('/');
+        }
+    }, []);
 
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -104,9 +106,7 @@ export default function Page() {
     return (
         <section className="mt-8 w-full max-w-lg mx-auto">
             <Header
-                content=
-                    "You're one step away from accessing all your lecture materials, sign in to continue."
-                
+                content="You're one step away from accessing all your lecture materials, sign in to continue."
                 aside="Sign In"
             />
             <form className="my-8 w-full">

@@ -11,7 +11,7 @@ import { getCookie } from 'cookies-next';
 import { Eye, EyeSlash } from 'iconsax-react';
 import Lottie from 'lottie-react';
 import { redirect } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
     const [email, setEmail] = useState('');
@@ -24,9 +24,11 @@ export default function Page() {
 
     // Redirect the user if they've already been authenticated
     // This prevents them from doing so twice
-    if (getCookie('user')) {
-        redirect('/');
-    }
+    useEffect(() => {
+        if (getCookie('user')) {
+            redirect('/');
+        }
+    }, []);
 
     // Some validation, then make requests to the server
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
