@@ -7,7 +7,7 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import { Eye, EyeSlash } from 'iconsax-react';
 import Lottie from 'lottie-react';
 import { redirect } from 'next/navigation';
@@ -89,13 +89,6 @@ export default function Page() {
                 } else {
                     await res.json().then((data) => {
                         console.log(data);
-
-                        setCookie('user', {
-                            username: data.payload.username,
-                            isVerified: data.payload.isVerified,
-                            role: data.payload.role,
-                        });
-
                         window.location.href = '/verify-email';
                     });
                 }

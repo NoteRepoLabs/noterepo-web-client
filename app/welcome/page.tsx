@@ -5,6 +5,7 @@ import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
 import InputField from '@/components/ui/InputField';
 import { SERVER_URL } from '@/config/constants';
+import { setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
@@ -60,8 +61,15 @@ export default function Page() {
                 } else {
                     await res.json().then((data) => {
                         console.log(data);
+
                         setIsPending(false);
                         setErrorMsg('');
+                        setCookie('user', {
+                            username: data.payload.username,
+                            isVerified: data.payload.isVerified,
+                            role: data.payload.role,
+                        });
+
                         window.location.href = '/';
                         return;
                     });
