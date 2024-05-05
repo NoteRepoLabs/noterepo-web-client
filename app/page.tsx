@@ -13,7 +13,9 @@ export default function Home() {
     }, []);
 
     const fetchUsers = async () => {
-        const res = await fetch(`${SERVER_URL}/users`);
+        const res = await fetch(`${SERVER_URL}/users`, {
+            credentials: 'include'
+        });
         const data = await res.json();
         console.log(data);
     };
