@@ -60,7 +60,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={theme} style={{ colorScheme: theme }}>
             <body
-                className={`${satoshi.variable} font-sans flex flex-col justify-center items-center`}
+                className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
             >
                 <Analytics />
                 <ThemeProvider

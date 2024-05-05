@@ -3,6 +3,7 @@
 import spinningAnimation from '@/animated/spinner.json';
 import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
+import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
@@ -101,14 +102,13 @@ export default function Page() {
     };
 
     return (
-        <section className="!max-w-2xl !w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
-            <h1 className="font-black text-3xl text-neutral-900 dark:text-neutral-100">
-                Sign In
-            </h1>
-            <p className="mt-3 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300">
-                You&apos;re one step away from accessing all your lecture
-                materials, sign into your account to continue.
-            </p>
+        <section className="mt-8 w-full max-w-lg mx-auto">
+            <Header
+                content=
+                    "You're one step away from accessing all your lecture materials, sign into your account to continue."
+                
+                aside="Sign In"
+            />
             <form className="my-8 w-full">
                 <InputField
                     name="email-field"

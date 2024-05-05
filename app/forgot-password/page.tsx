@@ -51,8 +51,8 @@ export default function Page() {
     };
 
     return (
-        <section className="max-w-2xl md:my-8 mx-3 md:mx-auto flex flex-col justify-center items-center min-h-screen">
-            <h1 className="font-black text-3xl text-neutral-900 dark:text-neutral-100">
+        <section className="mt-8 w-full max-w-lg mx-auto">
+            <h1 className="font-black text-center text-3xl text-neutral-900 dark:text-neutral-100">
                 Forgot Your Password?
             </h1>
             <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mt-6">

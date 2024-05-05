@@ -1,4 +1,4 @@
-import { Warning2 } from "iconsax-react"
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 
 interface ErrorTextProps {
     errorMsg: string
@@ -7,7 +7,7 @@ interface ErrorTextProps {
 export default function ErrorText({ errorMsg }: ErrorTextProps) {
     return (
         <div className="flex items-center justify-center mt-6">
-            <Warning2 size="24" color="#FA4E81" variant="Bold"/>
+            <ExclamationTriangleIcon className="text-[#FA4E81] w-[24px] h-[24px]" />
             <p className="ml-2 text-vibrant-red font-bold text-center">{errorMsg}</p>
         </div>
     )
