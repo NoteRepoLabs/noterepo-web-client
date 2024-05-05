@@ -109,7 +109,7 @@ export default function Page() {
     return (
         <section className="mt-8 w-full max-w-lg mx-auto">
             <Header
-                content="Sign in or create a new account to get started."
+                content="Create a new account to get started."
                 aside="Sign Up"
             />
             <form className="my-8 w-full" action="/">

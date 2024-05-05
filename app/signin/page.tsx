@@ -105,7 +105,7 @@ export default function Page() {
         <section className="mt-8 w-full max-w-lg mx-auto">
             <Header
                 content=
-                    "You're one step away from accessing all your lecture materials, sign into your account to continue."
+                    "You're one step away from accessing all your lecture materials, sign in to continue."
                 
                 aside="Sign In"
             />
