@@ -24,6 +24,7 @@ export const metadata: Metadata = {
             height: 640,
         },
     },
+    metadataBase: new URL('www.noterepo.com.ng'),
 };
 
 const satoshi = localFont({
