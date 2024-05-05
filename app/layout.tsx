@@ -15,16 +15,16 @@ export const metadata: Metadata = {
         title: 'NoteRepo',
         description:
             'A collaborative effort to make sharing lecture materials easier.',
-        url: 'www.noterepo.com.ng',
+        url: 'https://www.noterepo.com.ng',
         locale: 'en_US',
         type: 'website',
         images: {
-            url: 'www.noterepo.com.ng/opengraph-image.png',
+            url: 'https://www.noterepo.com.ng/opengraph-image.png',
             width: 1200,
             height: 640,
         },
     },
-    metadataBase: new URL('www.noterepo.com.ng'),
+    metadataBase: new URL('https://www.noterepo.com.ng'),
 };
 
 const satoshi = localFont({
