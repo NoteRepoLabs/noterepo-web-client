@@ -4,6 +4,9 @@ import './globals.css';
 import ThemeProvider from './provider';
 import { cookies } from 'next/headers';
 
+// Analytics
+import { Analytics } from '@vercel/analytics/react';
+
 export const metadata: Metadata = {
     title: 'NoteRepo',
     description:
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
         locale: 'en_US',
         type: 'website',
         images: {
-            url: 'https://www.noterepo.com.ng/opengraph-image.png',
+            url: 'https://www.noterepo.com.ng/opengraph.png',
             width: 1200,
             height: 640,
         },
@@ -59,6 +62,7 @@ export default function RootLayout({
             <body
                 className={`${satoshi.variable} font-sans flex flex-col justify-center items-center`}
             >
+                <Analytics />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
