@@ -7,11 +7,9 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
-import { getCookie } from 'cookies-next';
 import { Eye, EyeSlash } from 'iconsax-react';
 import Lottie from 'lottie-react';
-import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Page() {
     const [email, setEmail] = useState('');
@@ -21,14 +19,6 @@ export default function Page() {
     const [isPending, setIsPending] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
-
-    // Redirect the user if they've already been authenticated
-    // This prevents them from doing so twice
-    useEffect(() => {
-        if (getCookie('user')) {
-            redirect('/');
-        }
-    }, []);
 
     // Some validation, then make requests to the server
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {

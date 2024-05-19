@@ -1,19 +1,11 @@
 'use client';
 
-import { SERVER_URL } from '@/config/constants';
+import { getCookie, hasCookie } from 'cookies-next';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 
-const checkSession = async (): Promise<boolean> => {
-    try {
-        const res = await fetch(`${SERVER_URL}/users`, {
-            credentials: 'include',
-        });
-
-        return res.ok;
-    } catch {
-        return false;
-    }
+export const checkSession = () => {
+    return hasCookie('authtoken');
 };
 
 // Checks auth status of the user
@@ -23,13 +15,10 @@ export const useAuth = () => {
 
     useEffect(() => {
         const verifyUser = async () => {
-            const signedIn = await checkSession();
+            const signedIn = checkSession();
+
             setIsAuthenticated(signedIn);
             setLoading(false);
-
-            if (!signedIn) {
-                Router.push('/signup');
-            }
         };
 
         verifyUser();

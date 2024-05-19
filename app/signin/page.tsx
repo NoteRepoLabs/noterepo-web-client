@@ -7,10 +7,9 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
-import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Page() {
     const [email, setEmail] = useState('');
@@ -19,12 +18,6 @@ export default function Page() {
     const [isPending, setIsPending] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
-
-    useEffect(() => {
-        if (getCookie('user')) {
-            redirect('/');
-        }
-    }, []);
 
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
