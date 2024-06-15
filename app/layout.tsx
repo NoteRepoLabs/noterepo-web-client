@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import ThemeProvider from './provider';
 import { cookies } from 'next/headers';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Analytics
 import { Analytics } from '@vercel/analytics/react';
@@ -56,21 +57,26 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    // Initialize
     const theme = getTheme() as string;
+    const queryClient = new QueryClient();
+
     return (
-        <html lang="en" className={theme} style={{ colorScheme: theme }}>
-            <body
-                className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
-            >
-                <Analytics />
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
+        <QueryClientProvider client={queryClient}>
+            <html lang="en" className={theme} style={{ colorScheme: theme }}>
+                <body
+                    className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
                 >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
+                    <Analytics />
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                    >
+                        {children}
+                    </ThemeProvider>
+                </body>
+            </html>
+        </QueryClientProvider>
     );
 }

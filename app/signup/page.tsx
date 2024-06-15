@@ -20,43 +20,51 @@ export default function Page() {
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
 
+    // Handles showing error state
+    const showErrorState = (msg: string) => {
+        setErrorMsg(msg);
+        setIsPending(false);
+    }
+
     // Some validation, then make requests to the server
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsPending(true);
         setErrorMsg('');
 
+        // Verify email address is not empty
         if (email == '') {
             setIsEmailError(true);
-            setErrorMsg('Please fill the email field.');
-            setIsPending(false);
+            showErrorState('Please fill the email field.');
             return;
         }
 
+        // Verify password isn't empty either
         if (password == '') {
             setIsPasswordError(true);
-            setErrorMsg('Please fill the password field.');
-            setIsPending(false);
+            showErrorState('Please fill the password field.');
             return;
         }
 
+        // Password length must be at least 6 chars
         if (password.length < 6) {
             setIsPasswordError(true);
-            setErrorMsg('Password should be more than 6 characters long.');
-            setIsPending(false);
+            showErrorState('Password cannot be shorter than 6 characters.')
             return;
         }
 
+        // Verify that the email follows the right pattern regex
         if (!EMAIL_PATTERN.test(email)) {
             setIsEmailError(true);
-            setErrorMsg('Enter a valid email address.');
-            setIsPending(false);
+            showErrorState('Enter a valid email address.')
             return;
         }
 
+        // Prepare credentials for request
         const credentials = { email, password };
         console.log(credentials);
 
+        // Make sign-up query
         await fetch(`${SERVER_URL}/auth/sign-up`, {
             method: 'POST',
             mode: 'cors',

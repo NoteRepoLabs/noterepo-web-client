@@ -64,11 +64,19 @@ export default function Page() {
 
                         setIsPending(false);
                         setErrorMsg('');
-                        setCookie('user', {
-                            username: data.payload.username,
-                            isVerified: data.payload.isVerified,
-                            role: data.payload.role,
-                        });
+                        setCookie(
+                            'user',
+                            {
+                                username: data.payload.username,
+                                isVerified: data.payload.isVerified,
+                                role: data.payload.role,
+                            },
+                            {
+                                expires: new Date(
+                                    Date.now() + 24 * 60 * 60 * 1000
+                                ),
+                            }
+                        );
 
                         window.location.href = '/';
                         return;

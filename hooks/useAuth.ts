@@ -1,11 +1,11 @@
 'use client';
 
-import { getCookie, hasCookie } from 'cookies-next';
-import Router from 'next/router';
+import { hasCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 
+// Checks if refresh token exists
 export const checkSession = () => {
-    return hasCookie('authtoken');
+    return hasCookie('refresh-token');
 };
 
 // Checks auth status of the user

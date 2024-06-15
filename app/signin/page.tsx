@@ -24,21 +24,21 @@ export default function Page() {
         setIsPending(true);
         setErrorMsg('');
 
-        if (email == '') {
+        if (email.trim() == '') {
             setIsEmailError(true);
             setErrorMsg('Please fill the email field.');
             setIsPending(false);
             return;
         }
 
-        if (password == '') {
+        if (password.trim() == '') {
             setIsPasswordError(true);
             setErrorMsg('Please fill the password field.');
             setIsPending(false);
             return;
         }
 
-        if (password.length < 6) {
+        if (password.trim().length < 6 || password.length < 6) {
             setIsPasswordError(true);
             setErrorMsg('Password should be more than 6 characters long.');
             setIsPending(false);
@@ -80,11 +80,19 @@ export default function Page() {
                     await res.json().then((data) => {
                         console.log(data);
 
-                        setCookie('user', {
-                            username: data.payload.username,
-                            isVerified: data.payload.isVerified,
-                            role: data.payload.role,
-                        });
+                        setCookie(
+                            'user',
+                            {
+                                username: data.payload.username,
+                                isVerified: data.payload.isVerified,
+                                role: data.payload.role,
+                            },
+                            {
+                                expires: new Date(
+                                    Date.now() + 24 * 60 * 60 * 1000
+                                ),
+                            }
+                        );
 
                         window.location.href = '/';
                     });
