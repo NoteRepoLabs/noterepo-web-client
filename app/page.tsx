@@ -1,21 +1,17 @@
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { SERVER_URL } from '@/config/constants';
-import { useEffect } from 'react';
+import getUsers from '@/queries/getUsers';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {
-    const fetchUsers = async () => {
-        const res = await fetch(`${SERVER_URL}/users`, {
-            credentials: 'include',
-        });
-        const data = await res.json();
-        console.log(data);
-    };
+    const { isPending, data } = useQuery({
+        queryKey: ['getUsers'],
+        queryFn: getUsers,
+        staleTime: Infinity,
+    });
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
+    console.log('Users', data);
 
     return (
         <ProtectedRoute>
