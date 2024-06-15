@@ -61,6 +61,8 @@ export default function Page() {
                 sameSite: 'strict',
             });
             console.log('saved credentials successfully.');
+            // Redirect to dashboard
+            window.location.href = '/verify-email';
         },
     });
 
