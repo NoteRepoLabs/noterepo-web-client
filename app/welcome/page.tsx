@@ -5,90 +5,99 @@ import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
 import InputField from '@/components/ui/InputField';
 import { SERVER_URL } from '@/config/constants';
+import NetworkConfig from '@/config/network';
+import { UsernameCredentials } from '@/types/authTypes';
+import ServerResponse from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import { setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function Page() {
+    // Page state
     const [username, setUsername] = useState('');
-    const [isPending, setIsPending] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const searchParams = useSearchParams();
 
+    // Mutation queries
+    const updateUsernameMutation = useMutation({
+        mutationFn: (creds: UsernameCredentials) => {
+            return axios.post(
+                `${SERVER_URL}/auth/setInitialUsername/${creds.userID}`,
+                { username: creds.username },
+                { headers: NetworkConfig.headers }
+            );
+        },
+        onError: (err: AxiosError) => {
+            console.error('An error occurred.', err);
+            const serverErr = err.response?.data as ServerResponse;
+
+            err.code == 'ERR_NETWORK'
+                ? showErrorState('Could not sign up, check your connection.')
+                : showErrorState(serverErr.message ?? 'An error occurred.');
+        },
+        onSuccess: (res) => {
+            const data = res.data;
+            console.log(data);
+            const { access_token, refresh_token, ...user } = data.payload;
+
+            // store user creds and tokens
+            setCookie('accessToken', access_token, {
+                maxAge: 60 * 60,
+            }); // 1 hour
+            setCookie('refreshToken', refresh_token, {
+                maxAge: 5 * 24 * 60 * 60,
+            }); // 5 days
+            setCookie('user', user, { maxAge: 5 * 24 * 60 * 60 });
+            console.log('saved credentials successfully.');
+        },
+    });
+
+    const showErrorState = (msg: string) => {
+        setErrorMsg(msg);
+        setIsDisabled(false);
+    };
+
     const submitUsername = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsPending(true);
+        setIsDisabled(true);
+
+        // Validation
         if (!username) {
-            setErrorMsg('Please fill the username field.');
-            setIsPending(false);
+            showErrorState('Please fill the username field.');
             return;
         }
 
+        // User can't be less than 4 chars
+        if (username.length < 4) {
+            showErrorState('Username cannot be less than 4 characters.');
+            return;
+        }
+
+        // Username cannot exceed 15 chars
         if (username.length > 15) {
-            setErrorMsg('Username cannot exceed 15 characters.');
-            setIsPending(false);
+            showErrorState('Username cannot exceed 15 characters.');
             return;
         }
 
         console.log('username:', username);
         const userID = searchParams.get('userId');
 
+        // UserID must be provided
         if (!userID) {
-            setErrorMsg('Unable to verify account status, please sign in.');
-            setIsPending(false);
+            showErrorState('Unable to verify account status, please sign in.');
             return;
         }
 
-        await fetch(`${SERVER_URL}/auth/setInitialUsername/${userID}`, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username }),
-        })
-            .then(async (res) => {
-                if (!res.ok) {
-                    await res.json().then((data) => {
-                        console.log(data);
-                        const msg = 'An error occurred while setting up.';
-                        setErrorMsg(msg);
-                        setIsPending(false);
-                        return;
-                    });
-                } else {
-                    await res.json().then((data) => {
-                        console.log(data);
-
-                        setIsPending(false);
-                        setErrorMsg('');
-                        setCookie(
-                            'user',
-                            {
-                                username: data.payload.username,
-                                isVerified: data.payload.isVerified,
-                                role: data.payload.role,
-                            },
-                            {
-                                expires: new Date(
-                                    Date.now() + 24 * 60 * 60 * 1000
-                                ),
-                            }
-                        );
-
-                        window.location.href = '/';
-                        return;
-                    });
-                }
-            })
-            .catch(() => {
-                setErrorMsg('Failed to process request.');
-                setIsPending(false);
-            });
-
-        setIsPending(false);
+        // Make mutation request
+        updateUsernameMutation.mutate({
+            userID,
+            username,
+        });
+        setIsDisabled(false);
     };
 
     return (
@@ -114,9 +123,13 @@ export default function Page() {
             />
             {errorMsg && <ErrorText errorMsg={errorMsg} />}
             <FilledButton
-                text={isPending ? 'Setting Up' : "Let's Go!"}
+                text={
+                    updateUsernameMutation.isPending
+                        ? 'Setting Up'
+                        : "Let's Go!"
+                }
                 icon={
-                    isPending ? (
+                    updateUsernameMutation.isPending ? (
                         <Lottie
                             animationData={spinningAnimation}
                             loop={true}
@@ -129,11 +142,11 @@ export default function Page() {
                     ) : null
                 }
                 onClick={(e) => {
-                    if (!isPending) {
+                    if (!isDisabled) {
                         submitUsername(e);
                     }
                 }}
-                disabled={isPending}
+                disabled={isDisabled}
             />
         </section>
     );

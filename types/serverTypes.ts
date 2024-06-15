@@ -1,8 +1,8 @@
 /**
- * Defines an interface for standard server errors
+ * Defines an interface for standard server responses
  */
-export default interface ServerError {
-    status: string,
-    path: string,
-    message: string
+export default interface ServerResponse {
+    status: string;
+    path: string;
+    message: string;
 }

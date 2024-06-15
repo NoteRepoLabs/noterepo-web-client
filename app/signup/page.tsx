@@ -7,8 +7,9 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
-import SignUpCredentials from '@/types/authTypes';
-import ServerError from '@/types/serverTypes';
+import NetworkConfig from '@/config/network';
+import { SignUpCredentials } from '@/types/authTypes';
+import ServerResponse from '@/types/serverTypes';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { Eye, EyeSlash } from 'iconsax-react';
@@ -28,21 +29,14 @@ export default function Page() {
     // Mutation queries
     const signUpMutation = useMutation({
         mutationFn: (credentials: SignUpCredentials) => {
-            return axios.post(
-                `${SERVER_URL}/auth/sign-up`,
-                JSON.stringify(credentials),
-                {
-                    headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+            return axios.post(`${SERVER_URL}/auth/sign-up`, credentials, {
+                headers: NetworkConfig.headers,
+            });
         },
         onError: (error: AxiosError) => {
             console.error('An error occurred.', error);
-            const serverErr = error.response?.data as ServerError
-            
+            const serverErr = error.response?.data as ServerResponse;
+
             error.code == 'ERR_NETWORK'
                 ? showErrorState('Could not sign up, check your connection.')
                 : showErrorState(serverErr.message ?? 'An error occurred.');
