@@ -7,29 +7,62 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
+import SignUpCredentials from '@/types/authTypes';
+import ServerError from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import { Eye, EyeSlash } from 'iconsax-react';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
 
 export default function Page() {
+    // State
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const [isPending, setIsPending] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
+
+    // Mutation queries
+    const signUpMutation = useMutation({
+        mutationFn: (credentials: SignUpCredentials) => {
+            return axios.post(
+                `${SERVER_URL}/auth/sign-up`,
+                JSON.stringify(credentials),
+                {
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+        },
+        onError: (error: AxiosError) => {
+            console.error('An error occurred.', error);
+            const serverErr = error.response?.data as ServerError
+            
+            error.code == 'ERR_NETWORK'
+                ? showErrorState('Could not sign up, check your connection.')
+                : showErrorState(serverErr.message ?? 'An error occurred.');
+        },
+        onSuccess: (data) => {
+            console.log('User:', data);
+            window.location.href = '/verify-email';
+        },
+    });
 
     // Handles showing error state
     const showErrorState = (msg: string) => {
         setErrorMsg(msg);
-        setIsPending(false);
-    }
+        setIsDisabled(false);
+    };
 
     // Some validation, then make requests to the server
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsPending(true);
+        setIsDisabled(true);
         setErrorMsg('');
 
         // Verify email address is not empty
@@ -49,14 +82,14 @@ export default function Page() {
         // Password length must be at least 6 chars
         if (password.length < 6) {
             setIsPasswordError(true);
-            showErrorState('Password cannot be shorter than 6 characters.')
+            showErrorState('Password cannot be shorter than 6 characters.');
             return;
         }
 
         // Verify that the email follows the right pattern regex
         if (!EMAIL_PATTERN.test(email)) {
             setIsEmailError(true);
-            showErrorState('Enter a valid email address.')
+            showErrorState('Enter a valid email address.');
             return;
         }
 
@@ -64,39 +97,9 @@ export default function Page() {
         const credentials = { email, password };
         console.log(credentials);
 
-        // Make sign-up query
-        await fetch(`${SERVER_URL}/auth/sign-up`, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
-            }),
-        })
-            .then(async (res) => {
-                if (!res.ok) {
-                    await res.json().then((json) => {
-                        const msg =
-                            json.message ??
-                            'Could not sign in, please retry later.';
-                        setErrorMsg(msg);
-                        return;
-                    });
-                } else {
-                    await res.json().then((data) => {
-                        console.log(data);
-                        window.location.href = '/verify-email';
-                    });
-                }
-            })
-            .catch(() =>
-                setErrorMsg('Could not reach the server at this time.')
-            )
-            .finally(() => setIsPending(false));
+        // Make mutation request
+        signUpMutation.mutate(credentials);
+        setIsDisabled(false);
     };
 
     return (
@@ -158,9 +161,9 @@ export default function Page() {
                 />
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
-                    text={isPending ? 'Signing Up' : 'Sign Up'}
+                    text={signUpMutation.isPending ? 'Signing Up' : 'Sign Up'}
                     icon={
-                        isPending ? (
+                        signUpMutation.isPending ? (
                             <Lottie
                                 animationData={spinningAnimation}
                                 loop={true}
@@ -173,11 +176,11 @@ export default function Page() {
                         ) : null
                     }
                     onClick={(e) => {
-                        if (!isPending) {
+                        if (!signUpMutation.isPending) {
                             onSubmit(e);
                         }
                     }}
-                    disabled={isPending}
+                    disabled={isDisabled || signUpMutation.isPending}
                 />
                 <section className="w-full flex justify-center mt-8">
                     <Link

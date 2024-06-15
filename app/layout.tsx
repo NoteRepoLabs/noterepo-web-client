@@ -1,13 +1,14 @@
+import QueryProvider from '@/providers/queryProvider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { cookies } from 'next/headers';
 import './globals.css';
 import ThemeProvider from './provider';
-import { cookies } from 'next/headers';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Analytics
 import { Analytics } from '@vercel/analytics/react';
 
+// Open Graph Config
 export const metadata: Metadata = {
     title: 'NoteRepo',
     description:
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://www.noterepo.com.ng'),
 };
 
+// Font
 const satoshi = localFont({
     src: [
         { path: '../public/fonts/satoshi/Satoshi-Black.woff', weight: '900' },
@@ -45,6 +47,7 @@ const satoshi = localFont({
     variable: '--font-satoshi',
 });
 
+// Theme controller
 function getTheme() {
     const cookieStore = cookies();
     const themeCookie = cookieStore.get('theme');
@@ -59,24 +62,21 @@ export default function RootLayout({
 }>) {
     // Initialize
     const theme = getTheme() as string;
-    const queryClient = new QueryClient();
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <html lang="en" className={theme} style={{ colorScheme: theme }}>
-                <body
-                    className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
+        <html lang="en" className={theme} style={{ colorScheme: theme }}>
+            <body
+                className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
+            >
+                <Analytics />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
                 >
-                    <Analytics />
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                    >
-                        {children}
-                    </ThemeProvider>
-                </body>
-            </html>
-        </QueryClientProvider>
+                    <QueryProvider>{children}</QueryProvider>
+                </ThemeProvider>
+            </body>
+        </html>
     );
 }
