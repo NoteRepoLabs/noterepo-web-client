@@ -47,11 +47,19 @@ export default function Page() {
             // store user creds and tokens
             setCookie('accessToken', access_token, {
                 maxAge: 60 * 60,
+                httpOnly: true,
+                sameSite: 'strict',
             }); // 1 hour
             setCookie('refreshToken', refresh_token, {
                 maxAge: 5 * 24 * 60 * 60,
+                httpOnly: true,
+                sameSite: 'strict',
             }); // 5 days
-            setCookie('user', user, { maxAge: 5 * 24 * 60 * 60 });
+            setCookie('user', user, {
+                maxAge: 5 * 24 * 60 * 60,
+                httpOnly: true,
+                sameSite: 'strict',
+            });
             console.log('saved credentials successfully.');
         },
     });
