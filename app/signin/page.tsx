@@ -7,101 +7,109 @@ import Header from '@/components/ui/Header';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
+import NetworkConfig from '@/config/network';
+import { AuthCredentials } from '@/types/authTypes';
+import ServerResponse from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import { setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
 
 export default function Page() {
+    // Page state
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const [isPending, setIsPending] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
 
+    // Mutation queries
+    const signInMutation = useMutation({
+        mutationFn: (creds: AuthCredentials) => {
+            return axios.post(`${SERVER_URL}/auth/sign-in`, creds, {
+                headers: NetworkConfig.headers,
+            });
+        },
+        onSuccess: (res) => {
+            const data = res.data;
+            console.log(data);
+
+            const { access_token, refresh_token, ...user } = data.payload;
+            // store user creds and tokens
+            setCookie('accessToken', access_token, {
+                maxAge: 60 * 60,
+                sameSite: 'strict',
+            });
+            setCookie('refreshToken', refresh_token, {
+                maxAge: 5 * 24 * 60 * 60,
+                sameSite: 'strict',
+            });
+            setCookie('user', user, {
+                maxAge: 5 * 24 * 60 * 60,
+                sameSite: 'strict',
+            });
+            console.log('saved credentials successfully.');
+            // Redirect to dashboard
+            window.location.href = '/';
+        },
+        onError: (err: AxiosError) => {
+            console.error('An error occurred.', err);
+            const serverErr = err.response?.data as ServerResponse;
+
+            err.code == 'ERR_NETWORK'
+                ? showErrorState('Could not sign up, check your connection.')
+                : showErrorState(serverErr.message ?? 'An error occurred.');
+        },
+    });
+
+    // Show error states
+    const showErrorState = (msg: string) => {
+        setIsEmailError(true);
+        setErrorMsg(msg);
+        setIsDisabled(false);
+    };
+
+    /**
+     * Verify fields and make sign-in request
+     */
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsPending(true);
+        setIsDisabled(true);
         setErrorMsg('');
 
+        // Email cannot be empty
         if (email.trim() == '') {
-            setIsEmailError(true);
-            setErrorMsg('Please fill the email field.');
-            setIsPending(false);
+            showErrorState('Please fill the email field.');
             return;
         }
 
+        // Password cannot be empty
         if (password.trim() == '') {
-            setIsPasswordError(true);
-            setErrorMsg('Please fill the password field.');
-            setIsPending(false);
+            showErrorState('Please fill the password field.');
             return;
         }
 
+        // Passwords can't be less than 6 characters long
         if (password.trim().length < 6 || password.length < 6) {
-            setIsPasswordError(true);
-            setErrorMsg('Password should be more than 6 characters long.');
-            setIsPending(false);
+            showErrorState('Password should be more than 6 characters long.');
             return;
         }
 
+        // Match emails properly
         if (!EMAIL_PATTERN.test(email)) {
-            setIsEmailError(true);
-            setErrorMsg('Enter a valid email address.');
-            setIsPending(false);
+            showErrorState('Enter a valid email address.');
             return;
         }
 
+        // Prepare credentials
         const credentials = { email, password };
         console.log(credentials);
 
-        await fetch(`${SERVER_URL}/auth/sign-in`, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
-            }),
-        })
-            .then(async (res) => {
-                if (!res.ok) {
-                    await res.json().then((json) => {
-                        const msg =
-                            json.message ??
-                            'Could not sign in, please retry later.';
-                        setErrorMsg(msg);
-                        return;
-                    });
-                } else {
-                    await res.json().then((data) => {
-                        console.log(data);
-
-                        setCookie(
-                            'user',
-                            {
-                                username: data.payload.username,
-                                isVerified: data.payload.isVerified,
-                                role: data.payload.role,
-                            },
-                            {
-                                expires: new Date(
-                                    Date.now() + 24 * 60 * 60 * 1000
-                                ),
-                            }
-                        );
-
-                        window.location.href = '/';
-                    });
-                }
-            })
-            .catch(() =>
-                setErrorMsg('Could not reach the server at this time.')
-            )
-            .finally(() => setIsPending(false));
+        // Make mutation request
+        signInMutation.mutate(credentials);
+        setIsDisabled(false);
     };
 
     return (
@@ -141,9 +149,9 @@ export default function Page() {
                 />
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
-                    text={isPending ? 'Signing In' : 'Sign In'}
+                    text={signInMutation.isPending ? 'Signing In' : 'Sign In'}
                     icon={
-                        isPending ? (
+                        signInMutation.isPending ? (
                             <Lottie
                                 animationData={spinningAnimation}
                                 loop={true}
@@ -156,11 +164,11 @@ export default function Page() {
                         ) : null
                     }
                     onClick={(e) => {
-                        if (!isPending) {
+                        if (!isDisabled) {
                             onSubmit(e);
                         }
                     }}
-                    disabled={isPending}
+                    disabled={isDisabled}
                 />
                 <section className="w-full mt-8 text-center">
                     <Link

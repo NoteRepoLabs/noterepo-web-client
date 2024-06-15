@@ -1,7 +1,7 @@
 /**
  * Defines an interface for signing up
  */
-export interface SignUpCredentials {
+export interface AuthCredentials {
     email: string;
     password: string;
 }
@@ -10,6 +10,6 @@ export interface SignUpCredentials {
  * Defines an interface for setting username
  */
 export interface UsernameCredentials {
-    userID: string,
-    username: string
+    userID: string;
+    username: string;
 }

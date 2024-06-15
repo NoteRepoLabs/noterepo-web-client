@@ -8,7 +8,7 @@ import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
-import { SignUpCredentials } from '@/types/authTypes';
+import { AuthCredentials } from '@/types/authTypes';
 import ServerResponse from '@/types/serverTypes';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
@@ -28,7 +28,7 @@ export default function Page() {
 
     // Mutation queries
     const signUpMutation = useMutation({
-        mutationFn: (credentials: SignUpCredentials) => {
+        mutationFn: (credentials: AuthCredentials) => {
             return axios.post(`${SERVER_URL}/auth/sign-up`, credentials, {
                 headers: NetworkConfig.headers,
             });
