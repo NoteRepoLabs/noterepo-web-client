@@ -33,6 +33,10 @@ export default function Page() {
                 headers: NetworkConfig.headers,
             });
         },
+        onSuccess(res) {
+            console.log('User:', res.data);
+            window.location.href = '/verify-email';
+        },
         onError: (error: AxiosError) => {
             console.error('An error occurred.', error);
             const serverErr = error.response?.data as ServerResponse;
