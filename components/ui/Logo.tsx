@@ -29,7 +29,7 @@ export default function Logo(props: LogoProps) {
                 alt="Logo"
                 width={props.width}
                 height={props.height}
-                className="select-none"
+                className="select-none cursor-pointer"
             />
         </div>
     );

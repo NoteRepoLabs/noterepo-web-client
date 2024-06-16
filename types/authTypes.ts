@@ -20,3 +20,11 @@ export interface UsernameCredentials {
 export interface EmailCredentials {
     email: string;
 }
+
+/**
+ * Defines an interface for resetting passwords
+ */
+export interface PasswordResetCredentials {
+    userID: string,
+    password: string
+}

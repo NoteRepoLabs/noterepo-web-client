@@ -163,7 +163,7 @@ export default function Page() {
                             onSubmit(e);
                         }
                     }}
-                    disabled={isDisabled}
+                    disabled={signInMutation.isPending}
                 />
                 <section className="w-full mt-8 text-center">
                     <Link

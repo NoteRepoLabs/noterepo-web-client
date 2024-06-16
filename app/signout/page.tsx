@@ -7,7 +7,7 @@ export default function Page() {
     useEffect(() => {
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
-        deleteCookie('user');
+        localStorage.removeItem('user');
 
         console.log('Deleted cookies successfully.');
         window.location.href = '/signup';

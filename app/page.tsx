@@ -6,19 +6,26 @@ import { UserInterface } from '@/types/userTypes';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<UserInterface>({
+        username: '',
+        id: '',
+        email: '',
+        isVerified: false,
+        role: '',
+        search_token: '',
+    });
 
     useEffect(() => {
         const parsedUser: UserInterface = JSON.parse(
             localStorage.getItem('user') ?? '{}'
         );
         setUser(parsedUser);
-    }, [user]);
+    }, []);
 
     return (
         <ProtectedRoute>
             <section className="mt-8 w-full max-w-3xl h-full mx-auto">
-                <DashboardHeader />
+                <DashboardHeader username={user.username} />
             </section>
         </ProtectedRoute>
     );

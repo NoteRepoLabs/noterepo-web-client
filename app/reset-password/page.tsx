@@ -5,6 +5,11 @@ import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
 import InputField from '@/components/ui/InputField';
 import { SERVER_URL } from '@/config/constants';
+import NetworkConfig from '@/config/network';
+import { PasswordResetCredentials } from '@/types/authTypes';
+import ServerResponse from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import Lottie from 'lottie-react';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -18,6 +23,40 @@ export default function Page() {
     const [errorMsg, setErrorMsg] = useState('');
     const [isDisabled, setIsDisabled] = useState(false);
 
+    // Mutation queries
+    const resetPasswordMutation = useMutation({
+        mutationFn: (creds: PasswordResetCredentials) => {
+            return axios.post(
+                `${SERVER_URL}/users/reset-password/${creds.userID}`,
+                {
+                    password: creds.password,
+                    confirmPassword: creds.password,
+                },
+                {
+                    headers: NetworkConfig.headers,
+                }
+            );
+        },
+        onSuccess: (res) => {
+            const data = res.data;
+            console.log(data);
+        },
+        onError: (err: AxiosError) => {
+            console.error('An error occurred.', err);
+            const serverErr = err.response?.data as ServerResponse;
+
+            err.code == 'ERR_NETWORK'
+                ? showErrorState('Could not sign up, check your connection.')
+                : showErrorState(serverErr.message ?? 'An error occurred.');
+        },
+    });
+
+    // Handles showing error states
+    const showErrorState = (msg: string) => {
+        setErrorMsg(msg);
+        setIsDisabled(false);
+    };
+
     // Handles input validation and makes reset password request
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -26,16 +65,14 @@ export default function Page() {
         // Password length cannot be less than 6
         if (password.length < 6 || passwordConfirmation.length < 6) {
             setIsPasswordError(true);
-            setErrorMsg('Password should be at least 6 characters long.');
-            setIsDisabled(false);
+            showErrorState('Password should be at least 6 characters long.');
             return;
         }
 
         // Match new password
         if (password !== passwordConfirmation) {
             setIsPasswordError(true);
-            setErrorMsg('Passwords mismatch.');
-            setIsDisabled(false);
+            showErrorState('Passwords mismatch.');
             return;
         }
 
@@ -43,16 +80,16 @@ export default function Page() {
 
         // Verify that userID is present
         if (!userID) {
-            setErrorMsg('Invalid request state.');
-            setIsDisabled(false);
+            showErrorState('Invalid request state.');
             return;
         }
-
-        // Prepare credentials
-        const credentials = { password, confirmPassword: passwordConfirmation };
-        console.log(credentials);
-
-        // [TODO]: Make mutation requests here
+        
+        // Make mutation requests
+        resetPasswordMutation.mutate({
+            userID,
+            password,
+        });
+        setIsDisabled(false);
     };
 
     return (
@@ -96,10 +133,10 @@ export default function Page() {
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
                     text={
-                        isDisabled ? 'Resetting Password' : 'Reset My Password'
+                        resetPasswordMutation.isPending ? 'Resetting Password' : 'Reset My Password'
                     }
                     icon={
-                        isDisabled ? (
+                        resetPasswordMutation.isPending ? (
                             <Lottie
                                 animationData={spinningAnimation}
                                 loop={true}
@@ -112,11 +149,11 @@ export default function Page() {
                         ) : null
                     }
                     onClick={(e) => {
-                        if (!isDisabled) {
+                        if (!resetPasswordMutation.isPending) {
                             onSubmit(e);
                         }
                     }}
-                    disabled={isDisabled}
+                    disabled={resetPasswordMutation.isPending}
                 />
             </form>
         </section>
