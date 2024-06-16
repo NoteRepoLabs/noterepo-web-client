@@ -2,6 +2,7 @@
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardHeader from '@/components/ui/dashboard/DashboardHeader';
+import DashboardView from '@/components/ui/dashboard/DashboardView';
 import { UserInterface } from '@/types/userTypes';
 import { useEffect, useState } from 'react';
 
@@ -26,6 +27,7 @@ export default function Home() {
         <ProtectedRoute>
             <section className="mt-8 w-full max-w-3xl h-full mx-auto">
                 <DashboardHeader username={user.username} />
+                <DashboardView />
             </section>
         </ProtectedRoute>
     );

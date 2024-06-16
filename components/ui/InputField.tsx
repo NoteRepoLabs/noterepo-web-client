@@ -1,3 +1,4 @@
+/** Input field props interface */
 interface InputFieldProps {
     name: string;
     type: string;
@@ -7,9 +8,11 @@ interface InputFieldProps {
     required: boolean;
     error?: boolean;
     icon?: React.ReactNode;
+    style?: React.CSSProperties;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+/** Input field component */
 export default function InputField(props: InputFieldProps) {
     return (
         <div className="w-full block relative mb-4 mx-auto">
@@ -29,6 +32,7 @@ export default function InputField(props: InputFieldProps) {
                         ? 'border-vibrant-red'
                         : ' focus:border-neutral-700 border-neutral-300 dark:border-highlight dark:focus:border-neutral-200'
                 }`}
+                style={{...props.style}}
             />
             <div>{props.icon && <>{props.icon}</>}</div>
         </div>
