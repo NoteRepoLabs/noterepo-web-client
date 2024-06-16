@@ -23,15 +23,14 @@ export default function Page() {
     // Mutation queries
     const forgotPasswordMutation = useMutation({
         mutationFn: (email: EmailCredentials) => {
-            return axios.post(
-                `${SERVER_URL}/users/forget-password`,email, {headers: NetworkConfig.headers}
-            );
+            return axios.post(`${SERVER_URL}/users/forget-password`, email, {
+                headers: NetworkConfig.headers,
+            });
         },
         onSuccess: (res) => {
             const data = res.data;
             console.log(data);
-
-            // window.location.href = '/sent-reset-email';
+            window.location.href = '/sent-reset-email';
         },
         onError: (err: AxiosError) => {
             console.error('An error occurred.', err);
@@ -88,7 +87,11 @@ export default function Page() {
                 />
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
-                    text={forgotPasswordMutation.isPending ? 'Sending Email' : 'Reset Password'}
+                    text={
+                        forgotPasswordMutation.isPending
+                            ? 'Sending Email'
+                            : 'Reset Password'
+                    }
                     icon={
                         forgotPasswordMutation.isPending ? (
                             <Lottie
