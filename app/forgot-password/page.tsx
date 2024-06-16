@@ -6,48 +6,65 @@ import FilledButton from '@/components/ui/FilledButton';
 import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
+import NetworkConfig from '@/config/network';
+import { EmailCredentials } from '@/types/authTypes';
+import ServerResponse from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
 
 export default function Page() {
+    // Page state
     const [email, setEmail] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const [isPending, setIsPending] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
 
+    // Mutation queries
+    const forgotPasswordMutation = useMutation({
+        mutationFn: (email: EmailCredentials) => {
+            return axios.post(
+                `${SERVER_URL}/users/forget-password`,email, {headers: NetworkConfig.headers}
+            );
+        },
+        onSuccess: (res) => {
+            const data = res.data;
+            console.log(data);
+
+            // window.location.href = '/sent-reset-email';
+        },
+        onError: (err: AxiosError) => {
+            console.error('An error occurred.', err);
+            const serverErr = err.response?.data as ServerResponse;
+
+            err.code == 'ERR_NETWORK'
+                ? showErrorState('Could not sign up, check your connection.')
+                : showErrorState(serverErr.message ?? 'An error occurred.');
+        },
+    });
+
+    // Error related state
+    const showErrorState = (msg: string) => {
+        setErrorMsg(msg);
+        setIsDisabled(false);
+    };
+
+    // Handles verification and making password reset requests
     const sendResetEmail = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsPending(true);
+        setIsDisabled(true);
 
+        // Verify that email matches default pattern
         if (!EMAIL_PATTERN.test(email)) {
-            setErrorMsg('Enter your proper email address.');
-            setIsPending(false);
+            showErrorState('Enter your proper email address.');
             return;
         }
 
         console.log('email:', email);
-        await fetch(`${SERVER_URL}/users/forget-password`, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({ email }),
-        })
-            .then(async (res) => {
-                await res.json().then((data) => {
-                    if (data.status == 'fail') {
-                        setErrorMsg(data.message);
-                        return;
-                    }
-                    console.log(data);
-                    window.location.href = '/sent-reset-email';
-                });
-            })
-            .catch(() => {
-                setErrorMsg('Could not reset password at this time.');
-            })
-            .finally(() => setIsPending(false));
+
+        // Make mutation request
+        forgotPasswordMutation.mutate({ email: email });
+        setIsDisabled(false);
     };
 
     return (
@@ -71,9 +88,9 @@ export default function Page() {
                 />
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
-                    text={isPending ? 'Sending Email' : 'Reset Password'}
+                    text={forgotPasswordMutation.isPending ? 'Sending Email' : 'Reset Password'}
                     icon={
-                        isPending ? (
+                        forgotPasswordMutation.isPending ? (
                             <Lottie
                                 animationData={spinningAnimation}
                                 loop={true}
@@ -87,11 +104,11 @@ export default function Page() {
                     }
                     onClick={(e) => {
                         e.preventDefault();
-                        if (!isPending) {
+                        if (!forgotPasswordMutation.isPending || !isDisabled) {
                             sendResetEmail(e);
                         }
                     }}
-                    disabled={isPending}
+                    disabled={forgotPasswordMutation.isPending}
                 />
                 <section className="mt-6 mb-6 text-center">
                     <Link

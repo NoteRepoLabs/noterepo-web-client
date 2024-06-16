@@ -5,91 +5,54 @@ import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
 import InputField from '@/components/ui/InputField';
 import { SERVER_URL } from '@/config/constants';
-import { setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Page() {
-    const controller = new AbortController();
-    const signal = controller.signal;
+    // Page state
     const searchParams = useSearchParams();
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [isPasswordError, setIsPasswordError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const [isPending, setIsPending] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
 
+    // Handles input validation and makes reset password request
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsPending(true);
+        setIsDisabled(true);
+
+        // Password length cannot be less than 6
         if (password.length < 6 || passwordConfirmation.length < 6) {
             setIsPasswordError(true);
             setErrorMsg('Password should be at least 6 characters long.');
-            setIsPending(false);
+            setIsDisabled(false);
             return;
         }
 
+        // Match new password
         if (password !== passwordConfirmation) {
             setIsPasswordError(true);
             setErrorMsg('Passwords mismatch.');
-            setIsPending(false);
+            setIsDisabled(false);
             return;
         }
 
         const userID = searchParams.get('userId');
 
+        // Verify that userID is present
         if (!userID) {
             setErrorMsg('Invalid request state.');
-            setIsPending(false);
+            setIsDisabled(false);
             return;
         }
 
+        // Prepare credentials
         const credentials = { password, confirmPassword: passwordConfirmation };
         console.log(credentials);
 
-        try {
-            setTimeout(async () => {
-                throw new Error('abort');
-            }, 60 * 1000);
-            await fetch(`${SERVER_URL}/users/reset-password/${userID}`, {
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(credentials),
-                signal: signal,
-            }).then(async (res) => {
-                await res.json().then((data) => {
-                    console.log(data);
-                    if (data.status == 'fail') {
-                        setErrorMsg(data.message);
-                        return;
-                    }
-
-                    setCookie('user', {
-                        username: data.payload.username,
-                        isVerified: data.payload.isVerified,
-                        role: data.payload.role,
-                    });
-
-                    setErrorMsg('');
-                    window.location.href = '/';
-                });
-            });
-        } catch (e: any) {
-            console.log(e);
-            if (e.message == 'abort') {
-                controller.abort();
-                console.error('Aborting request.');
-                setErrorMsg('Could not reach the server at this time.');
-            }
-            setErrorMsg('Could not reset your password.');
-        } finally {
-            setIsPending(false);
-        }
+        // [TODO]: Make mutation requests here
     };
 
     return (
@@ -133,10 +96,10 @@ export default function Page() {
                 {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <FilledButton
                     text={
-                        isPending ? 'Resetting Password' : 'Reset My Password'
+                        isDisabled ? 'Resetting Password' : 'Reset My Password'
                     }
                     icon={
-                        isPending ? (
+                        isDisabled ? (
                             <Lottie
                                 animationData={spinningAnimation}
                                 loop={true}
@@ -149,11 +112,11 @@ export default function Page() {
                         ) : null
                     }
                     onClick={(e) => {
-                        if (!isPending) {
+                        if (!isDisabled) {
                             onSubmit(e);
                         }
                     }}
-                    disabled={isPending}
+                    disabled={isDisabled}
                 />
             </form>
         </section>

@@ -13,3 +13,10 @@ export interface UsernameCredentials {
     userID: string;
     username: string;
 }
+
+/** 
+ * Defines an interface for proving emails
+ */
+export interface EmailCredentials {
+    email: string;
+}

@@ -41,10 +41,6 @@ export default function Page() {
                 ? showErrorState('Could not sign up, check your connection.')
                 : showErrorState(serverErr.message ?? 'An error occurred.');
         },
-        onSuccess: (data) => {
-            console.log('User:', data);
-            window.location.href = '/verify-email';
-        },
     });
 
     // Handles showing error state
