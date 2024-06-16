@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 // Checks if refresh token exists
 export const checkSession = () => {
-    return hasCookie('user') && hasCookie('refreshToken');
+    return hasCookie('refreshToken');
 };
 
 // Checks auth status of the user

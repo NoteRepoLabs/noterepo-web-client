@@ -2,15 +2,18 @@
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardHeader from '@/components/ui/dashboard/DashboardHeader';
-// import getUsers from '@/queries/getUsers';
-// import { useQuery } from '@tanstack/react-query';
+import { UserInterface } from '@/types/userTypes';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-    // const { isPending, data } = useQuery({
-    //     queryKey: ['getUsers'],
-    //     queryFn: getUsers,
-    //     staleTime: Infinity,
-    // });
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const parsedUser: UserInterface = JSON.parse(
+            localStorage.getItem('user') ?? '{}'
+        );
+        setUser(parsedUser);
+    }, [user]);
 
     return (
         <ProtectedRoute>

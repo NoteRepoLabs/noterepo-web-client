@@ -46,10 +46,7 @@ export default function Page() {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             });
-            setCookie('user', user, {
-                maxAge: 5 * 24 * 60 * 60,
-                sameSite: 'strict',
-            });
+            localStorage.setItem('user', JSON.stringify(user));
             console.log('saved credentials successfully.');
             // Redirect to dashboard
             window.location.href = '/';
@@ -71,9 +68,7 @@ export default function Page() {
         setIsDisabled(false);
     };
 
-    /**
-     * Verify fields and make sign-in request
-     */
+    // Verify fields and make sign-in request
     const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsDisabled(true);
@@ -164,7 +159,7 @@ export default function Page() {
                         ) : null
                     }
                     onClick={(e) => {
-                        if (!isDisabled) {
+                        if (!signInMutation.isPending) {
                             onSubmit(e);
                         }
                     }}

@@ -54,10 +54,7 @@ export default function Page() {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             }); // 5 days
-            setCookie('user', user, {
-                maxAge: 5 * 24 * 60 * 60,
-                sameSite: 'strict',
-            });
+            localStorage.setItem('user', user);
             console.log('saved credentials successfully.');
             // Redirect to dashboard
             window.location.href = '/';
