@@ -89,7 +89,6 @@ export default function Page() {
 
         // Prepare credentials for request
         const credentials = { email, password };
-        console.log(credentials);
 
         // Make mutation request
         signUpMutation.mutate(credentials);

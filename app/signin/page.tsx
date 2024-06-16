@@ -100,7 +100,6 @@ export default function Page() {
 
         // Prepare credentials
         const credentials = { email, password };
-        console.log(credentials);
 
         // Make mutation request
         signInMutation.mutate(credentials);
