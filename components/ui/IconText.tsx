@@ -16,7 +16,7 @@ export default function IconText(props: IconTextProps) {
                 onClick={props.onClick}
             >
                 <div>{props.icon}</div>
-                <span className="font-bold text-neutral-300 dark:hover:text-neutral-200 hover:text-neutral-700 transition-colors text-md">
+                <span className="font-bold dark:text-neutral-300 text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors text-md">
                     {props.text}
                 </span>
             </div>
