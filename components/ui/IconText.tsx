@@ -11,7 +11,7 @@ export default function IconText(props: IconTextProps) {
     return (
         <>
             <div
-                className="inline-flex items-center cursor-pointer space-x-2"
+                className="inline-flex items-center cursor-pointer space-x-2 select-none"
                 style={{ ...props.styles }}
                 onClick={props.onClick}
             >
