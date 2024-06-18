@@ -58,7 +58,7 @@ export default function Page() {
             const serverErr = err.response?.data as ServerResponse;
 
             err.code == 'ERR_NETWORK'
-                ? showErrorState('Could not sign up, check your connection.')
+                ? showErrorState('Could not sign in, check your connection.')
                 : showErrorState(serverErr.message ?? 'An error occurred.');
         },
     });
