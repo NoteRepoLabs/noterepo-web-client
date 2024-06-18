@@ -18,8 +18,8 @@ export default function DashboardView() {
     return (
         <>
             <section className="w-full mt-[72px] py-8 h-full flex flex-col items-center">
-                <h2 className="font-bold text-3xl text-center mb-12">
-                    Your Repositories
+                <h2 className="font-extrabold text-3xl text-center mb-12">
+                    Your Repos
                 </h2>
                 <InputField
                     name={'search'}

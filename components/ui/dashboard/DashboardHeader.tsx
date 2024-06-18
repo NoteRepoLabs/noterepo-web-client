@@ -22,7 +22,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         isExpanded ? 'h-[180px]' : 'h-[70px]'
                     }`}
                 >
-                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0 items-center">
+                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-6 md:space-y-0 items-center">
                         <div className=" md:w-auto w-full flex justify-between">
                             <Logo width={160} height={40} />
                             <HambergerMenu
@@ -43,15 +43,15 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         </div>
                         <div
                             className={`${
-                                isExpanded ? 'block' : 'hidden'
-                            } md:block`}
+                                isExpanded ? 'flex' : 'hidden'
+                            } md:flex items-center`}
                         >
                             <PublicRepos />
                         </div>
                         <div
-                            className={`flex space-x-4 ${
-                                isExpanded ? 'block' : 'hidden'
-                            } md:block`}
+                            className={`space-x-4 ${
+                                isExpanded ? 'flex' : 'hidden'
+                            } md:flex items-center`}
                         >
                             <IconText
                                 text={props.username}
