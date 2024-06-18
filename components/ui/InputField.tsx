@@ -9,6 +9,7 @@ interface InputFieldProps {
     error?: boolean;
     icon?: React.ReactNode;
     style?: React.CSSProperties;
+    iconPos?: 'right' | 'left';
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -26,15 +27,21 @@ export default function InputField(props: InputFieldProps) {
                 onChange={props.onChange}
                 autoComplete="off"
                 spellCheck="false"
-                inputMode={props.type === 'password' ? 'text' : 'none'}
+                inputMode={props.type === 'email' ? 'email' : 'text'}
                 className={`max-w-lg w-[100%] border-[1.5px] py-3 pl-4 pr-12  md:py-4 tracking-wide rounded-xl focus:outline-none font-bold bg-neutral-100 dark:bg-neutral-700 transition-colors  ${
                     props.error
                         ? 'border-vibrant-red'
                         : ' focus:border-neutral-700 border-neutral-200 dark:border-highlight dark:focus:border-neutral-200'
                 }`}
-                style={{...props.style}}
+                style={{ ...props.style }}
             />
-            <div>{props.icon && <>{props.icon}</>}</div>
+            <div
+                className={`absolute top-1/2 transform -translate-y-1/2 ${
+                    props.iconPos === 'left' ? 'left-0' : 'right-4'
+                }`}
+            >
+                {props.icon && <>{props.icon}</>}
+            </div>
         </div>
     );
 }

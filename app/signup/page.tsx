@@ -129,7 +129,7 @@ export default function Page() {
                             <EyeSlash
                                 size="24"
                                 color="#A1A7B5"
-                                className="absolute right-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
+                                className="cursor-pointer"
                                 onClick={() =>
                                     setIsPasswordVisible(!isPasswordVisible)
                                 }
@@ -138,7 +138,7 @@ export default function Page() {
                             <Eye
                                 size="24"
                                 color="#A1A7B5"
-                                className="absolute right-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
+                                className="cursor-pointer"
                                 onClick={() =>
                                     setIsPasswordVisible(!isPasswordVisible)
                                 }

@@ -30,6 +30,7 @@ export default function DashboardView() {
                     value={search}
                     placeholder={'Search your repos'}
                     required={false}
+                    iconPos='left'
                     icon={
                         <SearchNormal1
                             size="24"
