@@ -13,6 +13,7 @@ import ServerResponse from '@/types/serverTypes';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { setCookie } from 'cookies-next';
+import { Eye, EyeSlash } from 'iconsax-react';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
 
@@ -21,6 +22,7 @@ export default function Page() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
@@ -129,11 +131,33 @@ export default function Page() {
                 />
                 <InputField
                     name="password-field"
-                    type="password"
+                    type={isPasswordVisible ? 'text' : 'password'}
                     id="password-field"
                     value={password}
                     placeholder="Password"
                     error={isPasswordError}
+                    icon={
+                        password &&
+                        (isPasswordVisible ? (
+                            <EyeSlash
+                                size="24"
+                                color="#A1A7B5"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                    setIsPasswordVisible(!isPasswordVisible)
+                                }
+                            />
+                        ) : (
+                            <Eye
+                                size="24"
+                                color="#A1A7B5"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                    setIsPasswordVisible(!isPasswordVisible)
+                                }
+                            />
+                        ))
+                    }
                     required={true}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setIsPasswordError(false);
