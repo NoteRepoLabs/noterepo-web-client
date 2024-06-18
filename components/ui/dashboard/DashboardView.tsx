@@ -5,6 +5,7 @@ import { SearchNormal1 } from 'iconsax-react';
 import Image from 'next/image';
 import InputField from '../InputField';
 import { useState } from 'react';
+import IconButton from './IconButton';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -21,6 +22,7 @@ export default function DashboardView() {
                 <h2 className="font-extrabold text-3xl text-center mb-12">
                     Your Repos
                 </h2>
+                {/* SEARCH BOX */}
                 <InputField
                     name={'search'}
                     type={'text'}
@@ -46,6 +48,7 @@ export default function DashboardView() {
                         minWidth: '100%',
                     }}
                 />
+                {/* CLIPBOARD */}
                 <div className="my-[24px] flex flex-col justify-center">
                     <div className="flex justify-center">
                         <Image
@@ -59,6 +62,14 @@ export default function DashboardView() {
                         No Repositories Yet.
                     </h4>
                 </div>
+                {/* NEW REPO BUTTON */}
+                <IconButton
+                    text="New Repo"
+                    style={{
+                        position: 'fixed',
+                    }}
+                    className="bottom-4 z-[996] right-4 md:right-[50%] md:translate-x-[50%] translate-x-0"
+                />
             </section>
         </>
     );
