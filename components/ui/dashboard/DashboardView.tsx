@@ -46,15 +46,16 @@ export default function DashboardView() {
                         minWidth: '100%',
                     }}
                 />
-                <div className="my-[24px]">
-                    <Image
-                        src={'/img/EmptyClip.svg'}
-                        alt={'empty'}
-                        width={200}
-                        height={200}
-                        style={{ display: 'inline-block' }}
-                    />
-                    <h4 className="font-bold text-2xl mt-8 text-neutral-300">
+                <div className="my-[24px] flex flex-col justify-center">
+                    <div className="flex justify-center">
+                        <Image
+                            src={'/img/EmptyClip.svg'}
+                            alt={'empty'}
+                            width={160}
+                            height={200}
+                        />
+                    </div>
+                    <h4 className="font-bold text-2xl mt-8 text-neutral-300 text-center">
                         No Repositories Yet.
                     </h4>
                 </div>
