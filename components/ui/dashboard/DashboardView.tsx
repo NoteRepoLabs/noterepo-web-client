@@ -6,6 +6,7 @@ import Image from 'next/image';
 import InputField from '../InputField';
 import { useState } from 'react';
 import IconButton from './IconButton';
+import CreateRepoDialog from '../repo/CreateRepoDialog';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -15,9 +16,13 @@ export interface DashboardProps {
 export default function DashboardView() {
     // Page state
     const [search, setSearch] = useState('');
+    const [showCreateDialog, setShowCreateDialog] = useState(false);
 
     return (
         <>
+            {showCreateDialog && (
+                <CreateRepoDialog onClick={() => setShowCreateDialog(false)} />
+            )}
             <section className="w-full mt-[72px] py-8 h-full flex flex-col items-center">
                 <h2 className="font-bold text-3xl text-center mb-12">
                     Your Repositories
@@ -60,6 +65,7 @@ export default function DashboardView() {
                     <IconButton
                         text="New Repo"
                         style={{ padding: '14px 8px' }}
+                        onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
                 {/* CLIPBOARD */}
