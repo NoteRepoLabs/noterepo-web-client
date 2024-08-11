@@ -142,7 +142,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                 <CloseCircle
                     size="24"
                     variant="Bold"
-                    className="text-neutral-300 cursor-pointer absolute top-4 left-4 transition-colors hover:text-neutral-100"
+                    className="text-neutral-300 cursor-pointer absolute top-4 left-4 transition-colors hover:text-neutral-500 dark:hover:text-neutral-100"
                     onClick={props.onClick}
                 />
                 <h3 className="text-2xl font-bold text-center dark:text-neutral-100 text-neutral-700">

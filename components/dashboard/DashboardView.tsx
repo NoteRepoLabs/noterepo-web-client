@@ -45,7 +45,9 @@ export default function DashboardView(props: DashboardProps) {
     };
 
     const handleRepoCreationSuccess = (accessToken: string) => {
-        fetchRepos(accessToken);
+        fetchRepos(accessToken).then(() => {
+            setShowCreateDialog(false);
+        });
     };
 
     // Fetch repos on load
@@ -89,10 +91,7 @@ export default function DashboardView(props: DashboardProps) {
                 />
             )}
             <section className="w-full mt-[72px] py-8 h-full flex flex-col items-center">
-                <h2 className="font-bold text-3xl text-center mb-12">
-                    Your Repositories
-                </h2>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-4 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-4 gap-4 sm:gap-2">
                     <div className="flex-grow w-full max-w-lg">
                         {/* SEARCH BOX */}
                         <InputField
@@ -133,8 +132,11 @@ export default function DashboardView(props: DashboardProps) {
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
+                <h2 className="font-bold text-3xl text-center mt-8 mb-2">
+                    Your Repositories
+                </h2>
                 {loading ? (
-                    <section className="mt-8">
+                    <section className="mt-12">
                         <div className="flex items-center gap-2">
                             <div className="max-w-8 max-h-8">
                                 <Lottie
@@ -153,7 +155,7 @@ export default function DashboardView(props: DashboardProps) {
                         </div>
                     </section>
                 ) : repos.length === 0 ? (
-                    <div className="mt-12 flex flex-col justify-center">
+                    <div className="flex flex-col justify-center">
                         <div className="flex justify-center ml-8">
                             <Image
                                 src={'/img/EmptyClip.svg'}
@@ -168,7 +170,7 @@ export default function DashboardView(props: DashboardProps) {
                         </h4>
                     </div>
                 ) : (
-                    <section className="my-8 w-full grid grid-cols-2 sm:grid-cols-4">
+                    <section className="px-4 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
                         {repos.map((repo, id) => (
                             <RepoCard key={id} repo={repo} />
                         ))}
