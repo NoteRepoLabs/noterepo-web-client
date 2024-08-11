@@ -1,6 +1,6 @@
 import QueryProvider from '@/providers/queryProvider';
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import { Roboto_Flex } from 'next/font/google';
 import { cookies } from 'next/headers';
 import './globals.css';
 import ThemeProvider from './provider';
@@ -33,19 +33,21 @@ export const metadata: Metadata = {
 };
 
 // Font
-const satoshi = localFont({
-    src: [
-        { path: '../public/fonts/satoshi/Satoshi-Black.woff', weight: '900' },
-        { path: '../public/fonts/satoshi/Satoshi-Bold.woff', weight: '800' },
-        { path: '../public/fonts/satoshi/Satoshi-Medium.woff', weight: '700' },
-        {
-            path: '../public/fonts/satoshi/Satoshi-Regular.woff',
-            weight: '600',
-        },
-        { path: '../public/fonts/satoshi/Satoshi-Light.woff', weight: '500' },
-    ],
-    variable: '--font-satoshi',
-});
+// const satoshi = localFont({
+//     src: [
+//         { path: '../public/fonts/satoshi/Satoshi-Black.woff', weight: '900' },
+//         { path: '../public/fonts/satoshi/Satoshi-Bold.woff', weight: '800' },
+//         { path: '../public/fonts/satoshi/Satoshi-Medium.woff', weight: '700' },
+//         {
+//             path: '../public/fonts/satoshi/Satoshi-Regular.woff',
+//             weight: '600',
+//         },
+//         { path: '../public/fonts/satoshi/Satoshi-Light.woff', weight: '500' },
+//     ],
+//     variable: '--font-satoshi',
+// });
+
+const sans = Roboto_Flex({ subsets: ['latin'] });
 
 // Theme controller
 function getTheme() {
@@ -66,7 +68,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={theme} style={{ colorScheme: theme }}>
             <body
-                className={`${satoshi.variable} font-sans mx-2 min-h-screen overflow-auto grid place-items-center`}
+                className={`${sans.className} mx-2 min-h-screen overflow-auto grid place-items-center`}
             >
                 <Analytics />
                 <ThemeProvider

@@ -37,21 +37,21 @@ export default function Page() {
                         />
                     </div>
 
-                    <h1 className="font-black text-2xl md:text-3xl mt-12 text-neutral-900 dark:text-neutral-100">
+                    <h1 className="font-bold text-2xl md:text-3xl mt-12 text-neutral-900 dark:text-neutral-100">
                         We&apos;ve Emailed You a Link
                     </h1>
-                    <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mt-4">
+                    <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mt-4">
                         A link has been sent to reset your password. Please
                         check your inbox.
                     </p>
                     <p className="mt-8">
-                        <span className="font-semibold text-neutral-500 dark:text-neutral-300">
+                        <span className="font-bold text-neutral-500 dark:text-neutral-300">
                             Didn&apos;t get an email?{' '}
                         </span>
                         <Link
                             underlined={true}
                             href=""
-                            text="Resend Link"
+                            text="Resend link"
                             style={{ marginRight: '12px' }}
                             onClick={(e) => {
                                 e.preventDefault();

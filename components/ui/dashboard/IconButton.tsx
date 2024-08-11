@@ -1,4 +1,4 @@
-import { AddSquare } from 'iconsax-react';
+import { Add } from 'iconsax-react';
 
 /** Icon button props interface */
 interface IconButtonProps {
@@ -12,11 +12,11 @@ export default function IconButton(props: IconButtonProps) {
     return (
         <>
             <button
-                className={`bg-neutral-900 dark:bg-neutral-100 flex py-3 px-4 rounded-xl space-x-2 hover:bg-neutral-800 dark:hover:bg-neutral-200 ${props.className} max-w-[160px]`}
+                className={`bg-vibrant-green flex items-center py-3 px-4 rounded-xl space-x-2 ${props.className} justify-center shadow-lg border-2 border-neutral-800 border-opacity-20 hover:opacity-90 transition-opacity`}
                 style={{ ...props.style }}
             >
-                <AddSquare size="24" variant="Bold" className='text-neutral-100 dark:text-neutral-800' />
-                <span className="font-extrabold text-md text-neutral-200 dark:text-neutral-800">
+                <Add size="24" variant="Outline" className='text-neutral-800' />
+                <span className="!font-extrabold text-lg text-neutral-800">
                     {props.text}
                 </span>
             </button>

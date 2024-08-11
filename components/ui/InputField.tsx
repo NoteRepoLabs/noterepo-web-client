@@ -10,13 +10,18 @@ interface InputFieldProps {
     icon?: React.ReactNode;
     style?: React.CSSProperties;
     iconPos?: 'right' | 'left';
+    noMargin?: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 /** Input field component */
 export default function InputField(props: InputFieldProps) {
     return (
-        <div className="w-full block relative mb-4 mx-auto">
+        <div
+            className={`w-full block relative ${
+                !props.noMargin ? 'mb-4' : ''
+            } mx-auto`}
+        >
             <input
                 type={props.type}
                 name={props.name}
@@ -28,7 +33,7 @@ export default function InputField(props: InputFieldProps) {
                 autoComplete="off"
                 spellCheck="false"
                 inputMode={props.type === 'email' ? 'email' : 'text'}
-                className={`max-w-lg w-[100%] border-[1.5px] py-3 pl-4 pr-12  md:py-4 tracking-wide rounded-xl focus:outline-none font-bold bg-neutral-100 dark:bg-neutral-700 transition-colors  ${
+                className={`max-w-lg w-[100%] border-[1.5px] py-3 pl-4 pr-12  md:py-4 tracking-wide rounded-xl focus:outline-none font-normal bg-neutral-100 dark:bg-neutral-700 transition-colors  ${
                     props.error
                         ? 'border-vibrant-red'
                         : ' focus:border-neutral-700 border-neutral-200 dark:border-highlight dark:focus:border-neutral-200'

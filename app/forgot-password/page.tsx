@@ -68,10 +68,10 @@ export default function Page() {
 
     return (
         <section className="mt-8 w-full max-w-lg mx-auto">
-            <h1 className="font-black text-center text-3xl text-neutral-900 dark:text-neutral-100">
+            <h1 className="font-bold text-center text-3xl text-neutral-900 dark:text-neutral-100">
                 Forgot Your Password?
             </h1>
-            <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mt-6">
+            <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mt-6">
                 We&apos;ll email you a link to reset your password if you
                 already have an account with us.
             </p>

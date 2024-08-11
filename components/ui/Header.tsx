@@ -12,10 +12,10 @@ export default function Header({ content, aside }: HeaderProps) {
         <>
             <div className="flex justify-center items-center">
                 <Logo width={200} height={80} />
-                <h3 className="text-3xl ml-2 hidden md:block">| {aside}</h3>
+                <h3 className="text-3xl ml-2 hidden md:block"><span className="opacity-70">| {aside}</span></h3>
             </div>
             <p
-                className={`mt-2 text-center font-semibold text-base md:text-lg text-neutral-500 dark:text-neutral-300`}
+                className={`mt-8 text-center font-normal text-lg text-neutral-500 dark:text-neutral-300 leading-[26px]`}
             >
                 {content}
             </p>
