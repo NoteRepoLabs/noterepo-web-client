@@ -12,13 +12,13 @@ import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
-import { cookies } from 'next/headers';
 import { getCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 
 /* Create Repo Dialog Props */
 interface CreateRepoDialogProps {
     onClick: () => void;
+    onSuccess: (accessToken: string) => void;
 }
 
 interface CreateRepoBody {
@@ -79,6 +79,9 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
+
+                // Notify parent
+                props.onSuccess(accessToken);
             } catch (error) {
                 showErrorState(
                     'Internal error, cannot create repo at this time.'
@@ -189,7 +192,11 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                     </div>
                     {errorMsg && <ErrorText errorMsg={errorMsg} />}
                     <FilledButton
-                        text={createRepoMutation.isPending ? "Creating Repo" : "Create Repo"}
+                        text={
+                            createRepoMutation.isPending
+                                ? 'Creating Repo'
+                                : 'Create Repo'
+                        }
                         disabled={isDisabled || createRepoMutation.isPending}
                         onClick={(e) => createRepo(e)}
                         icon={

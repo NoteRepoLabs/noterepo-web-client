@@ -27,7 +27,7 @@ export default function Home() {
         <ProtectedRoute>
             <section className="mt-8 w-full max-w-3xl h-full mx-auto">
                 <DashboardHeader username={user.username} />
-                <DashboardView />
+                <DashboardView user={user} />
             </section>
         </ProtectedRoute>
     );
