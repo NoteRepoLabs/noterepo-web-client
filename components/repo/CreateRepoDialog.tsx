@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from 'react';
 import InputField from '../ui/InputField';
 import FilledButton from '../ui/FilledButton';
 import { CloseCircle } from 'iconsax-react';
+import Toggle from '../ui/Toggle';
 
 /* Create Repo Dialog Props */
 interface CreateRepoDialogProps {
@@ -14,6 +15,7 @@ interface CreateRepoDialogProps {
 export default function CreateRepoDialog(props: CreateRepoDialogProps) {
     const [repoName, setRepoName] = useState('');
     const [repoDescription, setRepoDescription] = useState('');
+    const [makeVisible, setMakeVisible] = useState(false);
 
     return (
         <section className="w-full h-screen grid place-items-center fixed top-0 left-0 z-[995]">
@@ -55,6 +57,15 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                             setRepoDescription(e.target.value);
                         }}
                     />
+                    <div>
+                        <Toggle
+                            text="Make public"
+                            onClick={() => {
+                                setMakeVisible(!makeVisible);
+                            }}
+                            toggled={makeVisible}
+                        />
+                    </div>
                     <FilledButton
                         text="Create"
                         onClick={(e) => {
