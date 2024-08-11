@@ -1,7 +1,7 @@
 import { HambergerMenu, LogoutCurve } from 'iconsax-react';
-import Logo from '../Logo';
+import Logo from '../ui/Logo';
 import PublicRepos from './PublicRepos';
-import IconText from '../IconText';
+import IconText from '../ui/IconText';
 import { UserTick } from 'iconsax-react';
 import { useState } from 'react';
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import InputField from '../InputField';
-import FilledButton from '../FilledButton';
+import InputField from '../ui/InputField';
+import FilledButton from '../ui/FilledButton';
 import { CloseCircle } from 'iconsax-react';
 
 /* Create Repo Dialog Props */

@@ -3,7 +3,7 @@
 import { UserInterface } from '@/types/userTypes';
 import { SearchNormal1 } from 'iconsax-react';
 import Image from 'next/image';
-import InputField from '../InputField';
+import InputField from '../ui/InputField';
 import { useState } from 'react';
 import IconButton from './IconButton';
 import CreateRepoDialog from '../repo/CreateRepoDialog';

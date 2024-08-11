@@ -1,5 +1,5 @@
 import { GlobalSearch } from 'iconsax-react';
-import IconText from '../IconText';
+import IconText from '../ui/IconText';
 
 /** Public repo component */
 export default function PublicRepos() {

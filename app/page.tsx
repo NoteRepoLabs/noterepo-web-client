@@ -1,8 +1,8 @@
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
-import DashboardHeader from '@/components/ui/dashboard/DashboardHeader';
-import DashboardView from '@/components/ui/dashboard/DashboardView';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import DashboardView from '@/components/dashboard/DashboardView';
 import { UserInterface } from '@/types/userTypes';
 import { useEffect, useState } from 'react';
 
