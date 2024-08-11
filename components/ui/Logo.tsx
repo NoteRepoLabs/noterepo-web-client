@@ -14,8 +14,9 @@ export interface LogoProps {
 export default function Logo(props: LogoProps) {
     const light = '/img/NoteRepoLight.svg';
     const dark = '/img/NoteRepoDark.svg';
+
     const { resolvedTheme } = useTheme();
-    const [fallBackTheme, setFallBackTheme] = useState(light);
+    const [fallBackTheme, setFallBackTheme] = useState(dark);
 
     // Load initial theme
     useEffect(() => {
