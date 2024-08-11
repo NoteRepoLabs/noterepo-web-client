@@ -27,7 +27,7 @@ export default function DashboardView() {
                 <h2 className="font-bold text-3xl text-center mb-12">
                     Your Repositories
                 </h2>
-                <div className="flex flex-col sm:flex-row sm:items-center w-full max-w-[1200px] px-4 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-4 gap-2">
                     <div className="flex-grow w-full max-w-lg">
                         {/* SEARCH BOX */}
                         <InputField
