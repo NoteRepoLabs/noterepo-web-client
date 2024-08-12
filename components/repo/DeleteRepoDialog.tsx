@@ -10,6 +10,7 @@ import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
+import ErrorText from '../ui/ErrorText';
 
 interface DeleteRepoDialogProps {
     onCloseClick: () => void;
@@ -116,6 +117,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                     You&apos;re about to delete this repository which is
                     permanent. It cannot be undone.
                 </p>
+                {errorMsg && <ErrorText errorMsg={errorMsg} />}
                 <section className="w-full px-4 mt-4 flex gap-2 items-center">
                     <FilledButton
                         text="No, keep it"
