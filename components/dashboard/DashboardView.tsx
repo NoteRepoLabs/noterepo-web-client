@@ -30,12 +30,18 @@ export default function DashboardView(props: DashboardProps) {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [repos, setRepos] = useState<Repo[]>([]);
 
-    // Filter by name or description
-    const filteredRepos = repos.filter(
-        (repo) =>
-            repo.name.toLowerCase().includes(search.toLowerCase()) ||
-            repo.description.toLowerCase().includes(search.toLowerCase())
-    );
+    // Sort by date & filter by name or description
+    const filteredRepos = repos
+        .sort(
+            (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+        )
+        .filter(
+            (repo) =>
+                repo.name.toLowerCase().includes(search.toLowerCase()) ||
+                repo.description.toLowerCase().includes(search.toLowerCase())
+        );
 
     const fetchRepos = async (accessToken: string) => {
         try {

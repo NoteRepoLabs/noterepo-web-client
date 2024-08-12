@@ -10,11 +10,10 @@ interface RepoCardProps {
 export default function RepoCard(props: RepoCardProps) {
     return (
         <div
-            onClick={props.onClick}
             className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group"
         >
             <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[120px]">
-                <div>
+                <div onClick={props.onClick}>
                     <h1 className="text-xl font-extrabold mb-2 truncate">
                         {props.repo.name}
                     </h1>
