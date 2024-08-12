@@ -19,46 +19,56 @@ export default function Page() {
 
     const fetchRepoContent = async () => {
         setErrorMsg('');
-        try {
-            const userID = searchParams.get('user');
-            const repoID = searchParams.get('repo');
+        const repoID = searchParams.get('repo');
 
-            if (!userID || !repoID) {
-                setErrorMsg('Bad state, URL is malformed.');
+        if (!localStorage.getItem('repos')) {
+            try {
+                const userID = searchParams.get('user');
+
+                if (!userID || !repoID) {
+                    setErrorMsg('Bad state, URL is malformed.');
+                    setLoading(false);
+                    return;
+                }
+
+                const refreshToken = getCookie('refreshToken');
+
+                // Get the access token
+                const tokenResponse = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${refreshToken}`,
+                        },
+                    }
+                );
+
+                const accessToken = tokenResponse.data.payload['access_token'];
+
+                // Fetch repo content
+                const response = await axios.get(
+                    `${SERVER_URL}/users/${userID}/repo/${repoID}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
+                );
+
+                console.log(response.data['payload']);
+                setRepo(response.data['payload']);
                 setLoading(false);
-                return;
+            } catch (error) {
+                console.error('Failed to get repo content:', error);
+                setErrorMsg(
+                    'Failed to get repo content. Check your connection.'
+                );
+                setLoading(false);
             }
-
-            const refreshToken = getCookie('refreshToken');
-
-            // Get the access token
-            const tokenResponse = await axios.get(
-                `${SERVER_URL}/auth/refreshToken/${userID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${refreshToken}`,
-                    },
-                }
-            );
-
-            const accessToken = tokenResponse.data.payload['access_token'];
-
-            // Fetch repo content
-            const response = await axios.get(
-                `${SERVER_URL}/users/${userID}/repo/${repoID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                }
-            );
-
-            console.log(response.data['payload']);
-            setRepo(response.data['payload']);
-            setLoading(false);
-        } catch (error) {
-            console.error('Failed to get repo content:', error);
-            setErrorMsg('Failed to get repo content. Check your connection.');
+        } else {
+            const allRepos: Repo[] = JSON.parse(localStorage.getItem('repos')!);
+            const thisRepo: Repo = allRepos.filter((repo) => repo.id == repoID)[0];
+            setRepo(thisRepo);
             setLoading(false);
         }
     };
