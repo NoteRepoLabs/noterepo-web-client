@@ -116,6 +116,13 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
             return;
         }
 
+        // Repo name must exceed 4 chars
+        if (repoName.length < 5) {
+            setNameErr(true);
+            showErrorState('Provide at least 5 characters for repo name.');
+            return;
+        }
+
         // Verify description is not empty
         if (repoDescription.trim() == '') {
             setDescErr(true);
@@ -213,7 +220,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                             ) : null
                         }
                         styles={{
-                            marginTop: "16px"
+                            marginTop: '16px',
                         }}
                     />
                 </form>
