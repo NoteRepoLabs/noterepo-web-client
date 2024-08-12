@@ -2,7 +2,7 @@
 
 import { SERVER_URL } from '@/config/constants';
 import { UserInterface } from '@/types/userTypes';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
 import { SearchNormal1 } from 'iconsax-react';
 import Lottie from 'lottie-react';
@@ -39,6 +39,7 @@ export default function DashboardView(props: DashboardProps) {
             repo.description.toLowerCase().includes(search.toLowerCase())
     );
 
+    // Fetch user repo from server
     const fetchRepos = async (accessToken: string) => {
         try {
             const userID = JSON.parse(localStorage.getItem('user')!)['id'];
@@ -52,7 +53,6 @@ export default function DashboardView(props: DashboardProps) {
             );
 
             const fetchedRepos = response.data['payload'];
-
             const cachedRepos = JSON.parse(
                 localStorage.getItem('repos') || '[]'
             );
@@ -69,6 +69,10 @@ export default function DashboardView(props: DashboardProps) {
                 saveReposToCache(fetchedRepos);
             } else {
                 setRepos(cachedRepos);
+            }
+
+            if (isCacheExpired()) {
+                saveReposToCache(fetchedRepos);
             }
 
             console.log(fetchedRepos);
@@ -107,6 +111,7 @@ export default function DashboardView(props: DashboardProps) {
 
                 // Check cache expiry
                 if (isCacheExpired() || !localStorage.getItem('repos')) {
+                    console.log("Updating cache.");
                     fetchRepos(accessToken)
                         .then(() => {
                             setLoading(false);
@@ -117,16 +122,27 @@ export default function DashboardView(props: DashboardProps) {
                             setLoading(false);
                         });
                 } else {
+                    console.log('Fallback on cache.');
                     const cachedRepos = JSON.parse(
                         localStorage.getItem('repos')!
                     );
                     setRepos(cachedRepos);
                     setLoading(false);
                 }
-            } catch (error) {
-                console.error('Failed to initialize repos:', error);
-                setErrorMsg('Cannot fetch repos, too many requests.');
-                setLoading(false);
+            } catch (err: any) {
+                // Fallback on cache
+                if (
+                    err.code == 'ERR_BAD_REQUEST' &&
+                    localStorage.getItem('repos')
+                ) {
+                    console.log('Too many requests, falling back on cache.');
+                    setRepos(JSON.parse(localStorage.getItem('repos')!));
+                    setLoading(false);
+                } else {
+                    console.error('Failed to initialize repos:', err);
+                    setErrorMsg('Cannot fetch repos, too many requests.');
+                    setLoading(false);
+                }
             }
         };
 
