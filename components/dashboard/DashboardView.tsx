@@ -13,6 +13,7 @@ import CreateRepoDialog from '../repo/CreateRepoDialog';
 import RepoCard from '../repo/RepoCard';
 import InputField from '../ui/InputField';
 import IconButton from './IconButton';
+import Repo from '@/types/repoTypes';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -24,7 +25,14 @@ export default function DashboardView(props: DashboardProps) {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
-    const [repos, setRepos] = useState([]);
+    const [repos, setRepos] = useState<Repo[]>([]);
+
+    // Filter by name or description
+    const filteredRepos = repos.filter(
+        (repo) =>
+            repo.name.toLowerCase().includes(search.toLowerCase()) ||
+            repo.description.toLowerCase().includes(search.toLowerCase())
+    );
 
     const fetchRepos = async (accessToken: string) => {
         try {
@@ -169,12 +177,16 @@ export default function DashboardView(props: DashboardProps) {
                             Nothing Here Yet.
                         </h4>
                     </div>
-                ) : (
+                ) : filteredRepos.length != 0 ? (
                     <section className="px-4 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
-                        {repos.map((repo, id) => (
+                        {filteredRepos.map((repo, id) => (
                             <RepoCard key={id} repo={repo} />
                         ))}
                     </section>
+                ) : (
+                    <h3 className="mt-8 text-neutral-500">
+                        No Repos match this filter.
+                    </h3>
                 )}
             </section>
         </>
