@@ -15,6 +15,7 @@ import IconButton from './IconButton';
 import Repo from '@/types/repoTypes';
 import DeleteRepoDialog from '../repo/DeleteRepoDialog';
 import SpinnerText from '../ui/SpinnerText';
+import { isCacheExpired, saveReposToCache } from '@/util/cache';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -25,23 +26,18 @@ export default function DashboardView(props: DashboardProps) {
     // Page state
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [repos, setRepos] = useState<Repo[]>([]);
 
     // Sort by date & filter by name or description
-    const filteredRepos = repos
-        .sort(
-            (a, b) =>
-                new Date(b.createdAt).getTime() -
-                new Date(a.createdAt).getTime()
-        )
-        .filter(
-            (repo) =>
-                repo.name.toLowerCase().includes(search.toLowerCase()) ||
-                repo.description.toLowerCase().includes(search.toLowerCase())
-        );
+    const filteredRepos = repos.filter(
+        (repo) =>
+            repo.name.toLowerCase().includes(search.toLowerCase()) ||
+            repo.description.toLowerCase().includes(search.toLowerCase())
+    );
 
     const fetchRepos = async (accessToken: string) => {
         try {
@@ -54,14 +50,33 @@ export default function DashboardView(props: DashboardProps) {
                     },
                 }
             );
-            setRepos(response.data['payload']);
-            localStorage.setItem('repos', JSON.stringify(response.data['payload']));
-            console.log(response.data['payload']);
+
+            const fetchedRepos = response.data['payload'];
+
+            const cachedRepos = JSON.parse(
+                localStorage.getItem('repos') || '[]'
+            );
+
+            // Check if repos have changed
+            if (JSON.stringify(fetchedRepos) !== JSON.stringify(cachedRepos)) {
+                setRepos(
+                    fetchedRepos.sort(
+                        (a: Repo, b: Repo) =>
+                            new Date(b.createdAt).getTime() -
+                            new Date(a.createdAt).getTime()
+                    )
+                );
+                saveReposToCache(fetchedRepos);
+            }
+
+            console.log(fetchedRepos);
         } catch (error) {
             console.error('Failed to fetch repositories:', error);
+            setErrorMsg('Cannot fetch repos at this time.');
         }
     };
 
+    // Repo mod success
     const handleRepoModificationSuccess = (accessToken: string) => {
         fetchRepos(accessToken).then(() => {
             setShowCreateDialog(false);
@@ -71,43 +86,49 @@ export default function DashboardView(props: DashboardProps) {
 
     // Fetch repos on load
     useEffect(() => {
-        if (!localStorage.getItem('repos')) {
-            const fetchInitialRepos = async () => {
-                try {
-                    const userID = JSON.parse(localStorage.getItem('user')!)[
-                        'id'
-                    ];
-                    const refreshToken = getCookie('refreshToken');
+        const fetchInitialRepos = async () => {
+            try {
+                const userID = JSON.parse(localStorage.getItem('user')!)['id'];
+                const refreshToken = getCookie('refreshToken');
 
-                    // Get the access token
-                    const tokenResponse = await axios.get(
-                        `${SERVER_URL}/auth/refreshToken/${userID}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${refreshToken}`,
-                            },
-                        }
+                // Get the access token
+                const tokenResponse = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${refreshToken}`,
+                        },
+                    }
+                );
+
+                const accessToken = tokenResponse.data.payload['access_token'];
+
+                // Check cache expiry
+                if (isCacheExpired() || !localStorage.getItem('repos')) {
+                    fetchRepos(accessToken)
+                        .then(() => {
+                            setLoading(false);
+                        })
+                        .catch((e) => {
+                            console.error(e);
+                            setErrorMsg('Cannot fetch repos at this time.');
+                            setLoading(false);
+                        });
+                } else {
+                    const cachedRepos = JSON.parse(
+                        localStorage.getItem('repos')!
                     );
-
-                    const accessToken =
-                        tokenResponse.data.payload['access_token'];
-
-                    // Fetch the repositories
-                    fetchRepos(accessToken).then(() => {
-                        setLoading(false);
-                    });
-                } catch (error) {
-                    console.error('Failed to initialize repos:', error);
+                    setRepos(cachedRepos);
                     setLoading(false);
                 }
-            };
+            } catch (error) {
+                console.error('Failed to initialize repos:', error);
+                setErrorMsg('Cannot fetch repos, too many requests.');
+                setLoading(false);
+            }
+        };
 
-            fetchInitialRepos();
-        } else {
-            const repos = JSON.parse(localStorage.getItem('repos')!);
-            setRepos(repos);
-            setLoading(false);
-        }
+        fetchInitialRepos();
     }, []);
 
     return (
@@ -174,6 +195,10 @@ export default function DashboardView(props: DashboardProps) {
                 </h2>
                 {loading ? (
                     <SpinnerText text="Hang on, loading your repos." />
+                ) : errorMsg ? (
+                    <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
+                        {errorMsg}
+                    </h2>
                 ) : repos.length === 0 ? (
                     <div className="flex flex-col justify-center mt-8">
                         <div className="flex justify-center ml-8">

@@ -93,7 +93,7 @@ export default function Page() {
                     </section>
                 ) : errorMsg ? (
                     <section className="w-full grid place-items-center mt-8">
-                        <h3 className="font-bold text-neutral-300 text-xl">
+                        <h3 className="text-neutral-300 text-xl">
                             {errorMsg}
                         </h3>
                     </section>
