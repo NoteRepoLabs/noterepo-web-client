@@ -1,4 +1,5 @@
 import Repo from '@/types/repoTypes';
+import { Bookmark02Icon, Delete02Icon } from 'hugeicons-react';
 
 interface RepoCardProps {
     repo: Repo;
@@ -7,7 +8,7 @@ interface RepoCardProps {
 export default function RepoCard(props: RepoCardProps) {
     return (
         <div className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group">
-            <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[100px]">
+            <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[120px]">
                 <div>
                     <h1 className="text-xl font-extrabold mb-2 truncate">
                         {props.repo.name}
@@ -16,13 +17,20 @@ export default function RepoCard(props: RepoCardProps) {
                         {props.repo.description}
                     </p>
                 </div>
-                <div>
-                    <p className="mt-2 text-neutral-500 dark:text-neutral-300">
+                <div className="flex items-center justify-between">
+                    <p className="text-neutral-500 dark:text-neutral-300">
                         {props.repo.isPublic ? 'Public' : 'Private'}
                     </p>
-                    <p>
-                        
-                    </p>
+                    <section className="flex items-center gap-2 opacity-0 transition-all group-hover:opacity-100">
+                        <Bookmark02Icon
+                            size={18}
+                            className="text-neutral-500 hover:text-neutral-100"
+                        />
+                        <Delete02Icon
+                            size={18}
+                            className="text-neutral-500 hover:text-neutral-100"
+                        />
+                    </section>
                 </div>
             </div>
         </div>

@@ -46,7 +46,7 @@ export default function DashboardView(props: DashboardProps) {
                 }
             );
             setRepos(response.data['payload']);
-            console.log(repos);
+            console.log(response.data['payload']);
         } catch (error) {
             console.error('Failed to fetch repositories:', error);
         }
@@ -140,12 +140,12 @@ export default function DashboardView(props: DashboardProps) {
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
-                <h2 className="font-bold text-3xl text-left m:text-center mt-8 mx-2 sm:mx-0">
+                <h2 className="font-bold text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0">
                     Your Repositories
                 </h2>
                 {loading ? (
                     <section className="mt-12">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 w-full justify-center">
                             <div className="max-w-8 max-h-8">
                                 <Lottie
                                     animationData={spinningAnimation}
@@ -163,7 +163,7 @@ export default function DashboardView(props: DashboardProps) {
                         </div>
                     </section>
                 ) : repos.length === 0 ? (
-                    <div className="flex flex-col justify-center">
+                    <div className="flex flex-col justify-center mt-8">
                         <div className="flex justify-center ml-8">
                             <Image
                                 src={'/img/EmptyClip.svg'}
