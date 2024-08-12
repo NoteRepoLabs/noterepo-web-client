@@ -98,8 +98,8 @@ export default function DashboardView(props: DashboardProps) {
                     onSuccess={handleRepoCreationSuccess}
                 />
             )}
-            <section className="w-full mt-[72px] py-8 h-full flex flex-col items-center">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-4 gap-4 sm:gap-2">
+            <section className="w-full mt-[72px] py-8 h-full flex flex-col">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-2 gap-4 sm:gap-2">
                     <div className="flex-grow w-full max-w-lg">
                         {/* SEARCH BOX */}
                         <InputField
@@ -140,7 +140,7 @@ export default function DashboardView(props: DashboardProps) {
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
-                <h2 className="font-bold text-3xl text-center mt-8 mb-2">
+                <h2 className="font-bold text-3xl text-left m:text-center mt-8 mx-2 sm:mx-0">
                     Your Repositories
                 </h2>
                 {loading ? (
@@ -178,7 +178,7 @@ export default function DashboardView(props: DashboardProps) {
                         </h4>
                     </div>
                 ) : filteredRepos.length != 0 ? (
-                    <section className="px-4 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
+                    <section className="px-2 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
                         {filteredRepos.map((repo, id) => (
                             <RepoCard key={id} repo={repo} />
                         ))}
