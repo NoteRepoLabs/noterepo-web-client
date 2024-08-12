@@ -58,7 +58,7 @@ export default function DashboardView(props: DashboardProps) {
             );
 
             // Check if repos have changed
-            if (JSON.stringify(fetchedRepos) !== JSON.stringify(cachedRepos)) {
+            if (JSON.stringify(fetchedRepos) != JSON.stringify(cachedRepos)) {
                 setRepos(
                     fetchedRepos.sort(
                         (a: Repo, b: Repo) =>
@@ -67,6 +67,8 @@ export default function DashboardView(props: DashboardProps) {
                     )
                 );
                 saveReposToCache(fetchedRepos);
+            } else {
+                setRepos(cachedRepos);
             }
 
             console.log(fetchedRepos);
