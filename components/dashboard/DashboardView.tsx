@@ -140,7 +140,7 @@ export default function DashboardView(props: DashboardProps) {
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
-                <h2 className="font-bold text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0">
+                <h2 className="font-bold text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0 cursor-default">
                     Your Repositories
                 </h2>
                 {loading ? (

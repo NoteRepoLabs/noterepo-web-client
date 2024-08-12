@@ -13,22 +13,31 @@ export default function RepoCard(props: RepoCardProps) {
                     <h1 className="text-xl font-extrabold mb-2 truncate">
                         {props.repo.name}
                     </h1>
-                    <p className="text-neutral-500 dark:text-neutral-300 max-h-[20px] truncate">
+                    <p className="text-neutral-500 dark:text-neutral-300 truncate">
                         {props.repo.description}
                     </p>
                 </div>
                 <div className="flex items-center justify-between">
-                    <p className="text-neutral-500 dark:text-neutral-300">
-                        {props.repo.isPublic ? 'Public' : 'Private'}
+                    <p className="text-neutral-500 dark:text-neutral-300 flex gap-2 items-center">
+                        <div
+                            className={`w-[8px] h-[8px] ${
+                                props.repo.isPublic
+                                    ? 'bg-vibrant-green'
+                                    : 'bg-neutral-500'
+                            } rounded-xl`}
+                        ></div>
+                        <span>
+                            {props.repo.isPublic ? 'Public' : 'Private'}
+                        </span>
                     </p>
                     <section className="flex items-center gap-2 opacity-0 transition-all group-hover:opacity-100">
                         <Bookmark02Icon
                             size={18}
-                            className="text-neutral-500 hover:text-neutral-100"
+                            className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
                         />
                         <Delete02Icon
                             size={18}
-                            className="text-neutral-500 hover:text-neutral-100"
+                            className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
                         />
                     </section>
                 </div>
