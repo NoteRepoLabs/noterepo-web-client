@@ -25,6 +25,7 @@ export default function DashboardView(props: DashboardProps) {
     // Page state
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -54,9 +55,10 @@ export default function DashboardView(props: DashboardProps) {
         }
     };
 
-    const handleRepoCreationSuccess = (accessToken: string) => {
+    const handleRepoModificationSuccess = (accessToken: string) => {
         fetchRepos(accessToken).then(() => {
             setShowCreateDialog(false);
+            setShowDeleteDialog(false);
         });
     };
 
@@ -98,14 +100,15 @@ export default function DashboardView(props: DashboardProps) {
             {showCreateDialog && (
                 <CreateRepoDialog
                     onClick={() => setShowCreateDialog(false)}
-                    onSuccess={handleRepoCreationSuccess}
+                    onSuccess={handleRepoModificationSuccess}
                 />
             )}
             {/* DELETE REPO DIALOG */}
             {showDeleteDialog && (
                 <DeleteRepoDialog
+                    repoID={selectedRepoID}
                     onCloseClick={() => setShowDeleteDialog(false)}
-                    onDeleteClick={() => alert("Deleting!")}
+                    onSuccess={handleRepoModificationSuccess}
                 />
             )}
             <section className="w-full mt-[72px] py-8 h-full flex flex-col">
@@ -193,7 +196,10 @@ export default function DashboardView(props: DashboardProps) {
                             <RepoCard
                                 key={id}
                                 repo={repo}
-                                onDeleteClick={() => setShowDeleteDialog(true)}
+                                onDeleteClick={() => {
+                                    setSelectedRepoID(repo.id);
+                                    setShowDeleteDialog(true);
+                                }}
                             />
                         ))}
                     </section>

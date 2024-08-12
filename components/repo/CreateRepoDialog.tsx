@@ -212,6 +212,9 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                                 />
                             ) : null
                         }
+                        styles={{
+                            marginTop: "16px"
+                        }}
                     />
                 </form>
             </section>
