@@ -69,7 +69,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                 </header>
                 {isExpanded && (
                     <div
-                        className={`absolute w-full h-[1000px] bg-neutral-900 left-0 top-0 z-[997] opacity-70 md:hidden`}
+                        className={`block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm`}
                     ></div>
                 )}
             </div>
