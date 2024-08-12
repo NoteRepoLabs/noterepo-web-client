@@ -4,11 +4,15 @@ import { Bookmark02Icon, Delete02Icon } from 'hugeicons-react';
 interface RepoCardProps {
     repo: Repo;
     onDeleteClick: () => void;
+    onClick: () => void;
 }
 
 export default function RepoCard(props: RepoCardProps) {
     return (
-        <div className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group">
+        <div
+            onClick={props.onClick}
+            className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group"
+        >
             <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[120px]">
                 <div>
                     <h1 className="text-xl font-extrabold mb-2 truncate">

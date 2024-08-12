@@ -5,4 +5,5 @@ export default interface Repo {
     description: string;
     tags: string[];
     isPublic: boolean;
+    files: any[];
 }

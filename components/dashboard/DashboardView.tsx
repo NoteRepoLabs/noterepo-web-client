@@ -1,6 +1,5 @@
 'use client';
 
-import spinningAnimation from '@/animated/spinner.json';
 import { SERVER_URL } from '@/config/constants';
 import { UserInterface } from '@/types/userTypes';
 import axios from 'axios';
@@ -15,6 +14,7 @@ import InputField from '../ui/InputField';
 import IconButton from './IconButton';
 import Repo from '@/types/repoTypes';
 import DeleteRepoDialog from '../repo/DeleteRepoDialog';
+import SpinnerText from '../ui/SpinnerText';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -157,24 +157,7 @@ export default function DashboardView(props: DashboardProps) {
                     Your Repositories
                 </h2>
                 {loading ? (
-                    <section className="mt-12">
-                        <div className="flex items-center gap-2 w-full justify-center">
-                            <div className="max-w-8 max-h-8">
-                                <Lottie
-                                    animationData={spinningAnimation}
-                                    loop={true}
-                                    height={'32px'}
-                                    width={'32px'}
-                                    rendererSettings={{
-                                        preserveAspectRatio: 'xMidYMid slice',
-                                    }}
-                                />
-                            </div>
-                            <h1 className="font-bold text-xl text-center text-neutral-300">
-                                Hang on, loading your repos...
-                            </h1>
-                        </div>
-                    </section>
+                    <SpinnerText text="Hang on, loading your repos." />
                 ) : repos.length === 0 ? (
                     <div className="flex flex-col justify-center mt-8">
                         <div className="flex justify-center ml-8">
@@ -196,6 +179,9 @@ export default function DashboardView(props: DashboardProps) {
                             <RepoCard
                                 key={id}
                                 repo={repo}
+                                onClick={() => {
+                                    window.location.href = `/repo?user=${props.user.id}&repo=${repo.id}`;
+                                }}
                                 onDeleteClick={() => {
                                     setSelectedRepoID(repo.id);
                                     setShowDeleteDialog(true);
