@@ -14,6 +14,7 @@ import RepoCard from '../repo/RepoCard';
 import InputField from '../ui/InputField';
 import IconButton from './IconButton';
 import Repo from '@/types/repoTypes';
+import DeleteRepoDialog from '../repo/DeleteRepoDialog';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -25,6 +26,7 @@ export default function DashboardView(props: DashboardProps) {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [repos, setRepos] = useState<Repo[]>([]);
 
     // Filter by name or description
@@ -92,10 +94,18 @@ export default function DashboardView(props: DashboardProps) {
 
     return (
         <>
+            {/* CREATE REPO DIALOG */}
             {showCreateDialog && (
                 <CreateRepoDialog
                     onClick={() => setShowCreateDialog(false)}
                     onSuccess={handleRepoCreationSuccess}
+                />
+            )}
+            {/* DELETE REPO DIALOG */}
+            {showDeleteDialog && (
+                <DeleteRepoDialog
+                    onCloseClick={() => setShowDeleteDialog(false)}
+                    onDeleteClick={() => alert("Deleting!")}
                 />
             )}
             <section className="w-full mt-[72px] py-8 h-full flex flex-col">
@@ -158,7 +168,7 @@ export default function DashboardView(props: DashboardProps) {
                                 />
                             </div>
                             <h1 className="font-bold text-xl text-center text-neutral-300">
-                                Loading Your Repos...
+                                Hang on, loading your repos...
                             </h1>
                         </div>
                     </section>
@@ -180,7 +190,11 @@ export default function DashboardView(props: DashboardProps) {
                 ) : filteredRepos.length != 0 ? (
                     <section className="px-2 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
                         {filteredRepos.map((repo, id) => (
-                            <RepoCard key={id} repo={repo} />
+                            <RepoCard
+                                key={id}
+                                repo={repo}
+                                onDeleteClick={() => setShowDeleteDialog(true)}
+                            />
                         ))}
                     </section>
                 ) : (

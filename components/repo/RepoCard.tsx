@@ -3,6 +3,7 @@ import { Bookmark02Icon, Delete02Icon } from 'hugeicons-react';
 
 interface RepoCardProps {
     repo: Repo;
+    onDeleteClick: () => void;
 }
 
 export default function RepoCard(props: RepoCardProps) {
@@ -38,6 +39,7 @@ export default function RepoCard(props: RepoCardProps) {
                         <Delete02Icon
                             size={18}
                             className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+                            onClick={props.onDeleteClick}
                         />
                     </section>
                 </div>

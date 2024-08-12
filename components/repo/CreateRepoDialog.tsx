@@ -148,7 +148,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                 <h3 className="text-2xl font-bold text-center dark:text-neutral-100 text-neutral-700">
                     Create Your Repo
                 </h3>
-                <p className="my-2 text-neutral-500 dark:text-neutral-300">
+                <p className="my-2 px-2 text-neutral-500 dark:text-neutral-300">
                     Once you&apos;ve created a repo, you can start uploading
                     files in them.
                 </p>

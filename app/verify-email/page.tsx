@@ -33,10 +33,10 @@ export default function Page() {
                             }}
                         />
                     </div>
-                    <h1 className="font-black text-3xl mt-12 mb-6 text-neutral-900 dark:text-neutral-100">
+                    <h1 className="font-bold text-3xl mt-12 mb-6 text-neutral-900 dark:text-neutral-100">
                         Verify Your Email
                     </h1>
-                    <p className="text-center font-bold text-base text-neutral-500 dark:text-neutral-300 mb-12">
+                    <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mb-12">
                         We&apos;ve sent you a link to verify your email address.
                         Please check your inbox.
                     </p>
