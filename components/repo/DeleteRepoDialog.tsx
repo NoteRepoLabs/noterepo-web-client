@@ -27,7 +27,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                     You&apos;re about to delete this repository which is
                     permanent. It cannot be undone.
                 </p>
-                <section className="w-full px-4 flex gap-2 items-center">
+                <section className="w-full px-4 mt-4 flex gap-2 items-center">
                     <FilledButton text="No, keep it" onClick={props.onCloseClick} />
                     <OutlineButton text="Yes, delete" onClick={props.onDeleteClick} />
                 </section>
