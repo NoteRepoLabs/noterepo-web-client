@@ -55,6 +55,7 @@ export default function DashboardView(props: DashboardProps) {
                 }
             );
             setRepos(response.data['payload']);
+            localStorage.setItem('repos', JSON.stringify(response.data['payload']));
             console.log(response.data['payload']);
         } catch (error) {
             console.error('Failed to fetch repositories:', error);
@@ -70,34 +71,43 @@ export default function DashboardView(props: DashboardProps) {
 
     // Fetch repos on load
     useEffect(() => {
-        const fetchInitialRepos = async () => {
-            try {
-                const userID = JSON.parse(localStorage.getItem('user')!)['id'];
-                const refreshToken = getCookie('refreshToken');
+        if (!localStorage.getItem('repos')) {
+            const fetchInitialRepos = async () => {
+                try {
+                    const userID = JSON.parse(localStorage.getItem('user')!)[
+                        'id'
+                    ];
+                    const refreshToken = getCookie('refreshToken');
 
-                // Get the access token
-                const tokenResponse = await axios.get(
-                    `${SERVER_URL}/auth/refreshToken/${userID}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${refreshToken}`,
-                        },
-                    }
-                );
+                    // Get the access token
+                    const tokenResponse = await axios.get(
+                        `${SERVER_URL}/auth/refreshToken/${userID}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${refreshToken}`,
+                            },
+                        }
+                    );
 
-                const accessToken = tokenResponse.data.payload['access_token'];
+                    const accessToken =
+                        tokenResponse.data.payload['access_token'];
 
-                // Fetch the repositories
-                fetchRepos(accessToken).then(() => {
+                    // Fetch the repositories
+                    fetchRepos(accessToken).then(() => {
+                        setLoading(false);
+                    });
+                } catch (error) {
+                    console.error('Failed to initialize repos:', error);
                     setLoading(false);
-                });
-            } catch (error) {
-                console.error('Failed to initialize repos:', error);
-                setLoading(false);
-            }
-        };
+                }
+            };
 
-        fetchInitialRepos();
+            fetchInitialRepos();
+        } else {
+            const repos = JSON.parse(localStorage.getItem('repos')!);
+            setRepos(repos);
+            setLoading(false);
+        }
     }, []);
 
     return (

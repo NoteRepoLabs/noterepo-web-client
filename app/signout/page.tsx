@@ -8,8 +8,9 @@ export default function Page() {
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
         localStorage.removeItem('user');
+        localStorage.removeItem('repos');
 
-        console.log('Deleted cookies successfully.');
+        console.log('Deleted storage and cookies successfully.');
         window.location.href = '/signin';
     }, []);
 
