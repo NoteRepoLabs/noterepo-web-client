@@ -1,6 +1,7 @@
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
+import RepoViewLayout from '@/components/repo/RepoViewLayout';
 import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
 import Repo from '@/types/repoTypes';
@@ -67,7 +68,9 @@ export default function Page() {
             }
         } else {
             const allRepos: Repo[] = JSON.parse(localStorage.getItem('repos')!);
-            const thisRepo: Repo = allRepos.filter((repo) => repo.id == repoID)[0];
+            const thisRepo: Repo = allRepos.filter(
+                (repo) => repo.id == repoID
+            )[0];
             setRepo(thisRepo);
             setLoading(false);
         }
@@ -76,7 +79,7 @@ export default function Page() {
     // Fetch on load
     useEffect(() => {
         fetchRepoContent();
-    }, []);
+    });
 
     return (
         <ProtectedRoute>
@@ -93,9 +96,7 @@ export default function Page() {
                     </section>
                 ) : errorMsg ? (
                     <section className="w-full grid place-items-center mt-8">
-                        <h3 className="text-neutral-300 text-xl">
-                            {errorMsg}
-                        </h3>
+                        <h3 className="text-neutral-300 text-xl">{errorMsg}</h3>
                     </section>
                 ) : (
                     repo && (
@@ -108,6 +109,8 @@ export default function Page() {
                                     {repo.description}
                                 </p>
                             </div>
+
+                            <RepoViewLayout />
                         </main>
                     )
                 )}
