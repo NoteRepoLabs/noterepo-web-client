@@ -130,6 +130,12 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
             return;
         }
 
+        if (repoDescription.length < 5) {
+            setDescErr(true);
+            showErrorState('Description is too short.');
+            return;
+        }
+
         const repoDetails: CreateRepoBody = {
             name: repoName,
             description: repoDescription,

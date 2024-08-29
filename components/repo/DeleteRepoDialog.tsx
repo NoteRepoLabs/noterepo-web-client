@@ -1,5 +1,6 @@
 'use client';
 
+import spinningAnimation from '@/animated/spinner.json';
 import { CloseCircle } from 'iconsax-react';
 import FilledButton from '../ui/FilledButton';
 import OutlineButton from '../ui/OutlineButton';
@@ -11,6 +12,7 @@ import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
 import ErrorText from '../ui/ErrorText';
+import Lottie from 'lottie-react';
 
 interface DeleteRepoDialogProps {
     onCloseClick: () => void;
@@ -131,6 +133,22 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                         }
                         onClick={() => deleteRepo()}
                         disabled={isDisabled || deleteRepoMutation.isPending}
+                        icon={
+                            isDisabled || deleteRepoMutation.isPending ? (
+                                <div className="max-w-8 max-h-8">
+                                    <Lottie
+                                        animationData={spinningAnimation}
+                                        loop={true}
+                                        height={'32px'}
+                                        width={'32px'}
+                                        rendererSettings={{
+                                            preserveAspectRatio:
+                                                'xMidYMid slice',
+                                        }}
+                                    />
+                                </div>
+                            ) : null
+                        }
                     />
                 </section>
             </section>
