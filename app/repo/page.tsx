@@ -56,7 +56,6 @@ export default function Page() {
                     }
                 );
 
-                console.log(response.data['payload']);
                 setRepo(response.data['payload']);
                 setLoading(false);
             } catch (error) {

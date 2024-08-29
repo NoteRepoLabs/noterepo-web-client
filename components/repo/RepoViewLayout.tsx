@@ -2,13 +2,60 @@ import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
 import FileUploadButton from '../ui/FileUploadButton';
 import { useRef } from 'react';
+import { getCookie } from 'cookies-next';
+import axios from 'axios';
+import { SERVER_URL } from '@/config/constants';
+import { useSearchParams } from 'next/navigation';
 
 /** Repo View Layout Content Grid */
 export default function RepoViewLayout() {
+    const searchParams = useSearchParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileUploadButtonClick = () => {
         fileInputRef.current?.click();
+    };
+
+    /**
+     * Attempts to upload a file to the server.
+     * Firstly, we grab the user's ID and refresh token. Then generate an access token from there.
+     * Then we make a multi-part form request to upload the file using our credentials.
+     * The page is refreshed if successful or an alert is propagated otherwise.
+     */
+    const uploadSelectedFile = async (file: File) => {
+        try {
+            const userID = searchParams.get('user');
+            const repoID = searchParams.get('repo');
+            const refreshToken = getCookie('refreshToken');
+            const tokenResponse = await axios.get(
+                `${SERVER_URL}/auth/refreshToken/${userID}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${refreshToken}`,
+                    },
+                }
+            );
+            const accessToken = tokenResponse.data.payload['access_token'];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Upload file request
+            const response = await fetch(
+                `${SERVER_URL}/users/${userID}/repo/${repoID}/file`,
+                {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: formData,
+                }
+            );
+
+            const data = await response.json();
+            console.log(data);
+        } catch (err) {
+            throw err;
+        }
     };
 
     const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -16,7 +63,13 @@ export default function RepoViewLayout() {
     ) => {
         const file = ev.target.files?.[0];
         if (file) {
-            console.log(`Selected file:`, file);
+            try {
+                uploadSelectedFile(file);
+            } catch {
+                alert("We can't upload this file at the moment!");
+            }
+        } else {
+            alert('Failed to upload file!');
         }
     };
 
