@@ -1,8 +1,25 @@
-import { Save2, AddSquare, Link1, Trash } from 'iconsax-react';
+import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
+import FileUploadButton from '../ui/FileUploadButton';
+import { useRef } from 'react';
 
 /** Repo View Layout Content Grid */
 export default function RepoViewLayout() {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileUploadButtonClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
+        ev
+    ) => {
+        const file = ev.target.files?.[0];
+        if (file) {
+            console.log(`Selected file:`, file);
+        }
+    };
+
     return (
         <>
             <main className="flex flex-col sm:grid grid-cols-3 mt-6 border-t-2 border-highlight">
@@ -23,10 +40,10 @@ export default function RepoViewLayout() {
                             icon={<Save2 size={24} />}
                             onClick={() => {}}
                         />
-                        <TextButton
-                            text="Upload"
-                            icon={<AddSquare size={24} />}
-                            onClick={() => {}}
+                        <FileUploadButton
+                            onClick={handleFileUploadButtonClick}
+                            fileInputRef={fileInputRef}
+                            handleFileChange={handleFileChange}
                         />
                         <TextButton
                             text="Share"

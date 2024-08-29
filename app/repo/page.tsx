@@ -79,7 +79,7 @@ export default function Page() {
     // Fetch on load
     useEffect(() => {
         fetchRepoContent();
-    });
+    }, []);
 
     return (
         <ProtectedRoute>
