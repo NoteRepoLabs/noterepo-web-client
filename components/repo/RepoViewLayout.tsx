@@ -87,8 +87,8 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         setShowUploadingDialog(false);
         const file = ev.target.files?.[0];
         if (file) {
-            if (file.size >= 10 * MEGABYTE) {
-                toast.error('File limit is 10MB', toastConfig);
+            if (file.size >= 100 * MEGABYTE) {
+                toast.error('File limit is 100MB', toastConfig);
                 return;
             }
             try {
