@@ -10,7 +10,7 @@ interface RepoCardProps {
 export default function RepoCard(props: RepoCardProps) {
     return (
         <div
-            className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group"
+            className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group select-none"
         >
             <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[120px]">
                 <div onClick={props.onClick}>

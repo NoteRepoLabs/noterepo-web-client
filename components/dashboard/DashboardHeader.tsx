@@ -69,7 +69,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                 </header>
                 {isExpanded && (
                     <div
-                        className={`block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm`}
+                        className={`sm:hidden block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm`}
                     ></div>
                 )}
             </div>
