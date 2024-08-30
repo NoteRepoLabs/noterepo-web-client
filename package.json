@@ -22,7 +22,8 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -4,15 +4,26 @@ import FileUploadButton from '../ui/FileUploadButton';
 import { useRef, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
-import { SERVER_URL } from '@/config/constants';
+import { MEGABYTE, SERVER_URL } from '@/config/constants';
 import { useSearchParams } from 'next/navigation';
 import UploadingFileDialog from './UploadingFileDialog';
 import { RepoFile } from '@/types/repoTypes';
 import { File02Icon } from 'hugeicons-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
 }
+
+const toastConfig = {
+    hideProgressBar: true,
+    draggable: false,
+    theme: 'dark',
+    progressStyle: {
+        background: 'FA4E81',
+    },
+};
 
 /** Repo View Layout Content Grid */
 export default function RepoViewLayout(props: RepoViewLayoutProps) {
@@ -53,18 +64,14 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             formData.append('file', file);
 
             // Upload file request
-            const response = await fetch(
-                `${SERVER_URL}/users/${userID}/repo/${repoID}/file`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: formData,
-                }
-            );
+            await fetch(`${SERVER_URL}/users/${userID}/repo/${repoID}/file`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: formData,
+            });
 
-            const data = await response.json();
             // DEBUG: console.log(data);
             localStorage.setItem('forceUpdate', 'true');
             setShowUploadingDialog(false);
@@ -80,23 +87,32 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         setShowUploadingDialog(false);
         const file = ev.target.files?.[0];
         if (file) {
-            if (file.size >= 10 * 1024) {
-                alert("File limit is 10MB.");
+            if (file.size >= 10 * MEGABYTE) {
+                toast.error('File limit is 10MB', toastConfig);
                 return;
             }
             try {
                 setShowUploadingDialog(true);
                 uploadSelectedFile(file);
             } catch {
-                alert("We can't upload this file at the moment!");
+                toast.error(
+                    'Something went wrong while uploading your file',
+                    toastConfig
+                );
             }
         } else {
-            alert('Failed to upload file!');
+            toast.error('File upload failed', toastConfig);
         }
     };
 
     return (
         <>
+            <ToastContainer
+                stacked
+                toastStyle={{
+                    backgroundColor: '#181B26',
+                }}
+            />
             {/* UPLOADING FILE DIALOG */}
             {showUploadingDialog && <UploadingFileDialog />}
             <main className="flex flex-col sm:grid grid-cols-3 mt-6">
@@ -116,15 +132,22 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     key={file.id}
                                     className="text-neutral-300 hover:text-vibrant-green hover:underline underline-offset-4 transition-all flex gap-2 items-start"
                                 >
-                                    <File02Icon size={20} className="flex-shrink-0" />
-                                    <a href={file.urlLink} target="_blank" className="flex-grow">
+                                    <File02Icon
+                                        size={20}
+                                        className="flex-shrink-0"
+                                    />
+                                    <a
+                                        href={file.urlLink}
+                                        target="_blank"
+                                        className="flex-grow"
+                                    >
                                         {file.name}
                                     </a>
                                 </li>
                             ))}
                     </ul>
                 </section>
-                <section className="col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight p-4">
+                <section className="col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8">
                     <ul className="flex flex-col gap-3">
                         <TextButton
                             text="Bookmark"

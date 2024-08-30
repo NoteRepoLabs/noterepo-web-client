@@ -22,7 +22,7 @@ export default function UploadingFileDialog() {
                 </h3>
                 <p className="my-2 px-2 text-neutral-500 dark:text-neutral-300">
                     Hang on while we upload your file to our servers. You can
-                    grab a coffee and relax in the mean time...
+                    grab a coffee and relax in the mean time.
                 </p>
             </section>
         </section>
