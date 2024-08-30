@@ -161,7 +161,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     <a
                                         href={file.urlLink}
                                         target="_blank"
-                                        className="flex-grow"
+                                        className="flex-grow truncate text-ellipsis"
                                     >
                                         {file.name}
                                     </a>
