@@ -97,7 +97,7 @@ export default function Page() {
                 ) : (
                     repo && (
                         <main className="mt-8">
-                            <div className="text-center">
+                            <div className="text-left px-4 sm:px-0 sm:text-center">
                                 <h2 className="font-bold text-3xl">
                                     {repo.name}
                                 </h2>
