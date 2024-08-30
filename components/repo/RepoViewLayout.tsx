@@ -17,12 +17,9 @@ interface RepoViewLayoutProps {
 }
 
 const toastConfig = {
-    hideProgressBar: true,
+    hideProgressBar: false,
     draggable: false,
     theme: 'dark',
-    progressStyle: {
-        background: 'FA4E81',
-    },
 };
 
 /** Repo View Layout Content Grid */
@@ -32,6 +29,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [showUploadingDialog, setShowUploadingDialog] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     /**
      * Uses a React reference to indirectly trigger the hidden file input field
@@ -64,20 +62,43 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             formData.append('file', file);
 
             // Upload file request
-            await fetch(`${SERVER_URL}/users/${userID}/repo/${repoID}/file`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: formData,
-            });
+            setShowUploadingDialog(true);
+            await axios.post(
+                `${SERVER_URL}/users/${userID}/repo/${repoID}/file`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) /
+                                (progressEvent.total ?? 1)
+                        );
+                        setUploadProgress(percentCompleted);
+                    },
+                }
+            );
 
             // DEBUG: console.log(data);
             localStorage.setItem('forceUpdate', 'true');
-            setShowUploadingDialog(false);
-            window.location.reload();
+            toast.success("We've uploaded your file!", {
+                ...toastConfig,
+                onOpen: () => {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 100);
+                },
+            });
         } catch (err) {
+            toast.error(
+                'An error occurred while uploading this file',
+                toastConfig
+            );
             throw err;
+        } finally {
+            setShowUploadingDialog(false);
         }
     };
 
@@ -92,7 +113,6 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 return;
             }
             try {
-                setShowUploadingDialog(true);
                 uploadSelectedFile(file);
             } catch {
                 toast.error(
@@ -114,7 +134,9 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 }}
             />
             {/* UPLOADING FILE DIALOG */}
-            {showUploadingDialog && <UploadingFileDialog />}
+            {showUploadingDialog && (
+                <UploadingFileDialog progress={uploadProgress} />
+            )}
             <main className="flex flex-col sm:grid grid-cols-3 mt-6">
                 <section className="col-span-2 p-4">
                     <h2 className="text-2xl font-bold mb-4">

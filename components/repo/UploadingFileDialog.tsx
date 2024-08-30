@@ -1,7 +1,11 @@
 import spinningAnimation from '@/animated/spinner.json';
 import Lottie from 'lottie-react';
 
-export default function UploadingFileDialog() {
+interface UploadingFileDialogProps {
+    progress: number;
+}
+
+export default function UploadingFileDialog({ progress }: UploadingFileDialogProps) {
     return (
         <section className="w-full h-screen grid place-items-center fixed top-0 left-0 z-[995]">
             <div className="block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm"></div>
@@ -18,12 +22,13 @@ export default function UploadingFileDialog() {
                             }}
                         />
                     </div>
-                    <span>Uploading</span>
+                    <span>Uploading {progress}%</span>
                 </h3>
                 <p className="my-2 px-2 text-neutral-500 dark:text-neutral-300">
                     Hang on while we upload your file to our servers. You can
                     grab a coffee and relax in the mean time.
                 </p>
+                <p className="text-neutral-500 dark:text-neutral-300 font-bold text-sm">Do not close this window.</p>
             </section>
         </section>
     );
