@@ -137,8 +137,8 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             {showUploadingDialog && (
                 <UploadingFileDialog progress={uploadProgress} />
             )}
-            <main className="flex flex-col sm:grid grid-cols-3 mt-6">
-                <section className="col-span-2 p-4">
+            <main className="flex flex-col sm:grid sm:grid-cols-3 mt-6">
+                <section className="sm:col-span-2 p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
@@ -147,12 +147,12 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             No Files Uploaded yet.
                         </p>
                     )}
-                    <ul className="my-2 flex flex-col gap-2">
+                    <ul className="my-2 flex flex-col gap-2 w-full">
                         {numberOfFiles != 0 &&
                             props.files.map((file) => (
                                 <li
                                     key={file.id}
-                                    className="text-neutral-300 hover:text-vibrant-green hover:underline underline-offset-4 transition-all flex gap-2 items-start"
+                                    className="w-full text-neutral-300 hover:text-vibrant-green transition-all flex items-start overflow-hidden"
                                 >
                                     <File02Icon
                                         size={20}
@@ -161,7 +161,9 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     <a
                                         href={file.urlLink}
                                         target="_blank"
-                                        className="flex-grow truncate text-ellipsis"
+                                        title={file.name}
+                                        rel="noopener noreferrer"
+                                        className="flex-grow truncate text-ellipsis hover:underline underline-offset-4"
                                     >
                                         {file.name}
                                     </a>
