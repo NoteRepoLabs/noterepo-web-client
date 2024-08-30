@@ -39,7 +39,13 @@ export default function DashboardView(props: DashboardProps) {
             repo.description.toLowerCase().includes(search.toLowerCase())
     );
 
-    // Fetch user repo from server
+    /**
+     * Requests a collection of repositories owned by the logged in user.
+     * Firstly we get the user's ID and refresh token and request for an access token.
+     * Then use the access token to request for the repo collection, the request is cached
+     * to improve performance.
+     * @param accessToken Users access token for elevated privileges
+     */
     const fetchRepos = async (accessToken: string) => {
         try {
             const userID = JSON.parse(localStorage.getItem('user')!)['id'];
@@ -82,7 +88,12 @@ export default function DashboardView(props: DashboardProps) {
         }
     };
 
-    // Repo mod success
+    /**
+     * Handles when a repo has successfully been modified.
+     * We make a request to fetch the current repository state and optionally
+     * cache the result.
+     * @param accessToken Users access token for elevated privileges
+     */
     const handleRepoModificationSuccess = (accessToken: string) => {
         fetchRepos(accessToken).then(() => {
             setShowCreateDialog(false);
@@ -90,63 +101,63 @@ export default function DashboardView(props: DashboardProps) {
         });
     };
 
-    // Fetch repos on load
+    /**
+     * While the cache is still valid and have repos saved to local storage,
+     * use the locally stored data, otherwise, make a fresh request
+     * to the server and cache the result.
+     */
+    const onLoad = async () => {
+        if (!isCacheExpired() && localStorage.getItem('repos')) {
+            const cachedRepos = JSON.parse(localStorage.getItem('repos')!);
+            console.log('Fallback on cache.');
+            setRepos(cachedRepos);
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const userID = JSON.parse(localStorage.getItem('user')!)['id'];
+            const refreshToken = getCookie('refreshToken');
+
+            const { data: tokenData } = await axios.get(
+                `${SERVER_URL}/auth/refreshToken/${userID}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${refreshToken}`,
+                    },
+                }
+            );
+
+            const accessToken = tokenData.payload['access_token'];
+            
+            const { data: repoData } = await axios.get(
+                `${SERVER_URL}/users/${userID}/repo`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+
+            // Sort and save new data to cache
+            const sortedFetchedRepos = repoData['payload'].sort(
+                (a: Repo, b: Repo) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+            );
+
+            setRepos(sortedFetchedRepos);
+            saveReposToCache(sortedFetchedRepos);
+        } catch (err) {
+            console.error('Failed to fetch repos', err);
+            setErrorMsg('Failed to fetch repos.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchInitialRepos = async () => {
-            try {
-                const userID = JSON.parse(localStorage.getItem('user')!)['id'];
-                const refreshToken = getCookie('refreshToken');
-
-                // Get the access token
-                const tokenResponse = await axios.get(
-                    `${SERVER_URL}/auth/refreshToken/${userID}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${refreshToken}`,
-                        },
-                    }
-                );
-
-                const accessToken = tokenResponse.data.payload['access_token'];
-
-                // Check cache expiry
-                if (isCacheExpired() || !localStorage.getItem('repos')) {
-                    console.log("Updating cache.");
-                    fetchRepos(accessToken)
-                        .then(() => {
-                            setLoading(false);
-                        })
-                        .catch((e) => {
-                            console.error(e);
-                            setErrorMsg('Cannot fetch repos at this time.');
-                            setLoading(false);
-                        });
-                } else {
-                    console.log('Fallback on cache.');
-                    const cachedRepos = JSON.parse(
-                        localStorage.getItem('repos')!
-                    );
-                    setRepos(cachedRepos);
-                    setLoading(false);
-                }
-            } catch (err: any) {
-                // Fallback on cache
-                if (
-                    err.code == 'ERR_BAD_REQUEST' &&
-                    localStorage.getItem('repos')
-                ) {
-                    console.log('Too many requests, falling back on cache.');
-                    setRepos(JSON.parse(localStorage.getItem('repos')!));
-                    setLoading(false);
-                } else {
-                    console.error('Failed to initialize repos:', err);
-                    setErrorMsg('Cannot fetch repos, too many requests.');
-                    setLoading(false);
-                }
-            }
-        };
-
-        fetchInitialRepos();
+        onLoad();
     }, []);
 
     return (
@@ -212,7 +223,7 @@ export default function DashboardView(props: DashboardProps) {
                     Your Repositories
                 </h2>
                 {loading ? (
-                    <SpinnerText text="Hang on, loading your repos." />
+                    <SpinnerText text="Hang on, getting your repos." />
                 ) : errorMsg ? (
                     <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
                         {errorMsg}
