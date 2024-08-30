@@ -12,7 +12,4 @@ export default function getUsers() {
                 Authorization: `Bearer ${accessToken}`,
             },
         })
-        .then((res) => {
-            const data = res.data;
-        });
 }
