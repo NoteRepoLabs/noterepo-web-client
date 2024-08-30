@@ -1,17 +1,29 @@
 import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
 import FileUploadButton from '../ui/FileUploadButton';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import { useSearchParams } from 'next/navigation';
+import UploadingFileDialog from './UploadingFileDialog';
+import { RepoFile } from '@/types/repoTypes';
+
+interface RepoViewLayoutProps {
+    files: RepoFile[];
+}
 
 /** Repo View Layout Content Grid */
-export default function RepoViewLayout() {
+export default function RepoViewLayout(props: RepoViewLayoutProps) {
+    const numberOfFiles = props.files.length;
     const searchParams = useSearchParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const [showUploadingDialog, setShowUploadingDialog] = useState(false);
+
+    /**
+     * Uses a React reference to indirectly trigger the hidden file input field
+     */
     const handleFileUploadButtonClick = () => {
         fileInputRef.current?.click();
     };
@@ -53,6 +65,9 @@ export default function RepoViewLayout() {
 
             const data = await response.json();
             console.log(data);
+            localStorage.setItem('forceUpdate', 'true');
+            setShowUploadingDialog(false);
+            window.location.reload();
         } catch (err) {
             throw err;
         }
@@ -61,9 +76,11 @@ export default function RepoViewLayout() {
     const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
         ev
     ) => {
+        setShowUploadingDialog(false);
         const file = ev.target.files?.[0];
         if (file) {
             try {
+                setShowUploadingDialog(true);
                 uploadSelectedFile(file);
             } catch {
                 alert("We can't upload this file at the moment!");
@@ -75,16 +92,31 @@ export default function RepoViewLayout() {
 
     return (
         <>
+            {/* UPLOADING FILE DIALOG */}
+            {showUploadingDialog && <UploadingFileDialog />}
             <main className="flex flex-col sm:grid grid-cols-3 mt-6 border-t-2 border-highlight">
                 <section className="col-span-2 p-4">
-                    <h2 className="text-2xl font-bold">0 Files</h2>
-                    <p className="my-2 text-neutral-300">
-                        No Files Uploaded yet.
-                    </p>
-                    {/* <ul className="my-4">
-                        <li>File</li>
-                        <li>File</li>
-                    </ul> */}
+                    <h2 className="text-2xl font-bold">
+                        {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'}
+                    </h2>
+                    {numberOfFiles == 0 && (
+                        <p className="my-2 text-neutral-300">
+                            No Files Uploaded yet.
+                        </p>
+                    )}
+                    <ul className="my-2 flex flex-col gap-2">
+                        {numberOfFiles != 0 &&
+                            props.files.map((file) => (
+                                <li
+                                    key={file.id}
+                                    className="text-neutral-300 hover:text-neutral-100 hover:underline underline-offset-4 transition-all"
+                                >
+                                    <a href={file.urlLink} target="_blank">
+                                        {file.name}
+                                    </a>
+                                </li>
+                            ))}
+                    </ul>
                 </section>
                 <section className="col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight p-4">
                     <ul className="flex flex-col gap-3">

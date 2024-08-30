@@ -9,76 +9,69 @@ import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-/* Repo page component */
 export default function Page() {
     const searchParams = useSearchParams();
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(true);
     const [repo, setRepo] = useState<Repo | null>(null);
 
-    const fetchRepoContent = async () => {
+    const repoID = searchParams.get('repo');
+    const userID = searchParams.get('user');
+
+    const loadRepoFromLocalStorage = useCallback(() => {
+        return JSON.parse(localStorage.getItem(`repo-${repoID}`) || '');
+    }, [repoID]);
+
+    const fetchRepoContent = useCallback(async () => {
         setErrorMsg('');
-        const repoID = searchParams.get('repo');
+        const localRepo = loadRepoFromLocalStorage();
+        if (localRepo && localStorage.getItem('forceUpdate') != 'true') {
+            setRepo(localRepo);
+            setLoading(false);
+            return;
+        }
 
-        if (!localStorage.getItem('repos')) {
-            try {
-                const userID = searchParams.get('user');
+        if (!userID || !repoID) {
+            setErrorMsg('Bad state, URL is malformed.');
+            setLoading(false);
+            return;
+        }
 
-                if (!userID || !repoID) {
-                    setErrorMsg('Bad state, URL is malformed.');
-                    setLoading(false);
-                    return;
+        try {
+            const refreshToken = getCookie('refreshToken');
+            const { data: tokenData } = await axios.get(
+                `${SERVER_URL}/auth/refreshToken/${userID}`,
+                {
+                    headers: { Authorization: `Bearer ${refreshToken}` },
                 }
+            );
+            const accessToken = tokenData.payload['access_token'];
 
-                const refreshToken = getCookie('refreshToken');
+            const { data: repoData } = await axios.get(
+                `${SERVER_URL}/users/${userID}/repo/${repoID}`,
+                {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                }
+            );
 
-                // Get the access token
-                const tokenResponse = await axios.get(
-                    `${SERVER_URL}/auth/refreshToken/${userID}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${refreshToken}`,
-                        },
-                    }
-                );
-
-                const accessToken = tokenResponse.data.payload['access_token'];
-
-                // Fetch repo content
-                const response = await axios.get(
-                    `${SERVER_URL}/users/${userID}/repo/${repoID}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    }
-                );
-
-                setRepo(response.data['payload']);
-                setLoading(false);
-            } catch (error) {
-                console.error('Failed to get repo content:', error);
-                setErrorMsg(
-                    'Failed to get repo content. Check your connection.'
-                );
-                setLoading(false);
-            }
-        } else {
-            const allRepos: Repo[] = JSON.parse(localStorage.getItem('repos')!);
-            const thisRepo: Repo = allRepos.filter(
-                (repo) => repo.id == repoID
-            )[0];
+            const thisRepo = repoData['payload'];
+            localStorage.setItem(`repo-${repoID}`, JSON.stringify(thisRepo));
+            localStorage.setItem('forceUpdate', 'false');
+            console.log(thisRepo);
             setRepo(thisRepo);
+        } catch (error) {
+            console.error('Failed to get repo content:', error);
+            setErrorMsg('Failed to get repo content. Check your connection.');
+        } finally {
             setLoading(false);
         }
-    };
+    }, [userID, repoID, loadRepoFromLocalStorage]);
 
-    // Fetch on load
     useEffect(() => {
         fetchRepoContent();
-    }, []);
+    }, [fetchRepoContent]);
 
     return (
         <ProtectedRoute>
@@ -108,8 +101,7 @@ export default function Page() {
                                     {repo.description}
                                 </p>
                             </div>
-
-                            <RepoViewLayout />
+                            <RepoViewLayout files={repo.files} />
                         </main>
                     )
                 )}
