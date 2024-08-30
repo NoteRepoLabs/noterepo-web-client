@@ -2,10 +2,9 @@
 
 import { SERVER_URL } from '@/config/constants';
 import { UserInterface } from '@/types/userTypes';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { SearchNormal1 } from 'iconsax-react';
-import Lottie from 'lottie-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import CreateRepoDialog from '../repo/CreateRepoDialog';
