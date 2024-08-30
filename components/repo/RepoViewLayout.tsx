@@ -65,10 +65,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             );
 
             const data = await response.json();
-            console.log(data);
+            // DEBUG: console.log(data);
             localStorage.setItem('forceUpdate', 'true');
             setShowUploadingDialog(false);
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
             throw err;
         }

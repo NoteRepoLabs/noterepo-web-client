@@ -80,7 +80,7 @@ export default function DashboardView(props: DashboardProps) {
                 saveReposToCache(fetchedRepos);
             }
 
-            console.log(fetchedRepos);
+            // DEBUG: console.log(fetchedRepos);
         } catch (error) {
             console.error('Failed to fetch repositories:', error);
             setErrorMsg('Cannot fetch repos at this time.');

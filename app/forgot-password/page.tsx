@@ -29,7 +29,6 @@ export default function Page() {
         },
         onSuccess: (res) => {
             const data = res.data;
-            console.log(data);
             window.location.href = '/sent-reset-email';
         },
         onError: (err: AxiosError) => {
@@ -58,8 +57,6 @@ export default function Page() {
             showErrorState('Enter your proper email address.');
             return;
         }
-
-        console.log('email:', email);
 
         // Make mutation request
         forgotPasswordMutation.mutate({ email: email });

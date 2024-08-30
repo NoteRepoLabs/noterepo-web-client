@@ -63,7 +63,7 @@ export default function Page() {
             const thisRepo = repoData['payload'];
             localStorage.setItem(`repo-${repoID}`, JSON.stringify(thisRepo));
             localStorage.setItem('forceUpdate', 'false');
-            console.log(thisRepo);
+            // DEBUG: console.log(thisRepo);
             setRepo(thisRepo);
         } catch (error) {
             console.error('Failed to get repo content:', error);

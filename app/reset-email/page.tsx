@@ -20,8 +20,6 @@ export default function Page() {
         setFallback(resolvedTheme == 'dark' ? darkAnimData : lightAnimData);
     }, [resolvedTheme]);
 
-    console.log(resolvedTheme);
-
     return (
         <>
             {mounted && (

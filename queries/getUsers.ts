@@ -14,6 +14,5 @@ export default function getUsers() {
         })
         .then((res) => {
             const data = res.data;
-            console.log('Users', data);
         });
 }

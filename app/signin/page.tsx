@@ -36,7 +36,6 @@ export default function Page() {
         },
         onSuccess: (res) => {
             const data = res.data;
-            console.log(data);
 
             const { access_token, refresh_token, ...user } = data.payload;
             // store user creds and tokens

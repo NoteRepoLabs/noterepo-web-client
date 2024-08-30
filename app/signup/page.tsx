@@ -34,7 +34,6 @@ export default function Page() {
             });
         },
         onSuccess(res) {
-            console.log('User:', res.data);
             window.location.href = '/verify-email';
         },
         onError: (error: AxiosError) => {

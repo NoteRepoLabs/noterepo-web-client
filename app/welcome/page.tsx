@@ -41,7 +41,7 @@ export default function Page() {
         },
         onSuccess: (res) => {
             const data = res.data;
-            console.log(data);
+            // DEBUG: console.log(data);
             const { access_token, refresh_token, ...user } = data.payload;
 
             // store user creds and tokens
@@ -88,7 +88,6 @@ export default function Page() {
             return;
         }
 
-        console.log('username:', username);
         const userID = searchParams.get('userId');
 
         // UserID must be provided
