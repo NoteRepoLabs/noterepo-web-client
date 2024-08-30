@@ -4,6 +4,7 @@ import PublicRepos from './PublicRepos';
 import IconText from '../ui/IconText';
 import { UserTick } from 'iconsax-react';
 import { useState } from 'react';
+import { Cancel01Icon, Menu09Icon } from 'hugeicons-react';
 
 /** Dashboard header props  */
 export interface DashboardHeaderProps {
@@ -22,12 +23,10 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         isExpanded ? 'h-[180px]' : 'h-[70px]'
                     }`}
                 >
-                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-6 md:space-y-0 items-center">
+                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-6 md:space-y-0 gap-2">
                         <div className=" md:w-auto w-full flex justify-between">
                             <Logo width={160} height={40} />
-                            <HambergerMenu
-                                size="32"
-                                color="#A1A7B5"
+                            <div
                                 className="md:hidden cursor-pointer"
                                 onClick={() => {
                                     const body =
@@ -39,7 +38,13 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                                     }
                                     setIsExpanded(!isExpanded);
                                 }}
-                            />
+                            >
+                                {isExpanded ? (
+                                    <Cancel01Icon size="32" color="#A1A7B5" />
+                                ) : (
+                                    <Menu09Icon size="32" color="#A1A7B5" />
+                                )}
+                            </div>
                         </div>
                         <div
                             className={`${
