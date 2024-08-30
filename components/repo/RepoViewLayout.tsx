@@ -68,7 +68,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             // DEBUG: console.log(data);
             localStorage.setItem('forceUpdate', 'true');
             setShowUploadingDialog(false);
-            // window.location.reload();
+            window.location.reload();
         } catch (err) {
             throw err;
         }
@@ -80,6 +80,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         setShowUploadingDialog(false);
         const file = ev.target.files?.[0];
         if (file) {
+            if (file.size >= 10 * 1024) {
+                alert("File limit is 10MB.");
+                return;
+            }
             try {
                 setShowUploadingDialog(true);
                 uploadSelectedFile(file);
@@ -110,10 +114,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             props.files.map((file) => (
                                 <li
                                     key={file.id}
-                                    className="text-neutral-300 hover:text-vibrant-green hover:underline underline-offset-4 transition-all flex gap-2 items-center"
+                                    className="text-neutral-300 hover:text-vibrant-green hover:underline underline-offset-4 transition-all flex gap-2 items-start"
                                 >
-                                    <File02Icon />
-                                    <a href={file.urlLink} target="_blank">
+                                    <File02Icon size={20} className="flex-shrink-0" />
+                                    <a href={file.urlLink} target="_blank" className="flex-grow">
                                         {file.name}
                                     </a>
                                 </li>
