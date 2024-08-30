@@ -11,6 +11,7 @@ import { RepoFile } from '@/types/repoTypes';
 import { File02Icon } from 'hugeicons-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { truncateText } from '@/util/text';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -22,7 +23,7 @@ const toastConfig = {
     theme: 'dark',
 };
 
-/** Repo View Layout Content Grid */
+/** Repo View Layout Content */
 export default function RepoViewLayout(props: RepoViewLayoutProps) {
     const numberOfFiles = props.files.length;
     const searchParams = useSearchParams();
@@ -137,8 +138,8 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             {showUploadingDialog && (
                 <UploadingFileDialog progress={uploadProgress} />
             )}
-            <main className="flex flex-col sm:flex-row mt-6 w-full max-w-lg">
-                <section className="w-full flex-1 p-4 overflow-hidden">
+            <main className="flex flex-col sm:grid grid-cols-3 mt-6 w-full max-w-lg">
+                <section className="w-full flex-1 sm:col-span-2 p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
@@ -147,7 +148,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             No Files Uploaded yet.
                         </p>
                     )}
-                    <ul className="my-2 flex flex-col gap-2 w-full max-w-lg">
+                    <ul className="my-2 flex flex-col gap-2 w-full">
                         {numberOfFiles != 0 &&
                             props.files.map((file) => (
                                 <li
@@ -163,15 +164,15 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                         target="_blank"
                                         title={file.name}
                                         rel="noopener noreferrer"
-                                        className="text-sm sm:text-base truncate text-ellipsis hover:underline underline-offset-4 w-full max-w-[400px] overflow-hidden"
+                                        className="text-sm sm:text-base truncate text-ellipsis hover:underline underline-offset-4 w-full overflow-hidden break-words"
                                     >
-                                        {file.name}
+                                        {truncateText(file.name, 30)}
                                     </a>
                                 </li>
                             ))}
                     </ul>
                 </section>
-                <section className="sm:w-1/3 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8">
+                <section className="w-full sm:col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8 overflow-y-auto">
                     <ul className="flex flex-col gap-3">
                         <TextButton
                             text="Bookmark"

@@ -81,7 +81,7 @@ export default function Page() {
         <ProtectedRoute>
             <section className="mt-8 w-full max-w-3xl min-h-[90%] mx-auto">
                 <header className="cursor-pointer text-neutral-300 hover:text-neutral-200 transition-colors">
-                    <a href="/" className="flex gap-2 items-center">
+                    <a href="/" className="flex gap-2 items-center px-4 sm:px-0">
                         <ArrowLeft02Icon />
                         <span>Back</span>
                     </a>
