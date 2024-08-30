@@ -21,7 +21,11 @@ export default function Page() {
     const userID = searchParams.get('user');
 
     const loadRepoFromLocalStorage = useCallback(() => {
-        return JSON.parse(localStorage.getItem(`repo-${repoID}`) || '');
+        const identifier = `repo-${repoID}`;
+        if (localStorage.getItem(identifier)) {
+            return JSON.parse(localStorage.getItem(identifier)!);
+        }
+        return null;
     }, [repoID]);
 
     const fetchRepoContent = useCallback(async () => {

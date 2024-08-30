@@ -1,13 +1,14 @@
 import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
 import FileUploadButton from '../ui/FileUploadButton';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import { useSearchParams } from 'next/navigation';
 import UploadingFileDialog from './UploadingFileDialog';
 import { RepoFile } from '@/types/repoTypes';
+import { File02Icon } from 'hugeicons-react';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -94,10 +95,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         <>
             {/* UPLOADING FILE DIALOG */}
             {showUploadingDialog && <UploadingFileDialog />}
-            <main className="flex flex-col sm:grid grid-cols-3 mt-6 border-t-2 border-highlight">
+            <main className="flex flex-col sm:grid grid-cols-3 mt-6">
                 <section className="col-span-2 p-4">
-                    <h2 className="text-2xl font-bold">
-                        {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'}
+                    <h2 className="text-2xl font-bold mb-4">
+                        {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
                     {numberOfFiles == 0 && (
                         <p className="my-2 text-neutral-300">
@@ -109,8 +110,9 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             props.files.map((file) => (
                                 <li
                                     key={file.id}
-                                    className="text-neutral-300 hover:text-neutral-100 hover:underline underline-offset-4 transition-all"
+                                    className="text-neutral-300 hover:text-vibrant-green hover:underline underline-offset-4 transition-all flex gap-2 items-center"
                                 >
+                                    <File02Icon />
                                     <a href={file.urlLink} target="_blank">
                                         {file.name}
                                     </a>
