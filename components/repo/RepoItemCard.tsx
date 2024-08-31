@@ -32,7 +32,7 @@ export default function RepoItemCard(props: RepoItemCardProps) {
     return (
         <div
             className={clsx(
-                'overflow-hidden',
+                'overflow-hidden transition-all',
                 isExpanded ? 'h-[200px]' : 'h-[44px]'
             )}
         >
@@ -50,7 +50,10 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                             href={`/repo?user=${props.userID}&repo=${props.repoID}`}
                             rel="noopener noreferrer"
                             title={`${props.repo.name}`}
-                            className="text-lg"
+                            className={clsx(
+                                'text-lg opacity-70 hover:opacity-100 transition-colors',
+                                isExpanded ? '!opacity-100' : 'opacity-70'
+                            )}
                         >
                             {props.repo.name}
                         </a>
@@ -73,15 +76,30 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                 )}
             >
                 <ul>
-                    <li className="truncate">Name: {props.repo.name}</li>
                     <li className="truncate">
-                        Description: {props.repo.description}
+                        <span className="dark:text-neutral-300">Name:</span>{' '}
+                        {props.repo.name}
                     </li>
-                    <li>Files: 10</li>
+                    <li className="truncate">
+                        <span className="dark:text-neutral-300">
+                            Description:
+                        </span>{' '}
+                        {props.repo.description}
+                    </li>
                     <li>
-                        Visibility: {props.repo.isPublic ? 'Public' : 'Private'}
+                        <span className="dark:text-neutral-300">Files:</span>{' '}
+                        {props.repo._count.files}
                     </li>
-                    <li>Created: {props.repo.createdAt}</li>
+                    <li>
+                        <span className="dark:text-neutral-300">
+                            Visibility:
+                        </span>{' '}
+                        {props.repo.isPublic ? 'Public' : 'Private'}
+                    </li>
+                    <li>
+                        <span className=" dark:text-neutral-300">Created:</span>{' '}
+                        {props.repo.createdAt}
+                    </li>
                 </ul>
             </section>
         </div>

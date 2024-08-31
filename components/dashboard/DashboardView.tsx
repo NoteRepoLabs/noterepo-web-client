@@ -1,3 +1,10 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 'use client';
 
 import { SERVER_URL } from '@/config/constants';
@@ -23,7 +30,13 @@ export interface DashboardProps {
 
 type ViewType = 'LIST' | 'GRID';
 
-/** Dashboard view component */
+/**
+ * Main dashboard view component, responsible for fetching, caching
+ * and displaying the user's list of repositories.
+ * This is where most repo management actions (creating / deleting) is done.
+ * @param props passed in to modify dashboard behaviour
+ * @returns a dashboard view component
+ */
 export default function DashboardView(props: DashboardProps) {
     // Page state
     const [loading, setLoading] = useState(true);

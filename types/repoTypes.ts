@@ -1,5 +1,11 @@
-/* Interface definition for repos */
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
 
+// Repo file instance properties
 export interface RepoFile {
     id: string;
     createdAt: string;
@@ -10,6 +16,7 @@ export interface RepoFile {
     repoID: string;
 }
 
+// Repo instance properties
 export default interface Repo {
     id: string;
     name: string;
@@ -18,4 +25,5 @@ export default interface Repo {
     isPublic: boolean;
     files: RepoFile[];
     createdAt: string;
+    _count: { files: number };
 }
