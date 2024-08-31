@@ -30,9 +30,17 @@ export default function RepoItemCard(props: RepoItemCardProps) {
     };
 
     return (
-        <div>
+        <div
+            className={clsx(
+                'overflow-hidden',
+                isExpanded ? 'h-[200px]' : 'h-[44px]'
+            )}
+        >
             <header
-                className="flex items-center justify-between dark:hover:bg-neutral-800 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] group"
+                className={clsx(
+                    'flex items-center justify-between dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
+                    isExpanded ? 'dark:!bg-mod-700 !scale-100' : ''
+                )}
                 onClick={toggleExpanded}
             >
                 <section className="flex items-center gap-2">
@@ -55,6 +63,27 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                     )}
                 />
             </header>
+
+            <section
+                className={clsx(
+                    'mt-[2px] p-4 dark:bg-mod-700 rounded-lg transition-all',
+                    isExpanded
+                        ? 'h-[148px] pointer-events-auto'
+                        : 'h-[0px] pointer-events-none'
+                )}
+            >
+                <ul>
+                    <li className="truncate">Name: {props.repo.name}</li>
+                    <li className="truncate">
+                        Description: {props.repo.description}
+                    </li>
+                    <li>Files: 10</li>
+                    <li>
+                        Visibility: {props.repo.isPublic ? 'Public' : 'Private'}
+                    </li>
+                    <li>Created: {props.repo.createdAt}</li>
+                </ul>
+            </section>
         </div>
     );
 }

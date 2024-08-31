@@ -8,17 +8,18 @@ const config: Config = {
    ],
    theme: {
       colors: {
-         'neutral-900': '#090A0E',
-         'neutral-800': '#181B26',
-         'neutral-700': '#0D0E13',
-         'neutral-600': '#282C3A',
-         'neutral-500': '#66667B',
-         'neutral-300': '#A1A7B5',
-         'neutral-200': '#DBDBDD',
-         'neutral-100': '#FFFFFF',
-         'highlight': '#282C3A',
+         'neutral-900':   '#090A0E',
+         'neutral-800':   '#181B26',
+         'neutral-700':   '#0D0E13',
+         'neutral-600':   '#282C3A',
+         'neutral-500':   '#66667B',
+         'neutral-300':   '#A1A7B5',
+         'neutral-200':   '#DBDBDD',
+         'neutral-100':   '#FFFFFF',
+         'highlight':     '#282C3A',
+         'mod-700':       '#11131A',
          'vibrant-green': '#30F094',
-         'vibrant-red': '#FA4E81',
+         'vibrant-red':   '#FA4E81',
       },
       extend: {
          fontFamily: {

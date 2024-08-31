@@ -286,9 +286,11 @@ export default function DashboardView(props: DashboardProps) {
                             </section>
                         )
                     ) : (
-                        <h3 className="mt-8 text-neutral-500">
-                            No Repos match this filter.
-                        </h3>
+                        !loading && (
+                            <h3 className="text-center mt-8 text-neutral-500">
+                                No Repos match this filter.
+                            </h3>
+                        )
                     )}
                 </section>
             </section>
