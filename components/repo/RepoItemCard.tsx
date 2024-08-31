@@ -6,7 +6,10 @@
  */
 
 import Repo from '@/types/repoTypes';
+import clsx from 'clsx';
+import { ArrowDown01Icon } from 'hugeicons-react';
 import { FolderOpen } from 'iconsax-react';
+import { useState } from 'react';
 
 interface RepoItemCardProps {
     userID: string;
@@ -20,9 +23,18 @@ interface RepoItemCardProps {
  * @returns a repo item card component
  */
 export default function RepoItemCard(props: RepoItemCardProps) {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleExpanded = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     return (
         <div>
-            <header className="flex items-center justify-between dark:hover:bg-neutral-800 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98]">
+            <header
+                className="flex items-center justify-between dark:hover:bg-neutral-800 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] group"
+                onClick={toggleExpanded}
+            >
                 <section className="flex items-center gap-2">
                     <FolderOpen variant="Bulk" size={24} />
                     <h3>
@@ -36,6 +48,12 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                         </a>
                     </h3>
                 </section>
+                <ArrowDown01Icon
+                    className={clsx(
+                        'opacity-80 hidden group-hover:block cursor-pointer',
+                        isExpanded ? 'rotate-180 !block' : 'rotate-0'
+                    )}
+                />
             </header>
         </div>
     );
