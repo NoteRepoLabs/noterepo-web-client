@@ -6,6 +6,7 @@
  */
 
 import Repo from '@/types/repoTypes';
+import { formatDate } from '@/util/date';
 import clsx from 'clsx';
 import { ArrowDown01Icon } from 'hugeicons-react';
 import { FolderOpen } from 'iconsax-react';
@@ -98,7 +99,7 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                     </li>
                     <li>
                         <span className=" dark:text-neutral-300">Created:</span>{' '}
-                        {props.repo.createdAt}
+                        {formatDate(props.repo.createdAt)}
                     </li>
                 </ul>
             </section>
