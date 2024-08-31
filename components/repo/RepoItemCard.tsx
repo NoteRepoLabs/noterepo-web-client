@@ -91,11 +91,20 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                         <span className="dark:text-neutral-300">Files:</span>{' '}
                         {props.repo._count.files}
                     </li>
-                    <li>
+                    <li className="flex gap-2 items-center">
                         <span className="dark:text-neutral-300">
                             Visibility:
                         </span>{' '}
-                        {props.repo.isPublic ? 'Public' : 'Private'}
+                        <div className="flex gap-2 items-center">
+                            <div
+                                className={`w-[6px] h-[6px] ${
+                                    props.repo.isPublic
+                                        ? 'bg-vibrant-green'
+                                        : 'bg-neutral-500'
+                                } rounded-xl`}
+                            ></div>
+                            <span>{props.repo.isPublic ? 'Public' : 'Private'}</span>
+                        </div>
                     </li>
                     <li>
                         <span className=" dark:text-neutral-300">Created:</span>{' '}
