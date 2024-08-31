@@ -12,7 +12,7 @@ import { ArrowDown01Icon } from 'hugeicons-react';
 import { FolderOpen } from 'iconsax-react';
 import { useState } from 'react';
 
-interface RepoItemCardProps {
+interface RepoListItemProps {
     userID: string;
     repoID: string;
     repo: Repo;
@@ -20,10 +20,10 @@ interface RepoItemCardProps {
 
 /**
  * Responsible for showing information on a repo, developed as a
- * replacement for the current box-view card component.
+ * replacement for the previous box-view card component.
  * @returns a repo item card component
  */
-export default function RepoItemCard(props: RepoItemCardProps) {
+export default function RepoListItem(props: RepoListItemProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpanded = () => {
@@ -103,7 +103,9 @@ export default function RepoItemCard(props: RepoItemCardProps) {
                                         : 'bg-neutral-500'
                                 } rounded-xl`}
                             ></div>
-                            <span>{props.repo.isPublic ? 'Public' : 'Private'}</span>
+                            <span>
+                                {props.repo.isPublic ? 'Public' : 'Private'}
+                            </span>
                         </div>
                     </li>
                     <li>

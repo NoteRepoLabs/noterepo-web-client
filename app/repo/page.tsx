@@ -1,3 +1,10 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -11,15 +18,29 @@ import { ArrowLeft02Icon } from 'hugeicons-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 
+/**
+ * Responsible for fetching and caching individual repo contents.
+ * Contains options to upload, bookmark, share and delete the repo
+ * if the user wishes. This component mostly handles the data logic,
+ * the UI is kept separately.
+ * @returns a repo page component
+ */
 export default function Page() {
+    // Page state
     const searchParams = useSearchParams();
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(true);
     const [repo, setRepo] = useState<Repo | null>(null);
 
+    // URL query parameters
     const repoID = searchParams.get('repo');
     const userID = searchParams.get('user');
 
+    /**
+     * Attempts to retrieve a previously cached repository.
+     * Repositories are cached using the signature: `repo-{id}`.
+     * @returns a repo record or null.
+     */
     const loadRepoFromLocalStorage = useCallback(() => {
         const identifier = `repo-${repoID}`;
         if (localStorage.getItem(identifier)) {
@@ -28,15 +49,24 @@ export default function Page() {
         return null;
     }, [repoID]);
 
+    /**
+     * Attempts to fetch this repositories content. Firstly check if this
+     * repo is cached and use that instead to save compute and network IO.
+     * On cache miss, fetch the required repo content from the server, cache
+     * the result and force a full refresh.
+     * @info **async**
+     */
     const fetchRepoContent = useCallback(async () => {
         setErrorMsg('');
         const localRepo = loadRepoFromLocalStorage();
+
         if (localRepo && localStorage.getItem('forceUpdate') != 'true') {
             setRepo(localRepo);
             setLoading(false);
             return;
         }
 
+        // Guard check if user accesses this page without required credentials
         if (!userID || !repoID) {
             setErrorMsg('Bad state, URL is malformed.');
             setLoading(false);
@@ -51,8 +81,8 @@ export default function Page() {
                     headers: { Authorization: `Bearer ${refreshToken}` },
                 }
             );
-            const accessToken = tokenData.payload['access_token'];
 
+            const accessToken = tokenData.payload['access_token'];
             const { data: repoData } = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo/${repoID}`,
                 {
@@ -81,7 +111,10 @@ export default function Page() {
         <ProtectedRoute>
             <section className="mt-8 w-full max-w-3xl min-h-[90%] mx-auto">
                 <header className="cursor-pointer text-neutral-300 hover:text-neutral-200 transition-colors">
-                    <a href="/" className="flex gap-2 items-center px-4 sm:px-0">
+                    <a
+                        href="/"
+                        className="flex gap-2 items-center px-4 sm:px-0"
+                    >
                         <ArrowLeft02Icon />
                         <span>Back</span>
                     </a>

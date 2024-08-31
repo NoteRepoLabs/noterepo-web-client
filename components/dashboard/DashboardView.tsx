@@ -15,14 +15,14 @@ import { SearchNormal1 } from 'iconsax-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import CreateRepoDialog from '../repo/CreateRepoDialog';
-import RepoCard from '../repo/RepoCard';
+import RepoGridItem from '../repo/RepoGridItem';
 import InputField from '../ui/InputField';
 import IconButton from './IconButton';
 import Repo from '@/types/repoTypes';
 import DeleteRepoDialog from '../repo/DeleteRepoDialog';
 import SpinnerText from '../ui/SpinnerText';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
-import RepoItemCard from '../repo/RepoItemCard';
+import RepoListItem from '../repo/RepoListItem';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -273,7 +273,7 @@ export default function DashboardView(props: DashboardProps) {
                         repoView == 'GRID' ? (
                             <section className="w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
                                 {filteredRepos.map((repo, id) => (
-                                    <RepoCard
+                                    <RepoGridItem
                                         key={id}
                                         repo={repo}
                                         onClick={() => {
@@ -289,7 +289,7 @@ export default function DashboardView(props: DashboardProps) {
                         ) : (
                             <section className="w-full flex flex-col gap-2">
                                 {filteredRepos.map((repo, id) => (
-                                    <RepoItemCard
+                                    <RepoListItem
                                         key={id}
                                         userID={props.user.id}
                                         repoID={repo.id}
