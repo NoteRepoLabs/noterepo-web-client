@@ -15,10 +15,13 @@ import Repo from '@/types/repoTypes';
 import DeleteRepoDialog from '../repo/DeleteRepoDialog';
 import SpinnerText from '../ui/SpinnerText';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
+import RepoItemCard from '../repo/RepoItemCard';
 
 export interface DashboardProps {
     user: UserInterface;
 }
+
+type ViewType = 'LIST' | 'GRID';
 
 /** Dashboard view component */
 export default function DashboardView(props: DashboardProps) {
@@ -26,6 +29,7 @@ export default function DashboardView(props: DashboardProps) {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [repoView, setRepoView] = useState<ViewType>('LIST');
     const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -128,7 +132,7 @@ export default function DashboardView(props: DashboardProps) {
             );
 
             const accessToken = tokenData.payload['access_token'];
-            
+
             const { data: repoData } = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo`,
                 {
@@ -179,13 +183,13 @@ export default function DashboardView(props: DashboardProps) {
             <section className="w-full mt-[72px] py-8 h-full flex flex-col">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-2 gap-4 sm:gap-2">
                     <div className="flex-grow w-full max-w-lg">
-                        {/* SEARCH BOX */}
+                        {/* SEARCH BAR */}
                         <InputField
                             name={'search'}
                             type={'text'}
                             id={'search-field'}
                             value={search}
-                            placeholder={'Search your repos'}
+                            placeholder={'Find something quickly'}
                             required={false}
                             iconPos="left"
                             noMargin={true}
@@ -218,16 +222,20 @@ export default function DashboardView(props: DashboardProps) {
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
+
                 <h2 className="font-bold text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0 cursor-default">
                     Your Repositories
                 </h2>
-                {loading ? (
-                    <SpinnerText text="Hang on, getting your repos." />
-                ) : errorMsg ? (
+
+                {loading && <SpinnerText text="Hang on, getting your repos." />}
+
+                {errorMsg && (
                     <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
                         {errorMsg}
                     </h2>
-                ) : repos.length === 0 ? (
+                )}
+
+                {!loading && !errorMsg && repos.length === 0 && (
                     <div className="flex flex-col justify-center mt-8">
                         <div className="flex justify-center ml-8">
                             <Image
@@ -242,27 +250,47 @@ export default function DashboardView(props: DashboardProps) {
                             Nothing Here Yet.
                         </h4>
                     </div>
-                ) : filteredRepos.length != 0 ? (
-                    <section className="px-2 sm:px-8 my-8 w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
-                        {filteredRepos.map((repo, id) => (
-                            <RepoCard
-                                key={id}
-                                repo={repo}
-                                onClick={() => {
-                                    window.location.href = `/repo?user=${props.user.id}&repo=${repo.id}`;
-                                }}
-                                onDeleteClick={() => {
-                                    setSelectedRepoID(repo.id);
-                                    setShowDeleteDialog(true);
-                                }}
-                            />
-                        ))}
-                    </section>
-                ) : (
-                    <h3 className="mt-8 text-neutral-500">
-                        No Repos match this filter.
-                    </h3>
                 )}
+
+                <section className="px-2 sm:px-8 my-8 w-full">
+                    {!loading &&
+                    !errorMsg &&
+                    repos.length != 0 &&
+                    filteredRepos.length != 0 ? (
+                        repoView == 'GRID' ? (
+                            <section className="w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
+                                {filteredRepos.map((repo, id) => (
+                                    <RepoCard
+                                        key={id}
+                                        repo={repo}
+                                        onClick={() => {
+                                            window.location.href = `/repo?user=${props.user.id}&repo=${repo.id}`;
+                                        }}
+                                        onDeleteClick={() => {
+                                            setSelectedRepoID(repo.id);
+                                            setShowDeleteDialog(true);
+                                        }}
+                                    />
+                                ))}
+                            </section>
+                        ) : (
+                            <section className="w-full flex flex-col gap-2">
+                                {filteredRepos.map((repo, id) => (
+                                    <RepoItemCard
+                                        key={id}
+                                        userID={props.user.id}
+                                        repoID={repo.id}
+                                        repo={repo}
+                                    />
+                                ))}
+                            </section>
+                        )
+                    ) : (
+                        <h3 className="mt-8 text-neutral-500">
+                            No Repos match this filter.
+                        </h3>
+                    )}
+                </section>
             </section>
         </>
     );
