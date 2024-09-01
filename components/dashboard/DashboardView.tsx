@@ -193,7 +193,7 @@ export default function DashboardView(props: DashboardProps) {
                     onSuccess={handleRepoModificationSuccess}
                 />
             )}
-            <section className="w-full mt-[72px] py-8 h-full flex flex-col">
+            <section className="w-full mt-8 py-8 h-full flex flex-col">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-2 gap-4 sm:gap-2">
                     <div className="flex-grow w-full max-w-lg">
                         {/* SEARCH BAR */}
@@ -236,7 +236,7 @@ export default function DashboardView(props: DashboardProps) {
                     />
                 </div>
 
-                <h2 className="font-bold text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0 cursor-default">
+                <h2 className="font-bold text-2xl sm:text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0 cursor-default">
                     Your Repositories
                 </h2>
 

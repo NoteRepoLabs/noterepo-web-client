@@ -1,17 +1,27 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 import { HambergerMenu, LogoutCurve } from 'iconsax-react';
 import Logo from '../ui/Logo';
 import PublicRepos from './PublicRepos';
 import IconText from '../ui/IconText';
 import { UserTick } from 'iconsax-react';
 import { useState } from 'react';
-import { Cancel01Icon, Menu09Icon } from 'hugeicons-react';
+import { Cancel01Icon, Menu09Icon, Settings02Icon } from 'hugeicons-react';
 
-/** Dashboard header props  */
 export interface DashboardHeaderProps {
     username: string;
 }
 
-/** Dashboard header component */
+/**
+ * Universal header UI for the dashboard page.
+ * @param props used for modifying dashboard header behaviour
+ * @returns a dashboard header component
+ */
 export default function DashboardHeader(props: DashboardHeaderProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -23,7 +33,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         isExpanded ? 'h-[200px]' : 'h-[70px]'
                     }`}
                 >
-                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-6 md:space-y-0 gap-2">
+                    <div className="w-full max-w-3xl flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0 gap-2">
                         <div className=" md:w-auto w-full flex justify-between items-center">
                             <Logo width={160} height={40} />
                             <div
@@ -55,18 +65,20 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         </div>
                         <div
                             className={`space-x-4 ${
-                                isExpanded ? 'flex' : 'hidden'
-                            } md:flex items-center`}
+                                isExpanded
+                                    ? 'flex flex-col space-y-4 md:space-y-0'
+                                    : 'hidden'
+                            } md:flex md:flex-row md:items-center`}
                         >
                             <IconText
                                 text={props.username}
-                                icon={<UserTick size="24" color="#A1A7B5" />}
+                                icon={<UserTick size={24} />}
                             />
                             <IconText
-                                text="Sign out"
-                                icon={<LogoutCurve size="24" color="#A1A7B5" />}
+                                text="Settings"
+                                icon={<Settings02Icon size={24} />}
                                 onClick={() =>
-                                    (window.location.href = '/signout')
+                                    (window.location.href = '/settings')
                                 }
                             />
                         </div>

@@ -1,3 +1,10 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 import QueryProvider from '@/providers/queryProvider';
 import type { Metadata } from 'next';
 import { Roboto_Flex } from 'next/font/google';
@@ -32,21 +39,6 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://www.noterepo.com.ng'),
 };
 
-// Font
-// const satoshi = localFont({
-//     src: [
-//         { path: '../public/fonts/satoshi/Satoshi-Black.woff', weight: '900' },
-//         { path: '../public/fonts/satoshi/Satoshi-Bold.woff', weight: '800' },
-//         { path: '../public/fonts/satoshi/Satoshi-Medium.woff', weight: '700' },
-//         {
-//             path: '../public/fonts/satoshi/Satoshi-Regular.woff',
-//             weight: '600',
-//         },
-//         { path: '../public/fonts/satoshi/Satoshi-Light.woff', weight: '500' },
-//     ],
-//     variable: '--font-satoshi',
-// });
-
 const sans = Roboto_Flex({ subsets: ['latin'] });
 
 // Theme controller
@@ -62,13 +54,12 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // Initialize
     const theme = getTheme() as string;
 
     return (
         <html lang="en" className={theme} style={{ colorScheme: theme }}>
             <body
-                className={`${sans.className} mx-2 min-h-screen overflow-auto grid place-items-center`}
+                className={sans.className}
             >
                 <Analytics />
                 <ThemeProvider
