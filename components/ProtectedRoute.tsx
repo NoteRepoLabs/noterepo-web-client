@@ -15,6 +15,12 @@ interface ProtectedRouteProps {
     children: ReactNode;
 }
 
+/**
+ * Responsible for guarding protected routes from access. The user
+ * is automatically redirected to sign up if they are not authorized.
+ * @param children React nodes.
+ * @returns a protected route instance.
+ */
 export default function ProtectedRoute({
     children,
 }: ProtectedRouteProps): JSX.Element {
@@ -30,6 +36,7 @@ export default function ProtectedRoute({
                 <LoadingSpinner />
             </section>
         );
+
     if (!isAuthenticated) return <></>;
 
     return <>{children}</>;

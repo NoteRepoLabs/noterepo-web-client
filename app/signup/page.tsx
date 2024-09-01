@@ -8,6 +8,7 @@ import InputField from '@/components/ui/InputField';
 import Link from '@/components/ui/Link';
 import { EMAIL_PATTERN, SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
+import CenteredGridLayout from '@/layout/CenteredGridLayout';
 import { AuthCredentials } from '@/types/authTypes';
 import ServerResponse from '@/types/serverTypes';
 import { useMutation } from '@tanstack/react-query';
@@ -33,7 +34,7 @@ export default function Page() {
                 headers: NetworkConfig.headers,
             });
         },
-        onSuccess(res) {
+        onSuccess() {
             window.location.href = '/verify-email';
         },
         onError: (error: AxiosError) => {
@@ -95,99 +96,103 @@ export default function Page() {
     };
 
     return (
-        <section className="mt-8 w-full max-w-lg mx-auto">
-            <Header
-                content="Create a new account to get started."
-                aside="Sign Up"
-            />
-            <form className="my-8 w-full" action="/">
-                <InputField
-                    name="email-field"
-                    type="email"
-                    id="email-field"
-                    value={email}
-                    placeholder="Email"
-                    required={true}
-                    error={isEmailError}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setIsEmailError(false);
-                        setErrorMsg('');
-                        setEmail(e.target.value);
-                    }}
+        <CenteredGridLayout>
+            <section className="w-full max-w-lg mx-auto">
+                <Header
+                    content="Create a new account to get started."
+                    aside="Sign Up"
                 />
-                <InputField
-                    name="password-field"
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    id="password-field"
-                    value={password}
-                    placeholder="Password"
-                    error={isPasswordError}
-                    icon={
-                        password &&
-                        (isPasswordVisible ? (
-                            <EyeSlash
-                                size="24"
-                                color="#A1A7B5"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                    setIsPasswordVisible(!isPasswordVisible)
-                                }
-                            />
-                        ) : (
-                            <Eye
-                                size="24"
-                                color="#A1A7B5"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                    setIsPasswordVisible(!isPasswordVisible)
-                                }
-                            />
-                        ))
-                    }
-                    required={true}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setIsPasswordError(false);
-                        setErrorMsg('');
-                        setPassword(e.target.value);
-                    }}
-                />
-                {errorMsg && <ErrorText errorMsg={errorMsg} />}
-                <FilledButton
-                    text={signUpMutation.isPending ? 'Signing Up' : 'Sign Up'}
-                    icon={
-                        signUpMutation.isPending ? (
-                            <Lottie
-                                animationData={spinningAnimation}
-                                loop={true}
-                                height={'32px'}
-                                width={'32px'}
-                                rendererSettings={{
-                                    preserveAspectRatio: 'xMidYMid slice',
-                                }}
-                            />
-                        ) : null
-                    }
-                    onClick={(e) => {
-                        if (!signUpMutation.isPending) {
-                            onSubmit(e);
+                <form className="my-8 w-full" action="/">
+                    <InputField
+                        name="email-field"
+                        type="email"
+                        id="email-field"
+                        value={email}
+                        placeholder="Email"
+                        required={true}
+                        error={isEmailError}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setIsEmailError(false);
+                            setErrorMsg('');
+                            setEmail(e.target.value);
+                        }}
+                    />
+                    <InputField
+                        name="password-field"
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        id="password-field"
+                        value={password}
+                        placeholder="Password"
+                        error={isPasswordError}
+                        icon={
+                            password &&
+                            (isPasswordVisible ? (
+                                <EyeSlash
+                                    size="24"
+                                    color="#A1A7B5"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        setIsPasswordVisible(!isPasswordVisible)
+                                    }
+                                />
+                            ) : (
+                                <Eye
+                                    size="24"
+                                    color="#A1A7B5"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        setIsPasswordVisible(!isPasswordVisible)
+                                    }
+                                />
+                            ))
                         }
-                    }}
-                    disabled={isDisabled || signUpMutation.isPending}
-                />
-                <section className="w-full flex justify-center mt-8">
-                    <Link
-                        underlined={true}
-                        href={'/signin'}
-                        text={'Sign In'}
-                        style={{ marginRight: '24px' }}
+                        required={true}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setIsPasswordError(false);
+                            setErrorMsg('');
+                            setPassword(e.target.value);
+                        }}
                     />
-                    <Link
-                        underlined={true}
-                        href={'/forgot-password'}
-                        text={'Forgot Password?'}
+                    {errorMsg && <ErrorText errorMsg={errorMsg} />}
+                    <FilledButton
+                        text={
+                            signUpMutation.isPending ? 'Signing Up' : 'Sign Up'
+                        }
+                        icon={
+                            signUpMutation.isPending ? (
+                                <Lottie
+                                    animationData={spinningAnimation}
+                                    loop={true}
+                                    height={'32px'}
+                                    width={'32px'}
+                                    rendererSettings={{
+                                        preserveAspectRatio: 'xMidYMid slice',
+                                    }}
+                                />
+                            ) : null
+                        }
+                        onClick={(e) => {
+                            if (!signUpMutation.isPending) {
+                                onSubmit(e);
+                            }
+                        }}
+                        disabled={isDisabled || signUpMutation.isPending}
                     />
-                </section>
-            </form>
-        </section>
+                    <section className="w-full flex justify-center mt-8">
+                        <Link
+                            underlined={true}
+                            href={'/signin'}
+                            text={'Sign In'}
+                            style={{ marginRight: '24px' }}
+                        />
+                        <Link
+                            underlined={true}
+                            href={'/forgot-password'}
+                            text={'Forgot Password?'}
+                        />
+                    </section>
+                </form>
+            </section>
+        </CenteredGridLayout>
     );
 }
