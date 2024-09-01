@@ -60,6 +60,8 @@ export default function RepoListItem(props: RepoListItemProps) {
                         </a>
                     </h3>
                 </section>
+                {/* TOUCH TOGGLE */}
+                <div className="flex-grow flex-shrink-0 h-[24px]" onClick={toggleExpanded} />
                 <section className="flex items-center gap-2 transition-all">
                     <Bookmark02Icon
                         size={18}
@@ -81,7 +83,6 @@ export default function RepoListItem(props: RepoListItemProps) {
                             'opacity-80 hidden group-hover:block cursor-pointer',
                             isExpanded ? 'rotate-180 !block' : 'rotate-0'
                         )}
-                        onClick={toggleExpanded}
                     />
                 </section>
             </header>
