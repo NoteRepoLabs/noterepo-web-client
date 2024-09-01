@@ -19,7 +19,7 @@ import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
 import shared from '@/shared/constants';
 
@@ -81,6 +81,10 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                     );
 
                     accessToken = tokenData.payload['access_token'];
+                    setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                        maxAge: 20 * 60,
+                        sameSite: 'strict',
+                    }); // 20 mins
                 }
 
                 // Now, create the repository using the access token

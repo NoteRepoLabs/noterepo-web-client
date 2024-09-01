@@ -9,7 +9,7 @@ import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
 import FileUploadButton from '../ui/FileUploadButton';
 import { useRef, useState } from 'react';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import axios from 'axios';
 import { MEGABYTE, SERVER_URL } from '@/config/constants';
 import { useSearchParams } from 'next/navigation';
@@ -69,6 +69,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 );
 
                 accessToken = tokenData.payload['access_token'];
+                setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                    maxAge: 20 * 60,
+                    sameSite: 'strict',
+                }); // 20 mins
             }
             
             const formData = new FormData();

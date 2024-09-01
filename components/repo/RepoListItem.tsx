@@ -8,7 +8,7 @@
 import Repo from '@/types/repoTypes';
 import { formatDate } from '@/util/date';
 import clsx from 'clsx';
-import { ArrowDown01Icon } from 'hugeicons-react';
+import { ArrowDown01Icon, Bookmark02Icon, Delete02Icon } from 'hugeicons-react';
 import { FolderOpen } from 'iconsax-react';
 import { useState } from 'react';
 
@@ -60,12 +60,28 @@ export default function RepoListItem(props: RepoListItemProps) {
                         </a>
                     </h3>
                 </section>
-                <ArrowDown01Icon
-                    className={clsx(
-                        'opacity-80 hidden group-hover:block cursor-pointer',
-                        isExpanded ? 'rotate-180 !block' : 'rotate-0'
-                    )}
-                />
+                <section className="flex items-center gap-2 transition-all">
+                    <Bookmark02Icon
+                        size={18}
+                        className={clsx(
+                            'opacity-70 hover:opacity-100 transition-opacity cursor-pointer group-hover:visible invisible',
+                            isExpanded ? '!visible' : 'invisible'
+                        )}
+                    />
+                    <Delete02Icon
+                        size={18}
+                        className={clsx(
+                            'opacity-70 hover:opacity-100 transition-opacity cursor-pointer group-hover:visible invisible hover:text-vibrant-red',
+                            isExpanded ? '!visible' : 'invisible'
+                        )}
+                    />
+                    <ArrowDown01Icon
+                        className={clsx(
+                            'opacity-80 hidden group-hover:block cursor-pointer',
+                            isExpanded ? 'rotate-180 !block' : 'rotate-0'
+                        )}
+                    />
+                </section>
             </header>
 
             <section
@@ -95,7 +111,7 @@ export default function RepoListItem(props: RepoListItemProps) {
                         <span className="dark:text-neutral-300">
                             Visibility:
                         </span>{' '}
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-1 items-center">
                             <div
                                 className={`w-[6px] h-[6px] ${
                                     props.repo.isPublic

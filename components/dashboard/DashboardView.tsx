@@ -10,7 +10,7 @@
 import { SERVER_URL } from '@/config/constants';
 import { UserInterface } from '@/types/userTypes';
 import axios from 'axios';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { SearchNormal1 } from 'iconsax-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -152,6 +152,10 @@ export default function DashboardView(props: DashboardProps) {
                 );
 
                 accessToken = tokenData.payload['access_token'];
+                setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                    maxAge: 20 * 60,
+                    sameSite: 'strict',
+                }); // 20 mins
             }
 
             const { data: repoData } = await axios.get(
@@ -307,7 +311,7 @@ export default function DashboardView(props: DashboardProps) {
                             </section>
                         )
                     ) : (
-                        !loading && (
+                        !loading &&!errorMsg && (
                             <h3 className="text-center mt-8 text-neutral-500">
                                 No Repos match this filter.
                             </h3>

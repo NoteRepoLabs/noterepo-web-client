@@ -13,7 +13,7 @@ import FilledButton from '../ui/FilledButton';
 import OutlineButton from '../ui/OutlineButton';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
@@ -67,6 +67,10 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                     );
 
                     accessToken = tokenData.payload['access_token'];
+                    setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                        maxAge: 20 * 60,
+                        sameSite: 'strict',
+                    }); // 20 mins
                 }
 
                 // Now, delete the repository using the access token

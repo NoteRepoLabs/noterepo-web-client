@@ -58,13 +58,13 @@ export default function Page() {
 
             // store user creds and tokens
             setCookie(shared.keys.ACCESS_TOKEN, access_token, {
-                maxAge: 60 * 60,
+                maxAge: 20 * 60,
                 sameSite: 'strict',
-            });
+            }); // 20 mins
             setCookie(shared.keys.REFRESH_TOKEN, refresh_token, {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
-            });
+            }); // 5 days
             
             localStorage.setItem(shared.keys.USER, JSON.stringify(user));
             console.log('saved credentials successfully.');

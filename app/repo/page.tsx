@@ -14,7 +14,7 @@ import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
 import axios from 'axios';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
@@ -87,6 +87,10 @@ export default function Page() {
                 );
     
                 accessToken = tokenData.payload['access_token'];
+                setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                    maxAge: 20 * 60,
+                    sameSite: 'strict',
+                }); // 20 mins
             }
             
             const { data: repoData } = await axios.get(
