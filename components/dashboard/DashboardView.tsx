@@ -23,6 +23,7 @@ import DeleteRepoDialog from '../repo/DeleteRepoDialog';
 import SpinnerText from '../ui/SpinnerText';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import RepoListItem from '../repo/RepoListItem';
+import shared from '@/shared/constants';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -64,7 +65,7 @@ export default function DashboardView(props: DashboardProps) {
      */
     const fetchRepos = async (accessToken: string) => {
         try {
-            const userID = JSON.parse(localStorage.getItem('user')!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
             const response = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo`,
                 {
@@ -76,7 +77,7 @@ export default function DashboardView(props: DashboardProps) {
 
             const fetchedRepos = response.data['payload'];
             const cachedRepos = JSON.parse(
-                localStorage.getItem('repos') || '[]'
+                localStorage.getItem(shared.keys.REPOS) || '[]'
             );
 
             // Check if repos have changed
@@ -123,8 +124,8 @@ export default function DashboardView(props: DashboardProps) {
      * to the server and cache the result.
      */
     const onLoad = async () => {
-        if (!isCacheExpired() && localStorage.getItem('repos')) {
-            const cachedRepos = JSON.parse(localStorage.getItem('repos')!);
+        if (!isCacheExpired() && localStorage.getItem(shared.keys.REPOS)) {
+            const cachedRepos = JSON.parse(localStorage.getItem(shared.keys.REPOS)!);
             console.log('Fallback on cache.');
             setRepos(cachedRepos);
             setLoading(false);
@@ -132,8 +133,8 @@ export default function DashboardView(props: DashboardProps) {
         }
 
         try {
-            const userID = JSON.parse(localStorage.getItem('user')!)['id'];
-            const refreshToken = getCookie('refreshToken');
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
+            const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
 
             const { data: tokenData } = await axios.get(
                 `${SERVER_URL}/auth/refreshToken/${userID}`,

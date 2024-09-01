@@ -14,6 +14,7 @@ import InputField from '@/components/ui/InputField';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import CenteredGridLayout from '@/layout/CenteredGridLayout';
+import shared from '@/shared/constants';
 import { UsernameCredentials } from '@/types/authTypes';
 import ServerResponse from '@/types/serverTypes';
 import { useMutation } from '@tanstack/react-query';
@@ -63,15 +64,15 @@ export default function Page() {
             const { access_token, refresh_token, ...user } = data.payload;
 
             // store user creds and tokens
-            setCookie('accessToken', access_token, {
+            setCookie(shared.keys.ACCESS_TOKEN, access_token, {
                 maxAge: 60 * 60,
                 sameSite: 'strict',
             }); // 1 hour
-            setCookie('refreshToken', refresh_token, {
+            setCookie(shared.keys.REFRESH_TOKEN, refresh_token, {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             }); // 5 days
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem(shared.keys.USER, JSON.stringify(user));
             console.log('saved credentials successfully.');
             // Redirect to dashboard
             window.location.href = '/';

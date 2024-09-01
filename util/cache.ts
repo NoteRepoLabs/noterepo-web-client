@@ -5,7 +5,8 @@
  *      - LICENSE: MIT
  */
 
-import Repo from "@/types/repoTypes";
+import shared from '@/shared/constants';
+import Repo from '@/types/repoTypes';
 
 const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
 
@@ -14,8 +15,8 @@ const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
  * @param repos a collection of repos belonging to this user.
  */
 export const saveReposToCache = (repos: Repo[]) => {
-    localStorage.setItem('repos', JSON.stringify(repos));
-    localStorage.setItem('reposCacheTime', JSON.stringify(Date.now()));
+    localStorage.setItem(shared.keys.REPOS, JSON.stringify(repos));
+    localStorage.setItem(shared.keys.REPOS_CACHE, JSON.stringify(Date.now()));
 };
 
 /**
@@ -23,6 +24,8 @@ export const saveReposToCache = (repos: Repo[]) => {
  * @returns true if the current time has exceed cache validity.
  */
 export const isCacheExpired = (): boolean => {
-    const cacheTime = JSON.parse(localStorage.getItem('reposCacheTime') || '0');
+    const cacheTime = JSON.parse(
+        localStorage.getItem(shared.keys.REPOS_CACHE) || '0'
+    );
     return Date.now() - cacheTime > CACHE_EXPIRY_TIME;
 };

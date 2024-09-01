@@ -21,6 +21,7 @@ import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
 import { getCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
+import shared from '@/shared/constants';
 
 /* Create Repo Dialog Props */
 interface CreateRepoDialogProps {
@@ -56,7 +57,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
     // Create repo mutation
     const createRepoMutation = useMutation({
         mutationFn: async (body: CreateRepoBody) => {
-            const userID = JSON.parse(localStorage.getItem('user')!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
             if (!userID) {
                 showErrorState(
                     'Internal error, cannot create repo at this time.'

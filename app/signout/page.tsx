@@ -8,6 +8,7 @@
 'use client';
 
 import CenteredGridLayout from '@/layout/CenteredGridLayout';
+import shared from '@/shared/constants';
 import { deleteCookie } from 'cookies-next';
 import { useEffect } from 'react';
 
@@ -18,10 +19,12 @@ import { useEffect } from 'react';
  */
 export default function Page() {
     useEffect(() => {
-        deleteCookie('accessToken');
-        deleteCookie('refreshToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('repos');
+        deleteCookie(shared.keys.ACCESS_TOKEN);
+        deleteCookie(shared.keys.REFRESH_TOKEN);
+
+        localStorage.removeItem(shared.keys.USER);
+        localStorage.removeItem(shared.keys.REPOS);
+        localStorage.removeItem(shared.keys.REPOS_CACHE);
 
         console.log('Deleted storage and cookies successfully.');
         window.location.href = '/signin';

@@ -10,6 +10,7 @@
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import DashboardView from '@/components/dashboard/DashboardView';
+import shared from '@/shared/constants';
 import { UserInterface } from '@/types/userTypes';
 import { useEffect, useState } from 'react';
 
@@ -32,7 +33,7 @@ export default function Home() {
 
     useEffect(() => {
         const parsedUser: UserInterface = JSON.parse(
-            localStorage.getItem('user') ?? '{}'
+            localStorage.getItem(shared.keys.USER) ?? '{}'
         );
         setUser(parsedUser);
     }, []);

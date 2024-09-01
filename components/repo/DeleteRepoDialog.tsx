@@ -20,6 +20,7 @@ import NetworkConfig from '@/config/network';
 import ServerResponse from '@/types/serverTypes';
 import ErrorText from '../ui/ErrorText';
 import Lottie from 'lottie-react';
+import shared from '@/shared/constants';
 
 interface DeleteRepoDialogProps {
     onCloseClick: () => void;
@@ -42,7 +43,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
     // Delete repo mutation
     const deleteRepoMutation = useMutation({
         mutationFn: async (repoID: string) => {
-            const userID = JSON.parse(localStorage.getItem('user')!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
             if (!userID) {
                 showErrorState(
                     'Internal error, cannot delete repo at this time.'

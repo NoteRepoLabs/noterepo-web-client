@@ -7,6 +7,7 @@
 
 'use client';
 
+import shared from '@/shared/constants';
 import { hasCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 
@@ -15,7 +16,7 @@ import { useEffect, useState } from 'react';
  * @returns true if the refresh token and user instance is present.
  */
 export const checkSession = () => {
-    return hasCookie('refreshToken') && localStorage.getItem('user') != null;
+    return hasCookie(shared.keys.REFRESH_TOKEN) && localStorage.getItem(shared.keys.USER) != null;
 };
 
 /**

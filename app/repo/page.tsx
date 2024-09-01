@@ -42,7 +42,7 @@ export default function Page() {
      * @returns a repo record or null.
      */
     const loadRepoFromLocalStorage = useCallback(() => {
-        const identifier = `repo-${repoID}`;
+        const identifier = `_cr-${repoID}`;
         if (localStorage.getItem(identifier)) {
             return JSON.parse(localStorage.getItem(identifier)!);
         }
@@ -91,7 +91,7 @@ export default function Page() {
             );
 
             const thisRepo = repoData['payload'];
-            localStorage.setItem(`repo-${repoID}`, JSON.stringify(thisRepo));
+            localStorage.setItem(`_cr-${repoID}`, JSON.stringify(thisRepo));
             localStorage.setItem('forceUpdate', 'false');
             // DEBUG: console.log(thisRepo);
             setRepo(thisRepo);
