@@ -9,6 +9,21 @@
 @tailwind components;
 @tailwind utilities;
 
+::-moz-selection {
+    background: #577fbc;
+    color: #ffffff;
+}
+
+::-webkit-selection {
+    background: #577fbc;
+    color: #ffffff;
+}
+
+::selection {
+    background: #577fbc;
+    color: #ffffff;
+}
+
 * {
     box-sizing: border-box;
     /* outline: 1px solid #f00 !important; */
