@@ -16,6 +16,7 @@ interface RepoListItemProps {
     userID: string;
     repoID: string;
     repo: Repo;
+    onDeleteClick: () => void;
 }
 
 /**
@@ -74,6 +75,7 @@ export default function RepoListItem(props: RepoListItemProps) {
                             'opacity-70 hover:opacity-100 transition-opacity cursor-pointer group-hover:visible invisible hover:text-vibrant-red',
                             isExpanded ? '!visible' : 'invisible'
                         )}
+                        onClick={props.onDeleteClick}
                     />
                     <ArrowDown01Icon
                         className={clsx(

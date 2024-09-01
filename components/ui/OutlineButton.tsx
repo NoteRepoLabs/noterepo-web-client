@@ -5,11 +5,14 @@
  *      - LICENSE: MIT
  */
 
+import clsx from 'clsx';
+
 interface OutlineButtonProps {
     text: string;
     styles?: React.CSSProperties;
     icon?: React.ReactElement | null;
     disabled?: boolean;
+    tinyText?: boolean;
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -19,6 +22,7 @@ export default function OutlineButton({
     onClick,
     icon,
     disabled,
+    tinyText,
     styles,
 }: OutlineButtonProps) {
     return (
@@ -33,7 +37,7 @@ export default function OutlineButton({
             style={{ ...styles }}
         >
             {icon && <div className="w-8 max-w-8 h-8 max-h-8">{icon}</div>}
-            <span>{text}</span>
+            <span className={clsx(tinyText ? '!text-base' : '')}>{text}</span>
         </button>
     );
 }

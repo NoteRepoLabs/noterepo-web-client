@@ -120,7 +120,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
     return (
         <section className="w-full h-screen grid place-items-center fixed top-0 left-0 z-[995]">
             <div className="block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm"></div>
-            <section className="w-[90%] mt-12 max-w-lg px-4 py-8 bg-neutral-100 border-[1px] border-neutral-200 dark:border-neutral-600 dark:bg-neutral-700 z-[1000] flex flex-col justify-center rounded-xl items-center text-center shadow-lg relative">
+            <section className="w-[90%] mt-12 max-w-lg px-1 md:px-4 py-4 md:py-8 bg-neutral-100 border-[1px] border-neutral-200 dark:border-neutral-600 dark:bg-neutral-700 z-[1000] flex flex-col justify-center rounded-xl items-center text-center shadow-lg relative">
                 <CloseCircle
                     size="24"
                     variant="Bold"
@@ -139,6 +139,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                     <FilledButton
                         text="No, keep it"
                         onClick={props.onCloseClick}
+                        tinyText={true}
                     />
                     <OutlineButton
                         text={
@@ -164,6 +165,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                                 </div>
                             ) : null
                         }
+                        tinyText={true}
                     />
                 </section>
             </section>

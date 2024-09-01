@@ -306,6 +306,10 @@ export default function DashboardView(props: DashboardProps) {
                                         userID={props.user.id}
                                         repoID={repo.id}
                                         repo={repo}
+                                        onDeleteClick={() => {
+                                            setSelectedRepoID(repo.id);
+                                            setShowDeleteDialog(true);
+                                        }}
                                     />
                                 ))}
                             </section>
