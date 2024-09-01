@@ -46,7 +46,7 @@ export default function RepoListItem(props: RepoListItemProps) {
             >
                 <section className="flex items-center gap-2">
                     <FolderOpen variant="Bulk" size={24} />
-                    <h3 className="truncate">
+                    <h3 className="w-[160px] max-w-[160px] sm:max-w-[400px] truncate">
                         <a
                             href={`/repo?user=${props.userID}&repo=${props.repoID}`}
                             rel="noopener noreferrer"
@@ -62,7 +62,7 @@ export default function RepoListItem(props: RepoListItemProps) {
                 </section>
                 {/* TOUCH TOGGLE */}
                 <div
-                    className="flex-grow flex-shrink-0 h-[24px]"
+                    className="flex-grow flex-shrink-0 min-w-[20px] h-[24px]"
                     onClick={toggleExpanded}
                 />
                 <section className="flex items-center gap-2 transition-all">
