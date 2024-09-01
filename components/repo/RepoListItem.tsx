@@ -43,7 +43,6 @@ export default function RepoListItem(props: RepoListItemProps) {
                     'flex items-center justify-between dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
                     isExpanded ? 'dark:!bg-mod-700 !scale-100' : ''
                 )}
-                onClick={toggleExpanded}
             >
                 <section className="flex items-center gap-2">
                     <FolderOpen variant="Bulk" size={24} />
@@ -82,6 +81,7 @@ export default function RepoListItem(props: RepoListItemProps) {
                             'opacity-80 hidden group-hover:block cursor-pointer',
                             isExpanded ? 'rotate-180 !block' : 'rotate-0'
                         )}
+                        onClick={toggleExpanded}
                     />
                 </section>
             </header>
