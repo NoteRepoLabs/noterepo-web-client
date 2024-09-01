@@ -57,7 +57,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         try {
             const userID = searchParams.get('user');
             const repoID = searchParams.get('repo');
-            const refreshToken = getCookie('refreshToken');
+            const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
             let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
             if (!accessToken) {
