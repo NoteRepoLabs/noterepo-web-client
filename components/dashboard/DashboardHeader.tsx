@@ -73,6 +73,9 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                             <IconText
                                 text={props.username}
                                 icon={<UserTick size={24} />}
+                                styles={{
+                                    marginRight: '16px'
+                                }}
                             />
                             <IconText
                                 text="Settings"
@@ -80,6 +83,9 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                                 onClick={() =>
                                     (window.location.href = '/settings')
                                 }
+                                styles={{
+                                    marginLeft: '0px'
+                                }}
                             />
                         </div>
                     </div>
