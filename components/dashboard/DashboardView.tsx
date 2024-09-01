@@ -24,6 +24,7 @@ import SpinnerText from '../ui/SpinnerText';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import RepoListItem from '../repo/RepoListItem';
 import shared from '@/shared/constants';
+import DashboardSettings from './DashboardSettings';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -48,6 +49,8 @@ export default function DashboardView(props: DashboardProps) {
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [repos, setRepos] = useState<Repo[]>([]);
+    const [privateOnly, setPrivateOnly] = useState(false);
+    const [savedOnly, setSavedOnly] = useState(false);
 
     // Sort by date & filter by name or description
     const filteredRepos = repos.filter(
@@ -197,6 +200,7 @@ export default function DashboardView(props: DashboardProps) {
                     onSuccess={handleRepoModificationSuccess}
                 />
             )}
+
             {/* DELETE REPO DIALOG */}
             {showDeleteDialog && (
                 <DeleteRepoDialog
@@ -205,6 +209,7 @@ export default function DashboardView(props: DashboardProps) {
                     onSuccess={handleRepoModificationSuccess}
                 />
             )}
+
             <section className="w-full mt-8 py-8 h-full flex flex-col">
                 <div className="flex flex-col md:flex-row md:items-center justify-center w-full max-w-[1200px] px-2 gap-4 md:gap-2">
                     <div className="flex-grow w-full">
@@ -242,13 +247,15 @@ export default function DashboardView(props: DashboardProps) {
 
                     {/* NEW REPO BUTTON */}
                     <IconButton
-                        text="New Repo"
+                        text="New"
                         style={{ padding: '14px 8px' }}
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
 
-                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mt-8 mx-4 md:mx-0 cursor-default">
+                <DashboardSettings privateOnly={privateOnly} savedOnly={savedOnly} togglePrivateOnly={() => setPrivateOnly(!privateOnly)} toggleSavedOnly={() => setSavedOnly(!savedOnly)} />
+
+                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mt-4 mx-4 md:mx-0 cursor-default">
                     Your Repositories
                 </h2>
 
