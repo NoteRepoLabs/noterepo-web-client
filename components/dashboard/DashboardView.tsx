@@ -281,7 +281,7 @@ export default function DashboardView(props: DashboardProps) {
                     </div>
                 )}
 
-                <section className="px-2 sm:px-8 my-8 w-full">
+                <section className="px-4 my-8 w-full">
                     {!loading &&
                     !errorMsg &&
                     repos.length != 0 &&
