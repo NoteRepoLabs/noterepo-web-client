@@ -20,6 +20,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { truncateText } from '@/util/text';
 import shared from '@/shared/constants';
+import FileIcon from '../ui/FileIcon';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -74,7 +75,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     sameSite: 'strict',
                 }); // 20 mins
             }
-            
+
             const formData = new FormData();
             formData.append('file', file);
 
@@ -154,8 +155,9 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             {showUploadingDialog && (
                 <UploadingFileDialog progress={uploadProgress} />
             )}
-            <main className="flex flex-col sm:grid grid-cols-3 mt-6 w-full max-w-lg">
-                <section className="w-full flex-1 sm:col-span-2 p-4 overflow-hidden">
+
+            <main className="mt-6 w-full">
+                <section className="w-full p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
@@ -164,31 +166,21 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             No Files Uploaded yet.
                         </p>
                     )}
-                    <ul className="my-2 flex flex-col gap-2 w-full">
+                    <ul className="my-2 grid grid-cols-2 gap-4 w-full">
                         {numberOfFiles != 0 &&
                             props.files.map((file) => (
                                 <li
                                     key={file.id}
-                                    className="w-full text-neutral-300 hover:text-vibrant-green transition-all flex items-start overflow-hidden gap-2"
+                                    className="w-full text-neutral-300 col-span-1"
                                 >
-                                    <File02Icon
-                                        size={20}
-                                        className="flex-shrink-0"
-                                    />
-                                    <a
-                                        href={file.urlLink}
-                                        target="_blank"
-                                        title={file.name}
-                                        rel="noopener noreferrer"
-                                        className="text-sm sm:text-base truncate text-ellipsis hover:underline underline-offset-4 w-full overflow-hidden break-words"
-                                    >
-                                        {truncateText(file.name, 30)}
-                                    </a>
+                                    <div className="w-full">
+                                        <FileIcon filename={file.name} link={file.urlLink} />
+                                    </div>
                                 </li>
                             ))}
                     </ul>
                 </section>
-                <section className="w-full sm:col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8 overflow-y-auto">
+                {/* <section className="w-full sm:col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8 overflow-y-auto">
                     <ul className="flex flex-col gap-3">
                         <TextButton
                             text="Bookmark"
@@ -212,7 +204,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             danger={true}
                         />
                     </ul>
-                </section>
+                </section> */}
             </main>
         </>
     );
