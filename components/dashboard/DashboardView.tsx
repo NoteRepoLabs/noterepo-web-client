@@ -249,18 +249,19 @@ export default function DashboardView(props: DashboardProps) {
                     <IconButton
                         text="New"
                         style={{ padding: '14px 8px' }}
+                        className="scale-95 md:scale-100"
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
 
                 <DashboardSettings privateOnly={privateOnly} savedOnly={savedOnly} togglePrivateOnly={() => setPrivateOnly(!privateOnly)} toggleSavedOnly={() => setSavedOnly(!savedOnly)} />
 
-                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mt-4 mx-4 md:mx-0 cursor-default">
+                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mx-4 md:mx-0 cursor-default">
                     Your Repositories
                 </h2>
 
                 {loading && (
-                    <div className="flex items-start">
+                    <div className="flex items-start px-4">
                         <SpinnerText text="Hang on, getting your repos." />
                     </div>
                 )}
@@ -328,7 +329,7 @@ export default function DashboardView(props: DashboardProps) {
                     ) : (
                         !loading &&
                         !errorMsg && (
-                            <h3 className="text-center mt-8 text-neutral-500">
+                            <h3 className="text-left md:text-center mt-8 text-neutral-500">
                                 No Repos match this filter.
                             </h3>
                         )
