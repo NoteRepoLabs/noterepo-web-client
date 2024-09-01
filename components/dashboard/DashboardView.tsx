@@ -206,8 +206,8 @@ export default function DashboardView(props: DashboardProps) {
                 />
             )}
             <section className="w-full mt-8 py-8 h-full flex flex-col">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-center w-full max-w-[1200px] px-2 gap-4 sm:gap-2">
-                    <div className="flex-grow w-full max-w-lg">
+                <div className="flex flex-col md:flex-row md:items-center justify-center w-full max-w-[1200px] px-2 gap-4 md:gap-2">
+                    <div className="flex-grow w-full">
                         {/* SEARCH BAR */}
                         <InputField
                             name={'search'}
@@ -248,11 +248,15 @@ export default function DashboardView(props: DashboardProps) {
                     />
                 </div>
 
-                <h2 className="font-bold text-2xl sm:text-3xl text-left sm:text-center mt-8 mx-2 sm:mx-0 cursor-default">
+                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mt-8 mx-4 md:mx-0 cursor-default">
                     Your Repositories
                 </h2>
 
-                {loading && <SpinnerText text="Hang on, getting your repos." />}
+                {loading && (
+                    <div className="flex items-start">
+                        <SpinnerText text="Hang on, getting your repos." />
+                    </div>
+                )}
 
                 {errorMsg && (
                     <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
@@ -315,7 +319,8 @@ export default function DashboardView(props: DashboardProps) {
                             </section>
                         )
                     ) : (
-                        !loading &&!errorMsg && (
+                        !loading &&
+                        !errorMsg && (
                             <h3 className="text-center mt-8 text-neutral-500">
                                 No Repos match this filter.
                             </h3>
