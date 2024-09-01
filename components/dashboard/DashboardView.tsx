@@ -52,6 +52,10 @@ export default function DashboardView(props: DashboardProps) {
     const [privateOnly, setPrivateOnly] = useState(false);
     const [savedOnly, setSavedOnly] = useState(false);
 
+    // Toggle between list and grid views
+    const toggleListView = () => setRepoView('LIST');
+    const toggleGridView = () => setRepoView('GRID');
+
     // Sort by date & filter by name or description
     let filteredRepos = repos.filter((repo) => {
         const defaultFilter =
@@ -263,8 +267,11 @@ export default function DashboardView(props: DashboardProps) {
                 <DashboardSettings
                     privateOnly={privateOnly}
                     savedOnly={savedOnly}
+                    viewStyle={repoView}
                     togglePrivateOnly={() => setPrivateOnly(!privateOnly)}
                     toggleSavedOnly={() => setSavedOnly(!savedOnly)}
+                    toggleListView={toggleListView}
+                    toggleGridView={toggleGridView}
                 />
 
                 <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mx-4 md:mx-0 cursor-default">
