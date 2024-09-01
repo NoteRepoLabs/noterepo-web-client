@@ -21,7 +21,7 @@ interface CheckboxProps {
 export default function Checkbox(props: CheckboxProps) {
     return (
         <div
-            className="flex items-center gap-2 cursor-pointer transition-all active:scale-90 scale-100 select-none"
+            className="flex items-center gap-2 cursor-pointer transition-all active:scale-95 scale-100 select-none"
             onClick={props.onClick}
         >
             <div

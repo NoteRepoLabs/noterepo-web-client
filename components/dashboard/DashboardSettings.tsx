@@ -23,12 +23,12 @@ export default function DashboardSettings(props: DashboardSettingsProps) {
         <section className="flex items-center justify-between px-4 py-8">
             <section className="flex items-center gap-4">
                 <Checkbox
-                    label="Private Only"
+                    label="Private"
                     checked={props.privateOnly}
                     onClick={props.togglePrivateOnly}
                 />
                 <Checkbox
-                    label="Saved Only"
+                    label="Saved"
                     checked={props.savedOnly}
                     onClick={props.toggleSavedOnly}
                 />
