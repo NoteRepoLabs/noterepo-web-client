@@ -1,6 +1,12 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 import clsx from 'clsx';
 
-/** Icon text props interface */
 export interface IconTextProps {
     text: string;
     icon: React.ReactElement | null;

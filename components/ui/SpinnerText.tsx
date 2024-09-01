@@ -1,7 +1,13 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 import spinningAnimation from '@/animated/spinner.json';
 import Lottie from 'lottie-react';
 
-/* Spinner text props */
 interface SpinnerTextProps {
     text: string;
 }

@@ -1,3 +1,10 @@
+/**
+ *  2024 - NoteRepo Engineering, Open Source Software
+ *  This file is part of the source code which is available online.
+ *      - GitHub: https://github.com/NoteRepoLabs/noterepo-web-client
+ *      - LICENSE: MIT
+ */
+
 import { Save2, Link1, Trash } from 'iconsax-react';
 import TextButton from '../ui/TextButton';
 import FileUploadButton from '../ui/FileUploadButton';
