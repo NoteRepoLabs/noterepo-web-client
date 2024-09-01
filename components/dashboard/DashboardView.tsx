@@ -65,7 +65,9 @@ export default function DashboardView(props: DashboardProps) {
      */
     const fetchRepos = async (accessToken: string) => {
         try {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
+                'id'
+            ];
             const response = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo`,
                 {
@@ -125,7 +127,9 @@ export default function DashboardView(props: DashboardProps) {
      */
     const onLoad = async () => {
         if (!isCacheExpired() && localStorage.getItem(shared.keys.REPOS)) {
-            const cachedRepos = JSON.parse(localStorage.getItem(shared.keys.REPOS)!);
+            const cachedRepos = JSON.parse(
+                localStorage.getItem(shared.keys.REPOS)!
+            );
             console.log('Fallback on cache.');
             setRepos(cachedRepos);
             setLoading(false);
@@ -133,19 +137,22 @@ export default function DashboardView(props: DashboardProps) {
         }
 
         try {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
+                'id'
+            ];
             const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
+            let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
-            const { data: tokenData } = await axios.get(
-                `${SERVER_URL}/auth/refreshToken/${userID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${refreshToken}`,
-                    },
-                }
-            );
+            if (!accessToken) {
+                const { data: tokenData } = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: { Authorization: `Bearer ${refreshToken}` },
+                    }
+                );
 
-            const accessToken = tokenData.payload['access_token'];
+                accessToken = tokenData.payload['access_token'];
+            }
 
             const { data: repoData } = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo`,

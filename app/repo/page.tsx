@@ -11,6 +11,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import RepoViewLayout from '@/components/repo/RepoViewLayout';
 import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
+import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
@@ -74,15 +75,20 @@ export default function Page() {
         }
 
         try {
-            const refreshToken = getCookie('refreshToken');
-            const { data: tokenData } = await axios.get(
-                `${SERVER_URL}/auth/refreshToken/${userID}`,
-                {
-                    headers: { Authorization: `Bearer ${refreshToken}` },
-                }
-            );
-
-            const accessToken = tokenData.payload['access_token'];
+            const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
+            let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
+            
+            if (!accessToken) {
+                const { data: tokenData } = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: { Authorization: `Bearer ${refreshToken}` },
+                    }
+                );
+    
+                accessToken = tokenData.payload['access_token'];
+            }
+            
             const { data: repoData } = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo/${repoID}`,
                 {

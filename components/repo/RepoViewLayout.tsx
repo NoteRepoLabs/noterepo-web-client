@@ -19,6 +19,7 @@ import { File02Icon } from 'hugeicons-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { truncateText } from '@/util/text';
+import shared from '@/shared/constants';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -57,15 +58,19 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             const userID = searchParams.get('user');
             const repoID = searchParams.get('repo');
             const refreshToken = getCookie('refreshToken');
-            const tokenResponse = await axios.get(
-                `${SERVER_URL}/auth/refreshToken/${userID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${refreshToken}`,
-                    },
-                }
-            );
-            const accessToken = tokenResponse.data.payload['access_token'];
+            let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
+
+            if (!accessToken) {
+                const { data: tokenData } = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: { Authorization: `Bearer ${refreshToken}` },
+                    }
+                );
+
+                accessToken = tokenData.payload['access_token'];
+            }
+            
             const formData = new FormData();
             formData.append('file', file);
 

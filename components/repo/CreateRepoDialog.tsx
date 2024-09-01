@@ -57,7 +57,9 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
     // Create repo mutation
     const createRepoMutation = useMutation({
         mutationFn: async (body: CreateRepoBody) => {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)['id'];
+            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
+                'id'
+            ];
             if (!userID) {
                 showErrorState(
                     'Internal error, cannot create repo at this time.'
@@ -65,20 +67,21 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                 throw new Error('Bad state, user ID not present.');
             }
             try {
-                const refreshToken = getCookie('refreshToken');
+                const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
+                let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
-                // First, get the access token
-                const tokenResponse = await axios.get(
-                    `${SERVER_URL}/auth/refreshToken/${userID}`,
-                    {
-                        headers: {
-                            ...NetworkConfig.headers,
-                            Authorization: `Bearer ${refreshToken}`,
-                        },
-                    }
-                );
+                if (!accessToken) {
+                    const { data: tokenData } = await axios.get(
+                        `${SERVER_URL}/auth/refreshToken/${userID}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${refreshToken}`,
+                            },
+                        }
+                    );
 
-                const accessToken = tokenResponse.data.payload['access_token'];
+                    accessToken = tokenData.payload['access_token'];
+                }
 
                 // Now, create the repository using the access token
                 await axios.post(`${SERVER_URL}/users/${userID}/repo`, body, {
@@ -89,7 +92,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
                 });
 
                 // Notify parent
-                props.onSuccess(accessToken);
+                props.onSuccess(accessToken!);
             } catch (error) {
                 showErrorState(
                     'Internal error, cannot create repo at this time.'

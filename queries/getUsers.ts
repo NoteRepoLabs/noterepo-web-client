@@ -6,6 +6,7 @@
  */
 
 import { SERVER_URL } from '@/config/constants';
+import shared from '@/shared/constants';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 
@@ -13,7 +14,7 @@ import { getCookie } from 'cookies-next';
  * Test function for fetching all users.
  */
 export default function getUsers() {
-    const accessToken = getCookie('accessToken');
+    const accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
     axios.get(`${SERVER_URL}/users`, {
         maxRate: 2,
