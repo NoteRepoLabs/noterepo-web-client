@@ -53,11 +53,17 @@ export default function DashboardView(props: DashboardProps) {
     const [savedOnly, setSavedOnly] = useState(false);
 
     // Sort by date & filter by name or description
-    const filteredRepos = repos.filter(
-        (repo) =>
+    let filteredRepos = repos.filter((repo) => {
+        const defaultFilter =
             repo.name.toLowerCase().includes(search.toLowerCase()) ||
-            repo.description.toLowerCase().includes(search.toLowerCase())
-    );
+            repo.description.toLowerCase().includes(search.toLowerCase());
+
+        if (privateOnly) {
+            return defaultFilter && !repo.isPublic;
+        }
+
+        return defaultFilter;
+    });
 
     /**
      * Requests a collection of repositories owned by the logged in user.
@@ -254,7 +260,12 @@ export default function DashboardView(props: DashboardProps) {
                     />
                 </div>
 
-                <DashboardSettings privateOnly={privateOnly} savedOnly={savedOnly} togglePrivateOnly={() => setPrivateOnly(!privateOnly)} toggleSavedOnly={() => setSavedOnly(!savedOnly)} />
+                <DashboardSettings
+                    privateOnly={privateOnly}
+                    savedOnly={savedOnly}
+                    togglePrivateOnly={() => setPrivateOnly(!privateOnly)}
+                    toggleSavedOnly={() => setSavedOnly(!savedOnly)}
+                />
 
                 <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mx-4 md:mx-0 cursor-default">
                     Your Repositories
