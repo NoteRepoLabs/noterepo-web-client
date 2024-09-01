@@ -27,7 +27,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
 
     return (
         <>
-            <div className="overflow-x-hidden">
+            <div className="overflow-x-hidden z-[9999]">
                 <header
                     className={`flex flex-col md:flex-row dark:bg-neutral-700 bg-neutral-100 p-4 justify-center border-b-[1.5px] dark:border-b-neutral-800 border-b-neutral-200 md:items-center space-y-4 md:space-y-0 overflow-hidden transition-all md:h-auto fixed z-[999] left-0 right-0 top-0  ${
                         isExpanded ? 'h-[200px]' : 'h-[70px]'
@@ -92,7 +92,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                 </header>
                 {isExpanded && (
                     <div
-                        className={`sm:hidden block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm`}
+                        className={`sm:hidden block fixed inset-0 bg-neutral-900 bg-opacity-50 backdrop-blur-sm z-[20]`}
                     ></div>
                 )}
             </div>
