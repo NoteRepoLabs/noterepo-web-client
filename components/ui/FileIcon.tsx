@@ -17,15 +17,16 @@ interface FileIconProps {
  * @returns a file icon component.
  */
 export default function FileIcon(props: FileIconProps) {
-    const chooseFileIcon = (name: string) => {
+    const chooseFileIcon = (name: string, v2: boolean) => {
+        const base = v2 ? '/img/files/v2' : '/img/files';
         const imgRgx = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
 
-        if (name.includes('.pdf')) return '/img/files/file-pdf.svg';
+        if (name.includes('.pdf')) return `${base}/file-pdf.svg`;
         if (name.includes('.docx') || name.includes('.doc'))
-            return '/img/files/file-docx.svg';
-        if (imgRgx.test(name)) return '/img/files/file-img.svg';
-        if (name.includes('.ppt')) return '/img/files/file-ppt.svg';
-        return '/img/files/file-other.svg';
+            return `${base}/file-docx.svg`;
+        if (imgRgx.test(name)) return `${base}/file-img.svg`;
+        if (name.includes('.ppt')) return `${base}/file-ppt.svg`;
+        return `${base}file-other.svg`;
     };
 
     return (
@@ -34,7 +35,7 @@ export default function FileIcon(props: FileIconProps) {
                 <Image
                     width={32}
                     height={32}
-                    src={chooseFileIcon(props.filename)}
+                    src={chooseFileIcon(props.filename, true)}
                     alt="file-icon"
                     className="select-none"
                 />
