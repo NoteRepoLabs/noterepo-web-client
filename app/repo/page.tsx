@@ -13,7 +13,7 @@ import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 import { useSearchParams } from 'next/navigation';
@@ -105,9 +105,13 @@ export default function Page() {
             localStorage.setItem('forceUpdate', 'false');
             // DEBUG: console.log(thisRepo);
             setRepo(thisRepo);
-        } catch (error) {
-            console.error('Failed to get repo content:', error);
-            setErrorMsg('Failed to get repo content. Check your connection.');
+        } catch (err) {
+            console.error('Failed to get repo content:', err);
+            if ((err as AxiosError).response?.status == 404) {
+                setErrorMsg('This repository does not exist.');
+                return;
+            }
+            setErrorMsg('Could not fetch your files. Check your connection.');
         } finally {
             setLoading(false);
         }

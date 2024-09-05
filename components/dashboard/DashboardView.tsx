@@ -25,6 +25,7 @@ import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import RepoListItem from '../repo/RepoListItem';
 import shared from '@/shared/constants';
 import DashboardSettings from './DashboardSettings';
+import fetchRepos from '@/queries/fetchRepos';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -70,67 +71,25 @@ export default function DashboardView(props: DashboardProps) {
     });
 
     /**
-     * Requests a collection of repositories owned by the logged in user.
-     * Firstly we get the user's ID and refresh token and request for an access token.
-     * Then use the access token to request for the repo collection, the request is cached
-     * to improve performance.
-     * @param accessToken Users access token for elevated privileges
-     */
-    const fetchRepos = async (accessToken: string) => {
-        try {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
-                'id'
-            ];
-            const response = await axios.get(
-                `${SERVER_URL}/users/${userID}/repo`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                }
-            );
-
-            const fetchedRepos = response.data['payload'];
-            const cachedRepos = JSON.parse(
-                localStorage.getItem(shared.keys.REPOS) || '[]'
-            );
-
-            // Check if repos have changed
-            if (JSON.stringify(fetchedRepos) != JSON.stringify(cachedRepos)) {
-                setRepos(
-                    fetchedRepos.sort(
-                        (a: Repo, b: Repo) =>
-                            new Date(b.createdAt).getTime() -
-                            new Date(a.createdAt).getTime()
-                    )
-                );
-                saveReposToCache(fetchedRepos);
-            } else {
-                setRepos(cachedRepos);
-            }
-
-            if (isCacheExpired()) {
-                saveReposToCache(fetchedRepos);
-            }
-
-            // DEBUG: console.log(fetchedRepos);
-        } catch (error) {
-            console.error('Failed to fetch repositories:', error);
-            setErrorMsg('Cannot fetch repos at this time.');
-        }
-    };
-
-    /**
      * Handles when a repo has successfully been modified.
      * We make a request to fetch the current repository state and optionally
      * cache the result.
      * @param accessToken Users access token for elevated privileges
      */
     const handleRepoModificationSuccess = (accessToken: string) => {
-        fetchRepos(accessToken).then(() => {
-            setShowCreateDialog(false);
-            setShowDeleteDialog(false);
-        });
+        fetchRepos(
+            accessToken,
+            (data) => {
+                setRepos(data);
+                setShowCreateDialog(false);
+                setShowDeleteDialog(false);
+            },
+            (data) => saveReposToCache(data),
+            (err) => {
+                console.error('Failed to fetch repositories:', err);
+                setErrorMsg('Cannot fetch repos at this time.');
+            }
+        );
     };
 
     /**
@@ -147,29 +106,31 @@ export default function DashboardView(props: DashboardProps) {
             setRepos(cachedRepos);
             setLoading(false);
         } else {
-            console.log("[INFO]: Cache miss.");
+            console.log('[INFO]: Cache miss.');
             try {
-                const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
-                    'id'
-                ];
+                const userID = JSON.parse(
+                    localStorage.getItem(shared.keys.USER)!
+                )['id'];
                 const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
                 let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
-    
+
                 if (!accessToken) {
                     const { data: tokenData } = await axios.get(
                         `${SERVER_URL}/auth/refreshToken/${userID}`,
                         {
-                            headers: { Authorization: `Bearer ${refreshToken}` },
+                            headers: {
+                                Authorization: `Bearer ${refreshToken}`,
+                            },
                         }
                     );
-    
+
                     accessToken = tokenData.payload['access_token'];
                     setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
                         maxAge: 20 * 60,
                         sameSite: 'strict',
                     }); // 20 mins
                 }
-    
+
                 const { data: repoData } = await axios.get(
                     `${SERVER_URL}/users/${userID}/repo`,
                     {
@@ -178,14 +139,14 @@ export default function DashboardView(props: DashboardProps) {
                         },
                     }
                 );
-    
+
                 // Sort and save new data to cache
                 const sortedFetchedRepos = repoData['payload'].sort(
                     (a: Repo, b: Repo) =>
                         new Date(b.createdAt).getTime() -
                         new Date(a.createdAt).getTime()
                 );
-    
+
                 setRepos(sortedFetchedRepos);
                 saveReposToCache(sortedFetchedRepos);
             } catch (err) {

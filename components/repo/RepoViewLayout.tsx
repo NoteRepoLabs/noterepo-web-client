@@ -21,6 +21,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { truncateText } from '@/util/text';
 import shared from '@/shared/constants';
 import FileIcon from '../ui/FileIcon';
+import { useMutation } from '@tanstack/react-query';
+import NetworkConfig from '@/config/network';
+import { ServerResponse } from 'http';
+import DeleteRepoDialog from './DeleteRepoDialog';
+import fetchRepos from '@/queries/fetchRepos';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -38,8 +43,49 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
     const searchParams = useSearchParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showUploadingDialog, setShowUploadingDialog] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+
+    /**
+     * Handles when a repo has successfully been modified.
+     * We make a request to fetch the current repository state and optionally
+     * cache the result.
+     * @param accessToken Users access token for elevated privileges
+     */
+    const handleRepoModificationSuccess = (accessToken: string) => {
+        fetchRepos(
+            accessToken,
+            () => {
+                localStorage.setItem('forceUpdate', 'true');
+
+                const cacheKey = `_cr-${getRepoIDFromParams()}`;
+                localStorage.removeItem(cacheKey);
+                toast.success('This repo has been deleted.', {
+                    ...toastConfig,
+                    onOpen: () => {
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 100);
+                    },
+                });
+            },
+            null,
+            (err) => {
+                console.error('Failed to delete this repo:', err);
+                toast.error('Failed to delete this repo.', toastConfig);
+            }
+        );
+    };
+
+    /**
+     * Utility function to extract the repo id from the page.
+     * @returns a repo id string.
+     */
+    const getRepoIDFromParams = () => {
+        const repoID = searchParams.get('repo');
+        return repoID ?? '';
+    };
 
     /**
      * Uses a React reference to indirectly trigger the hidden file input field
@@ -152,13 +198,22 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 }}
             />
 
+            {/* DELETE REPO DIALOG */}
+            {showDeleteDialog && (
+                <DeleteRepoDialog
+                    repoID={getRepoIDFromParams()}
+                    onCloseClick={() => setShowDeleteDialog(false)}
+                    onSuccess={handleRepoModificationSuccess}
+                />
+            )}
+
             {/* UPLOADING FILE DIALOG */}
             {showUploadingDialog && (
                 <UploadingFileDialog progress={uploadProgress} />
             )}
 
-            <main className="mt-6 w-full">
-                <section className="w-full p-4 overflow-hidden">
+            <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
+                <section className="col-span-3 w-full p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
@@ -175,23 +230,30 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     className="w-full text-neutral-300 col-span-1"
                                 >
                                     <div className="w-full">
-                                        <FileIcon filename={file.name} link={file.urlLink} />
+                                        <FileIcon
+                                            filename={file.name}
+                                            link={file.urlLink}
+                                        />
                                     </div>
                                 </li>
                             ))}
                     </ul>
                 </section>
-                {/* <section className="w-full sm:col-span-1 border-l-0 border-t-2 sm:border-t-0 sm:border-l-2 border-highlight py-4 pl-4 sm:pl-8 overflow-y-auto">
+
+                <section className="border border-highlight w-full col-span-1 p-4 dark:bg-mod-700 rounded-none md:rounded-lg h-[200px] max-h-[200px]">
+                    <h3 className="text-sm font-bold md:text-center mb-2">
+                        ACTIONS
+                    </h3>
                     <ul className="flex flex-col gap-3">
-                        <TextButton
-                            text="Bookmark"
-                            icon={<Save2 size={24} />}
-                            onClick={() => {}}
-                        />
                         <FileUploadButton
                             onClick={handleFileUploadButtonClick}
                             fileInputRef={fileInputRef}
                             handleFileChange={handleFileChange}
+                        />
+                        <TextButton
+                            text="Bookmark"
+                            icon={<Save2 size={24} />}
+                            onClick={() => {}}
                         />
                         <TextButton
                             text="Share"
@@ -201,11 +263,11 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         <TextButton
                             text="Delete"
                             icon={<Trash size={24} />}
-                            onClick={() => {}}
+                            onClick={() => setShowDeleteDialog(true)}
                             danger={true}
                         />
                     </ul>
-                </section> */}
+                </section>
             </main>
         </>
     );
