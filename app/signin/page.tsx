@@ -41,9 +41,9 @@ export default function Page() {
     const [isPasswordError, setIsPasswordError] = useState(false);
 
     /**
-     * Provides required mutation queries to sign in users.  
+     * Provides required mutation queries to sign in users.
      * On success: Save the refresh and access tokens returned as cookies,
-     * save the user instance to local storage then redirect to the dashboard page.  
+     * save the user instance to local storage then redirect to the dashboard page.
      * On failure: Display an error message telling the user what went wrong.
      */
     const signInMutation = useMutation({
@@ -65,10 +65,10 @@ export default function Page() {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             }); // 5 days
-            
+
             localStorage.setItem(shared.keys.USER, JSON.stringify(user));
             console.log('saved credentials successfully.');
-            
+
             // Redirect to dashboard
             window.location.href = '/';
         },
@@ -228,6 +228,12 @@ export default function Page() {
                         />
                     </section>
                 </form>
+                <p className='mb-8 text-xs dark:text-neutral-300 text-neutral-500 text-center'>
+                    By signing in, you expressly consent to and agree with NoteRepo&apos;s{' '}
+                    <a href="/privacy-policy" target="_blank" className="dark:hover:text-neutral-100 underline underline-offset-4 transition-all">
+                        privacy policy.
+                    </a>
+                </p>
             </section>
         </CenteredGridLayout>
     );
