@@ -39,7 +39,7 @@ export default function Checkbox(props: CheckboxProps) {
             </div>
             <span
                 className={clsx(
-                    'opacity-70 hover:opacity-100 transition-opacity',
+                    'opacity-80 hover:opacity-100 transition-opacity',
                     props.checked ? '!opacity-100' : ''
                 )}
             >
