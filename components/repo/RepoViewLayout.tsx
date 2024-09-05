@@ -151,6 +151,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     backgroundColor: '#181B26',
                 }}
             />
+
             {/* UPLOADING FILE DIALOG */}
             {showUploadingDialog && (
                 <UploadingFileDialog progress={uploadProgress} />
@@ -166,7 +167,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             No Files Uploaded yet.
                         </p>
                     )}
-                    <ul className="my-2 grid grid-cols-2 gap-4 w-full">
+                    <ul className="my-2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {numberOfFiles != 0 &&
                             props.files.map((file) => (
                                 <li
