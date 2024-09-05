@@ -26,9 +26,9 @@ export default function FileIcon(props: FileIconProps) {
             return `${base}/file-docx.svg`;
         if (imgRgx.test(name)) return `${base}/file-img.svg`;
         if (name.includes('.ppt')) return `${base}/file-ppt.svg`;
-        return `${base}file-other.svg`;
+        return `${base}/file-other.svg`;
     };
-
+    
     return (
         <>
             <section className="flex items-center gap-3">

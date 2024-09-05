@@ -140,60 +140,60 @@ export default function DashboardView(props: DashboardProps) {
      */
     const onLoad = async () => {
         if (!isCacheExpired() && localStorage.getItem(shared.keys.REPOS)) {
+            console.log('[INFO]: Cache hit.');
             const cachedRepos = JSON.parse(
                 localStorage.getItem(shared.keys.REPOS)!
             );
-            console.log('Fallback on cache.');
             setRepos(cachedRepos);
             setLoading(false);
-            return;
-        }
-
-        try {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
-                'id'
-            ];
-            const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
-            let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
-
-            if (!accessToken) {
-                const { data: tokenData } = await axios.get(
-                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+        } else {
+            console.log("[INFO]: Cache miss.");
+            try {
+                const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
+                    'id'
+                ];
+                const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
+                let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
+    
+                if (!accessToken) {
+                    const { data: tokenData } = await axios.get(
+                        `${SERVER_URL}/auth/refreshToken/${userID}`,
+                        {
+                            headers: { Authorization: `Bearer ${refreshToken}` },
+                        }
+                    );
+    
+                    accessToken = tokenData.payload['access_token'];
+                    setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                        maxAge: 20 * 60,
+                        sameSite: 'strict',
+                    }); // 20 mins
+                }
+    
+                const { data: repoData } = await axios.get(
+                    `${SERVER_URL}/users/${userID}/repo`,
                     {
-                        headers: { Authorization: `Bearer ${refreshToken}` },
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
                     }
                 );
-
-                accessToken = tokenData.payload['access_token'];
-                setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
-                    maxAge: 20 * 60,
-                    sameSite: 'strict',
-                }); // 20 mins
+    
+                // Sort and save new data to cache
+                const sortedFetchedRepos = repoData['payload'].sort(
+                    (a: Repo, b: Repo) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                );
+    
+                setRepos(sortedFetchedRepos);
+                saveReposToCache(sortedFetchedRepos);
+            } catch (err) {
+                console.error('Failed to fetch repos', err);
+                setErrorMsg('Failed to fetch repos.');
+            } finally {
+                setLoading(false);
             }
-
-            const { data: repoData } = await axios.get(
-                `${SERVER_URL}/users/${userID}/repo`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                }
-            );
-
-            // Sort and save new data to cache
-            const sortedFetchedRepos = repoData['payload'].sort(
-                (a: Repo, b: Repo) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
-            );
-
-            setRepos(sortedFetchedRepos);
-            saveReposToCache(sortedFetchedRepos);
-        } catch (err) {
-            console.error('Failed to fetch repos', err);
-            setErrorMsg('Failed to fetch repos.');
-        } finally {
-            setLoading(false);
         }
     };
 
