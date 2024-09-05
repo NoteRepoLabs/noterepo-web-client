@@ -26,6 +26,7 @@ import RepoListItem from '../repo/RepoListItem';
 import shared from '@/shared/constants';
 import DashboardSettings from './DashboardSettings';
 import fetchRepos from '@/queries/fetchRepos';
+import Footer from '../ui/Footer';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -315,6 +316,7 @@ export default function DashboardView(props: DashboardProps) {
                     )}
                 </section>
             </section>
+            <Footer />
         </>
     );
 }

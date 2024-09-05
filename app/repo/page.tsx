@@ -9,6 +9,7 @@
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import RepoViewLayout from '@/components/repo/RepoViewLayout';
+import Footer from '@/components/ui/Footer';
 import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
@@ -157,6 +158,7 @@ export default function Page() {
                     )
                 )}
             </section>
+            <Footer />
         </ProtectedRoute>
     );
 }
