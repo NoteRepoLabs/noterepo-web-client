@@ -7,6 +7,7 @@
 
 import clsx from 'clsx';
 import { Tick02Icon } from 'hugeicons-react';
+import Tick from '@/components/svg/tick.svg';
 
 interface CheckboxProps {
     label: string;
@@ -31,10 +32,21 @@ export default function Checkbox(props: CheckboxProps) {
                 )}
             >
                 {props.checked && (
-                    <Tick02Icon
-                        size={16}
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    />
+                    <svg
+                        width="100%"
+                        height="100%"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M20 6L9 17L4 12"
+                            stroke="currentColor"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
                 )}
             </div>
             <span
