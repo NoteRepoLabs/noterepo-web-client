@@ -5,9 +5,9 @@
  *      - LICENSE: MIT
  */
 
-import { GridViewIcon, LeftToRightListBulletIcon } from 'hugeicons-react';
-import Checkbox from '../ui/Checkbox';
 import clsx from 'clsx';
+import { Grid2, Task } from 'iconsax-react';
+import Checkbox from '../ui/Checkbox';
 
 interface DashboardSettingsProps {
     privateOnly: boolean;
@@ -48,7 +48,7 @@ export default function DashboardSettings(props: DashboardSettingsProps) {
                             props.viewStyle == 'LIST' && '!opacity-100 font-bold'
                         )}
                     >
-                        <LeftToRightListBulletIcon size={18} />
+                        <Task size={18} />
                         <span>List</span>
                     </li>
                     <li
@@ -58,7 +58,7 @@ export default function DashboardSettings(props: DashboardSettingsProps) {
                             props.viewStyle == 'GRID' && '!opacity-100 font-bold'
                         )}
                     >
-                        <GridViewIcon size={18} />
+                        <Grid2 size={18} />
                         <span>Grid</span>
                     </li>
                 </ul>
