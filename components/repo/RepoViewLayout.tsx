@@ -241,7 +241,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     </ul>
                 </section>
 
-                <section className="border border-highlight w-full col-span-1 p-4 dark:bg-mod-700 rounded-none md:rounded-lg h-[200px] max-h-[200px]">
+                <section className="border border-highlight md:col-span-1 p-4 dark:bg-mod-700 m-2 md:m-0 rounded-lg h-[200px] max-h-[200px]">
                     <h3 className="text-sm font-bold md:text-center mb-2">
                         ACTIONS
                     </h3>

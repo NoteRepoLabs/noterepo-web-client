@@ -16,7 +16,7 @@ export default function Footer() {
 
     return (
         <footer className="w-full mb-2">
-            <ul className="flex gap-2 items-center text-sm dark:text-neutral-300 w-full justify-center py-2">
+            <ul className="flex gap-2 items-center text-xs dark:text-neutral-300 w-full justify-center py-2">
                 <li className={styles}><a target="_blank" href={META.github}>source code</a></li>
                 <li>•</li>
                 <li className={styles}><a href="/privacy-policy" target="_blank">privacy policy</a></li>
