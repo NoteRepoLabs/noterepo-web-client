@@ -99,7 +99,14 @@ export default function DashboardView(props: DashboardProps) {
      * to the server and cache the result.
      */
     const onLoad = async () => {
-        if (!isCacheExpired() && localStorage.getItem(shared.keys.REPOS)) {
+        // Only if force update isn't triggered
+        const shouldForceUpdate =
+            localStorage.getItem(shared.keys.FORCE_UPDATE) == 'true';
+        if (
+            !shouldForceUpdate &&
+            !isCacheExpired() &&
+            localStorage.getItem(shared.keys.REPOS)
+        ) {
             console.log('[INFO]: Cache hit.');
             const cachedRepos = JSON.parse(
                 localStorage.getItem(shared.keys.REPOS)!
@@ -154,6 +161,7 @@ export default function DashboardView(props: DashboardProps) {
                 console.error('Failed to fetch repos', err);
                 setErrorMsg('Failed to fetch repos.');
             } finally {
+                localStorage.setItem(shared.keys.FORCE_UPDATE, 'false');
                 setLoading(false);
             }
         }

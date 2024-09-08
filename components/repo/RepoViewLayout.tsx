@@ -57,7 +57,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         fetchRepos(
             accessToken,
             () => {
-                localStorage.setItem('forceUpdate', 'true');
+                localStorage.setItem(shared.keys.FORCE_UPDATE, 'true');
 
                 const cacheKey = `_cr-${getRepoIDFromParams()}`;
                 localStorage.removeItem(cacheKey);
@@ -146,7 +146,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             );
 
             // DEBUG: console.log(data);
-            localStorage.setItem('forceUpdate', 'true');
+            localStorage.setItem(shared.keys.FORCE_UPDATE, 'true');
             toast.success("We've uploaded your file!", {
                 ...toastConfig,
                 onOpen: () => {
@@ -172,8 +172,8 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         setShowUploadingDialog(false);
         const file = ev.target.files?.[0];
         if (file) {
-            if (file.size >= 50 * MEGABYTE) {
-                toast.error('File limit is 50MB', toastConfig);
+            if (file.size >= shared.fileLimit * MEGABYTE) {
+                toast.error(`File limit is ${shared.fileLimit}MB`, toastConfig);
                 return;
             }
             try {

@@ -10,12 +10,14 @@
  * obfuscation.
  */
 const shared = {
+    fileLimit: 50,
     keys: {
         REFRESH_TOKEN: "__rfs",
         ACCESS_TOKEN: "__acs",
         USER: "__su",
         REPOS: "__reps",
-        REPOS_CACHE: "_crp"
+        REPOS_CACHE: "_crp",
+        FORCE_UPDATE: "_forced"
     }
 }
 

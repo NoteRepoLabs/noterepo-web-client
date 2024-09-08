@@ -62,7 +62,7 @@ export default function Page() {
         setErrorMsg('');
         const localRepo = loadRepoFromLocalStorage();
 
-        if (localRepo && localStorage.getItem('forceUpdate') != 'true') {
+        if (localRepo && localStorage.getItem(shared.keys.FORCE_UPDATE) != 'true') {
             setRepo(localRepo);
             setLoading(false);
             return;
