@@ -19,7 +19,7 @@ export default function Footer() {
             <ul className="flex gap-2 items-center text-sm dark:text-neutral-300 w-full justify-center py-2">
                 <li className={styles}><a target="_blank" href={META.github}>source code</a></li>
                 <li>•</li>
-                <li className={styles}><a href="/privacy-policy">privacy policy</a></li>
+                <li className={styles}><a href="/privacy-policy" target="_blank">privacy policy</a></li>
                 <li>•</li>
                 <li>2024, NoteRepo OSS</li>
             </ul>
