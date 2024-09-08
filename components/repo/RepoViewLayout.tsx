@@ -26,6 +26,7 @@ import NetworkConfig from '@/config/network';
 import { ServerResponse } from 'http';
 import DeleteRepoDialog from './DeleteRepoDialog';
 import fetchRepos from '@/queries/fetchRepos';
+import Footer from '../ui/Footer';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];

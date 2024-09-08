@@ -18,7 +18,7 @@ import axios, { AxiosError } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Responsible for fetching and caching individual repo contents.
@@ -124,41 +124,43 @@ export default function Page() {
 
     return (
         <ProtectedRoute>
-            <section className="mt-8 w-full max-w-3xl min-h-[90%] mx-auto">
-                <header className="cursor-pointer text-neutral-300 hover:text-neutral-200 transition-colors">
-                    <a
-                        href="/"
-                        className="flex gap-2 items-center px-4 sm:px-0"
-                    >
-                        <ArrowLeft02Icon />
-                        <span>Back</span>
-                    </a>
-                </header>
-                {loading ? (
-                    <section className="w-full grid place-items-center">
-                        <SpinnerText text="Getting files." />
-                    </section>
-                ) : errorMsg ? (
-                    <section className="w-full grid place-items-center mt-8">
-                        <h3 className="text-neutral-300 text-xl">{errorMsg}</h3>
-                    </section>
-                ) : (
-                    repo && (
-                        <main className="mt-8">
-                            <div className="text-left px-4 sm:px-0 sm:text-center">
-                                <h2 className="font-bold text-3xl">
-                                    {repo.name}
-                                </h2>
-                                <p className="text-base mt-4 text-neutral-300">
-                                    {repo.description}
-                                </p>
-                            </div>
-                            <RepoViewLayout files={repo.files} />
-                        </main>
-                    )
-                )}
+            <section className="flex flex-col h-screen">
+                <section className="mt-8 w-full max-w-3xl mx-auto flex-grow">
+                    <header className="cursor-pointer text-neutral-300 hover:text-neutral-200 transition-colors">
+                        <a
+                            href="/"
+                            className="flex gap-2 items-center px-4 sm:px-0"
+                        >
+                            <ArrowLeft02Icon />
+                            <span>Back</span>
+                        </a>
+                    </header>
+                    {loading ? (
+                        <section className="w-full grid place-items-center">
+                            <SpinnerText text="Getting files." />
+                        </section>
+                    ) : errorMsg ? (
+                        <section className="w-full grid place-items-center mt-8">
+                            <h3 className="text-neutral-300 text-xl">{errorMsg}</h3>
+                        </section>
+                    ) : (
+                        repo && (
+                            <main className="mt-8">
+                                <div className="text-left px-4 sm:px-0 sm:text-center">
+                                    <h2 className="font-bold text-3xl">
+                                        {repo.name}
+                                    </h2>
+                                    <p className="text-base mt-4 text-neutral-300">
+                                        {repo.description}
+                                    </p>
+                                </div>
+                                <RepoViewLayout files={repo.files} />
+                            </main>
+                        )
+                    )}
+                </section>
+                <Footer />
             </section>
-            <Footer />
         </ProtectedRoute>
     );
 }

@@ -37,6 +37,8 @@ export default function FileIcon(props: FileIconProps) {
                     height={32}
                     src={chooseFileIcon(props.filename, true)}
                     alt="file-icon"
+                    priority={true}
+                    fetchPriority='high'
                     className="select-none"
                 />
                 <p className="truncate cursor-pointer dark:hover:text-neutral-100 hover:underline underline-offset-4">

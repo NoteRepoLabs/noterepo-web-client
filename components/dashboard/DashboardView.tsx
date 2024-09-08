@@ -172,159 +172,163 @@ export default function DashboardView(props: DashboardProps) {
     }, []);
 
     return (
-        <>
-            {/* CREATE REPO DIALOG */}
-            {showCreateDialog && (
-                <CreateRepoDialog
-                    onClick={() => setShowCreateDialog(false)}
-                    onSuccess={handleRepoModificationSuccess}
-                />
-            )}
+        <section className="flex flex-col h-screen">
+            <section className="flex-grow">
+                {/* CREATE REPO DIALOG */}
+                {showCreateDialog && (
+                    <CreateRepoDialog
+                        onClick={() => setShowCreateDialog(false)}
+                        onSuccess={handleRepoModificationSuccess}
+                    />
+                )}
 
-            {/* DELETE REPO DIALOG */}
-            {showDeleteDialog && (
-                <DeleteRepoDialog
-                    repoID={selectedRepoID}
-                    onCloseClick={() => setShowDeleteDialog(false)}
-                    onSuccess={handleRepoModificationSuccess}
-                />
-            )}
+                {/* DELETE REPO DIALOG */}
+                {showDeleteDialog && (
+                    <DeleteRepoDialog
+                        repoID={selectedRepoID}
+                        onCloseClick={() => setShowDeleteDialog(false)}
+                        onSuccess={handleRepoModificationSuccess}
+                    />
+                )}
 
-            <section className="w-full mt-8 py-8 h-full flex flex-col">
-                <div className="flex flex-col md:flex-row md:items-center justify-center w-full max-w-[1200px] px-2 gap-4 md:gap-2">
-                    <div className="flex-grow w-full">
-                        {/* SEARCH BAR */}
-                        <InputField
-                            name={'search'}
-                            type={'text'}
-                            id={'search-field'}
-                            value={search}
-                            placeholder={'Find something quickly'}
-                            required={false}
-                            iconPos="left"
-                            noMargin={true}
-                            icon={
-                                <SearchNormal1
-                                    size="24"
-                                    color="#A1A7B5"
-                                    variant="TwoTone"
-                                    className="absolute left-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
-                                />
-                            }
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                setSearch(e.target.value);
-                            }}
-                            style={{
-                                paddingRight: '16px',
-                                paddingLeft: '48px',
-                                width: '100%',
-                                marginBottom: '0px',
-                            }}
+                <section className="w-full mt-8 pt-8 flex flex-col">
+                    <div className="flex flex-col md:flex-row md:items-center justify-center w-full max-w-[1200px] px-2 gap-4 md:gap-2">
+                        <div className="flex-grow w-full">
+                            {/* SEARCH BAR */}
+                            <InputField
+                                name={'search'}
+                                type={'text'}
+                                id={'search-field'}
+                                value={search}
+                                placeholder={'Find something quickly'}
+                                required={false}
+                                iconPos="left"
+                                noMargin={true}
+                                icon={
+                                    <SearchNormal1
+                                        size="24"
+                                        color="#A1A7B5"
+                                        variant="TwoTone"
+                                        className="absolute left-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
+                                    />
+                                }
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    setSearch(e.target.value);
+                                }}
+                                style={{
+                                    paddingRight: '16px',
+                                    paddingLeft: '48px',
+                                    width: '100%',
+                                    marginBottom: '0px',
+                                }}
+                            />
+                        </div>
+
+                        {/* NEW REPO BUTTON */}
+                        <IconButton
+                            text="New"
+                            style={{ padding: '14px 8px' }}
+                            className="w-full md:!w-[140px] border-2 border-vibrant-green"
+                            onClick={() => setShowCreateDialog(true)}
                         />
                     </div>
 
-                    {/* NEW REPO BUTTON */}
-                    <IconButton
-                        text="New"
-                        style={{ padding: '14px 8px' }}
-                        className="w-full md:!w-[140px]"
-                        onClick={() => setShowCreateDialog(true)}
+                    <DashboardSettings
+                        privateOnly={privateOnly}
+                        savedOnly={savedOnly}
+                        viewStyle={repoView}
+                        togglePrivateOnly={() => setPrivateOnly(!privateOnly)}
+                        toggleSavedOnly={() => setSavedOnly(!savedOnly)}
+                        toggleListView={toggleListView}
+                        toggleGridView={toggleGridView}
                     />
-                </div>
 
-                <DashboardSettings
-                    privateOnly={privateOnly}
-                    savedOnly={savedOnly}
-                    viewStyle={repoView}
-                    togglePrivateOnly={() => setPrivateOnly(!privateOnly)}
-                    toggleSavedOnly={() => setSavedOnly(!savedOnly)}
-                    toggleListView={toggleListView}
-                    toggleGridView={toggleGridView}
-                />
-
-                <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mx-4 md:mx-0 cursor-default">
-                    Your Repositories
-                </h2>
-
-                {loading && (
-                    <div className="flex items-start px-4">
-                        <SpinnerText text="Hang on, getting your repos." />
-                    </div>
-                )}
-
-                {errorMsg && (
-                    <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
-                        {errorMsg}
+                    <h2 className="font-bold text-2xl md:text-3xl text-left md:text-center mx-4 md:mx-0 cursor-default">
+                        Your Repositories
                     </h2>
-                )}
 
-                {!loading && !errorMsg && repos.length === 0 && (
-                    <div className="flex flex-col justify-center mt-8">
-                        <div className="flex justify-center ml-8">
-                            <Image
-                                src={'/img/EmptyClip.svg'}
-                                alt={'empty'}
-                                width={160}
-                                height={200}
-                                priority={true}
-                            />
+                    {loading && (
+                        <div className="flex items-start px-4">
+                            <SpinnerText text="Hang on, getting your repos." />
                         </div>
-                        <h4 className="font-medium text-2xl mt-8 text-neutral-300 text-center">
-                            Nothing Here Yet.
-                        </h4>
-                    </div>
-                )}
-
-                <section className="px-4 my-8 w-full">
-                    {!loading &&
-                    !errorMsg &&
-                    repos.length != 0 &&
-                    filteredRepos.length != 0 ? (
-                        repoView == 'GRID' ? (
-                            <section className="w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
-                                {filteredRepos.map((repo, id) => (
-                                    <RepoGridItem
-                                        key={id}
-                                        repo={repo}
-                                        onClick={() => {
-                                            window.location.href = `/repo?user=${props.user.id}&repo=${repo.id}`;
-                                        }}
-                                        onDeleteClick={() => {
-                                            setSelectedRepoID(repo.id);
-                                            setShowDeleteDialog(true);
-                                        }}
-                                    />
-                                ))}
-                            </section>
-                        ) : (
-                            <section className="w-full flex flex-col gap-2">
-                                {filteredRepos.map((repo, id) => (
-                                    <RepoListItem
-                                        key={id}
-                                        userID={props.user.id}
-                                        repoID={repo.id}
-                                        repo={repo}
-                                        onDeleteClick={() => {
-                                            setSelectedRepoID(repo.id);
-                                            setShowDeleteDialog(true);
-                                        }}
-                                    />
-                                ))}
-                            </section>
-                        )
-                    ) : (
-                        !loading &&
-                        !errorMsg && (
-                            <h3 className="text-left md:text-center mt-8 text-neutral-500">
-                                No Repos match this filter.
-                            </h3>
-                        )
                     )}
+
+                    {errorMsg && (
+                        <h2 className="w-full text-center mt-8  text-neutral-300 text-xl">
+                            {errorMsg}
+                        </h2>
+                    )}
+
+                    {!loading && !errorMsg && repos.length === 0 && (
+                        <div className="flex flex-col justify-center mt-8">
+                            <div className="flex justify-center ml-8">
+                                <Image
+                                    src={'/img/EmptyClip.svg'}
+                                    alt={'empty'}
+                                    width={160}
+                                    height={200}
+                                    priority={true}
+                                />
+                            </div>
+                            <h4 className="font-medium text-2xl mt-8 text-neutral-300 text-center">
+                                Nothing Here Yet.
+                            </h4>
+                        </div>
+                    )}
+
+                    <section className="px-4 mt-8 w-full">
+                        {!loading &&
+                        !errorMsg &&
+                        repos.length != 0 &&
+                        filteredRepos.length != 0 ? (
+                            repoView == 'GRID' ? (
+                                <section className="w-full grid gap-4 grid-cols-1 justify-items-center sm:grid-cols-3">
+                                    {filteredRepos.map((repo, id) => (
+                                        <RepoGridItem
+                                            key={id}
+                                            repo={repo}
+                                            onClick={() => {
+                                                window.location.href = `/repo?user=${props.user.id}&repo=${repo.id}`;
+                                            }}
+                                            onDeleteClick={() => {
+                                                setSelectedRepoID(repo.id);
+                                                setShowDeleteDialog(true);
+                                            }}
+                                        />
+                                    ))}
+                                </section>
+                            ) : (
+                                <section className="w-full flex flex-col gap-2">
+                                    {filteredRepos.map((repo, id) => (
+                                        <RepoListItem
+                                            key={id}
+                                            userID={props.user.id}
+                                            repoID={repo.id}
+                                            repo={repo}
+                                            onDeleteClick={() => {
+                                                setSelectedRepoID(repo.id);
+                                                setShowDeleteDialog(true);
+                                            }}
+                                        />
+                                    ))}
+                                </section>
+                            )
+                        ) : (
+                            !loading &&
+                            !errorMsg && (
+                                <h3 className="text-left md:text-center mt-8 text-neutral-500">
+                                    No Repos match this filter.
+                                </h3>
+                            )
+                        )}
+                    </section>
                 </section>
             </section>
-            <Footer />
-        </>
+            <div className="mb-8">
+                <Footer />
+            </div>
+        </section>
     );
 }
