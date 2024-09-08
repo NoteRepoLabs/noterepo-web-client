@@ -15,7 +15,7 @@ export default function Footer() {
     const styles = "dark:hover:text-neutral-200 transition-all hover:underline underline-offset-4";
 
     return (
-        <footer className="w-full fixed left-0 bottom-0 dark:bg-neutral-900">
+        <footer className="w-full mt-8 mb-2">
             <ul className="flex gap-2 items-center text-sm dark:text-neutral-300 w-full justify-center py-2">
                 <li className={styles}><a target="_blank" href={META.github}>source code</a></li>
                 <li>•</li>

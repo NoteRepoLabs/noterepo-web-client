@@ -221,7 +221,7 @@ export default function DashboardView(props: DashboardProps) {
                     <IconButton
                         text="New"
                         style={{ padding: '14px 8px' }}
-                        className="scale-95 md:scale-100"
+                        className="w-full md:!w-[140px]"
                         onClick={() => setShowCreateDialog(true)}
                     />
                 </div>
