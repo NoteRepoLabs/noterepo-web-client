@@ -172,7 +172,7 @@ export default function DashboardView(props: DashboardProps) {
     }, []);
 
     return (
-        <section className="flex flex-col h-screen">
+        <section className="flex flex-col h-[calc(100vh-16px)]">
             <section className="flex-grow">
                 {/* CREATE REPO DIALOG */}
                 {showCreateDialog && (
