@@ -112,7 +112,7 @@ export default function Page() {
                 setErrorMsg('This repository does not exist.');
                 return;
             }
-            setErrorMsg('Could not fetch your files. Check your connection.');
+            setErrorMsg('Oops, something went wrong, check your connection.');
         } finally {
             setLoading(false);
         }
@@ -137,7 +137,7 @@ export default function Page() {
                     </header>
                     {loading ? (
                         <section className="w-full grid place-items-center">
-                            <SpinnerText text="Getting files." />
+                            <SpinnerText text="We're fetching your files." />
                         </section>
                     ) : errorMsg ? (
                         <section className="w-full grid place-items-center mt-8">

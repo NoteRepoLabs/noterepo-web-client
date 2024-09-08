@@ -250,8 +250,8 @@ export default function DashboardView(props: DashboardProps) {
                     </h2>
 
                     {loading && (
-                        <div className="flex items-start px-4">
-                            <SpinnerText text="Hang on, getting your repos." />
+                        <div className="flex justify-center items-start px-4">
+                            <SpinnerText text="Fetching your repos, just a moment..." />
                         </div>
                     )}
 
