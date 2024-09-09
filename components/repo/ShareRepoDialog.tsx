@@ -39,7 +39,7 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                         <span>{sharingLink}</span>
                     </div>
                     <button
-                        className="flex-grow bg-vibrant-green rounded-lg text-neutral-900"
+                        className="flex-grow bg-vibrant-green rounded-lg text-neutral-900 font-bold"
                         onClick={() => {
                             navigator.clipboard.writeText(sharingLink);
                         }}
