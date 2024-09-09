@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run clean && next dev -p 3456",
+    "dev": "npm run clean && npx next dev -p 3456",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
