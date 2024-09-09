@@ -25,6 +25,7 @@ import UploadingFileDialog from './UploadingFileDialog';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
+    repoID: string;
 }
 
 const toastConfig = {
@@ -211,7 +212,10 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
 
             {/* SHARE REPO DIALOG */}
             {showShareRepoDialog && (
-                <ShareRepoDialog onClick={() => setShowShareRepoDialog(false)} />
+                <ShareRepoDialog
+                    onClick={() => setShowShareRepoDialog(false)}
+                    repoID={props.repoID}
+                />
             )}
 
             <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">

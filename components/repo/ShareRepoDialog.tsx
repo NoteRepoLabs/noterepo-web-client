@@ -7,15 +7,19 @@
 
 'use client';
 
+import META from '@/shared/meta';
 import CloseCircleIcon from '../ui/CloseCircleIcon';
 import Modal from '../ui/Modal';
 
 interface ShareRepoDialogProps {
     onClick: () => void;
+    repoID: string;
 }
 
 /* Delete Repo Dialog Component */
 export default function ShareRepoDialog(props: ShareRepoDialogProps) {
+    const sharingLink = `${META.baseURL}/share?id=${props.repoID}`;
+
     return (
         <>
             <Modal>
@@ -27,6 +31,14 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                     Copy this link to share your repo with anyone! Note that
                     anything you&apos;ve uploaded will be publicly viewable.
                 </p>
+                <section className="flex gap-2">
+                    <div className="w-[90%] max-w-[90%]">
+                        <span>{sharingLink}</span>
+                    </div>
+                    <button className="flex-grow">
+                        <span>Copy</span>
+                    </button>
+                </section>
             </Modal>
         </>
     );
