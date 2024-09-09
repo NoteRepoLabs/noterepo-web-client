@@ -58,9 +58,18 @@ export default function Page() {
             console.error('An error occurred.', err);
             const serverErr = thisError.response?.data as ServerResponse;
 
-            thisError.code == 'ERR_NETWORK'
-                ? showErrorState("We're having trouble connecting right now.")
-                : showErrorState(serverErr.message ?? 'An error occurred.');
+            if (thisError.code == 'ERR_NETWORK') {
+                showErrorState("We're having trouble connecting right now.");
+            } else {
+                if (thisError.response?.status == 500) {
+                    showErrorState('This repository does not exist.');
+                } else {
+                    showErrorState(
+                        serverErr.message ??
+                            'Oops, an unknown error has occurred. Contact the devs at noterepo.engineering@gmail.com'
+                    );
+                }
+            }
         } finally {
             setIsLoading(false);
         }
