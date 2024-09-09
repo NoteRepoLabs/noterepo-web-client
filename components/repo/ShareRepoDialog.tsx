@@ -31,8 +31,8 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                     Copy this link to share your repo with anyone! Note that
                     anything you&apos;ve uploaded will be publicly viewable.
                 </p>
-                <section className="flex gap-2">
-                    <div className="w-[90%] max-w-[90%]">
+                <section className="flex gap-2 mt-4">
+                    <div className="w-[80%] dark:bg-neutral-700 max-w-md border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[48px] whitespace-nowrap" id="no-scroll">
                         <span>{sharingLink}</span>
                     </div>
                     <button className="flex-grow">

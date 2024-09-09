@@ -58,3 +58,8 @@ input::-ms-clear {
         text-wrap: balance;
     }
 }
+
+#no-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
