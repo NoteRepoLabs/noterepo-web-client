@@ -25,6 +25,7 @@ import UploadingFileDialog from './UploadingFileDialog';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
+    isPublic: boolean;
     repoID: string;
 }
 
@@ -261,11 +262,14 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             icon={<Save2 size={24} />}
                             onClick={() => {}}
                         />
-                        <TextButton
+                        {/* ONLY PUBLIC REPOS CAN BE SHARED */}
+                        {props.isPublic && (
+                            <TextButton
                             text="Share"
                             icon={<Link1 size={24} />}
                             onClick={() => setShowShareRepoDialog(true)}
                         />
+                        )}
                         <TextButton
                             text="Delete"
                             icon={<Trash size={24} />}

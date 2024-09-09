@@ -160,8 +160,9 @@ export default function Page() {
                                     </p>
                                 </div>
                                 <RepoViewLayout
-                                    files={repo.files}
                                     repoID={repo.id}
+                                    isPublic={repo.isPublic}
+                                    files={repo.files}
                                 />
                             </main>
                         )
