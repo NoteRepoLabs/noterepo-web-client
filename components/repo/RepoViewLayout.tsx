@@ -165,6 +165,12 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         }
     };
 
+    /**
+     * Handles selecting a file from the user's computer. Checks for file limit
+     * constraints and if passing, sends it to the server.
+     * @param ev Event
+     * @returns nothing
+     */
     const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
         ev
     ) => {
@@ -219,6 +225,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 />
             )}
 
+            {/* FILE LIST */}
             <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
                 <section className="col-span-3 w-full p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
@@ -247,6 +254,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     </ul>
                 </section>
 
+                {/* SIDEBAR */}
                 <section className="border border-highlight md:col-span-1 p-4 dark:bg-mod-700 m-2 md:m-0 rounded-lg md:h-[200px] max-h-[200px]">
                     <h3 className="text-sm font-bold md:text-center mb-2">
                         ACTIONS
