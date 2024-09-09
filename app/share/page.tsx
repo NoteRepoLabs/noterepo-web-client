@@ -56,13 +56,12 @@ export default function Page() {
         } catch (err) {
             const thisError = err as AxiosError;
             console.error('An error occurred.', err);
-            const serverErr = thisError.response?.data as ServerResponse;
 
             thisError.code == 'ERR_NETWORK'
                 ? showErrorState(
                       "We're having trouble connecting right now."
                   )
-                : showErrorState(serverErr.message ?? 'An error occurred.');
+                : showErrorState('This repo does not exist.');
         } finally {
             setIsLoading(false);
         }
