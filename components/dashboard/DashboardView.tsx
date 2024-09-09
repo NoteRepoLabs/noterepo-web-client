@@ -251,7 +251,7 @@ export default function DashboardView(props: DashboardProps) {
 
                     {loading && (
                         <div className="flex justify-center items-start px-4">
-                            <SpinnerText text="Fetching your repos, just a moment..." />
+                            <SpinnerText text="Just a moment..." />
                         </div>
                     )}
 
@@ -278,7 +278,7 @@ export default function DashboardView(props: DashboardProps) {
                         </div>
                     )}
 
-                    <section className="px-4 mt-8 w-full">
+                    <section className="px-4 mt-8 mb-4 w-full">
                         {!loading &&
                         !errorMsg &&
                         repos.length != 0 &&

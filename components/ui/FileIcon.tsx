@@ -28,7 +28,7 @@ export default function FileIcon(props: FileIconProps) {
         if (name.includes('.ppt')) return `${base}/file-ppt.svg`;
         return `${base}/file-other.svg`;
     };
-    
+
     return (
         <>
             <section className="flex items-center gap-3">

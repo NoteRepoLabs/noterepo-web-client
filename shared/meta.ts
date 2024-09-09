@@ -8,6 +8,7 @@
 
 // Metadata about the site
 const META = {
+    baseURL: 'https://noterepo.com.ng',
     github: 'https://github.com/NoteRepoLabs',
 };
 

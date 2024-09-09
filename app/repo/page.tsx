@@ -62,7 +62,10 @@ export default function Page() {
         setErrorMsg('');
         const localRepo = loadRepoFromLocalStorage();
 
-        if (localRepo && localStorage.getItem(shared.keys.FORCE_UPDATE) != 'true') {
+        if (
+            localRepo &&
+            localStorage.getItem(shared.keys.FORCE_UPDATE) != 'true'
+        ) {
             setRepo(localRepo);
             setLoading(false);
             return;
@@ -78,7 +81,7 @@ export default function Page() {
         try {
             const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
             let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
-            
+
             if (!accessToken) {
                 const { data: tokenData } = await axios.get(
                     `${SERVER_URL}/auth/refreshToken/${userID}`,
@@ -86,14 +89,14 @@ export default function Page() {
                         headers: { Authorization: `Bearer ${refreshToken}` },
                     }
                 );
-    
+
                 accessToken = tokenData.payload['access_token'];
                 setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
                     maxAge: 20 * 60,
                     sameSite: 'strict',
                 }); // 20 mins
             }
-            
+
             const { data: repoData } = await axios.get(
                 `${SERVER_URL}/users/${userID}/repo/${repoID}`,
                 {
@@ -141,7 +144,9 @@ export default function Page() {
                         </section>
                     ) : errorMsg ? (
                         <section className="w-full grid place-items-center mt-8">
-                            <h3 className="text-neutral-300 text-xl">{errorMsg}</h3>
+                            <h3 className="text-neutral-300 text-xl">
+                                {errorMsg}
+                            </h3>
                         </section>
                     ) : (
                         repo && (
@@ -154,7 +159,11 @@ export default function Page() {
                                         {repo.description}
                                     </p>
                                 </div>
-                                <RepoViewLayout files={repo.files} />
+                                <RepoViewLayout
+                                    repoID={repo.id}
+                                    isPublic={repo.isPublic}
+                                    files={repo.files}
+                                />
                             </main>
                         )
                     )}
