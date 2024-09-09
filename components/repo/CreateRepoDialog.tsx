@@ -8,21 +8,21 @@
 'use client';
 
 import spinningAnimation from '@/animated/spinner.json';
-import { ChangeEvent, useState } from 'react';
-import InputField from '../ui/InputField';
-import FilledButton from '../ui/FilledButton';
-import { CloseCircle } from 'iconsax-react';
-import Toggle from '../ui/Toggle';
-import ErrorText from '../ui/ErrorText';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
+import shared from '@/shared/constants';
 import ServerResponse from '@/types/serverTypes';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import Lottie from 'lottie-react';
-import shared from '@/shared/constants';
+import { ChangeEvent, useState } from 'react';
+import CloseCircleIcon from '../ui/CloseCircleIcon';
+import ErrorText from '../ui/ErrorText';
+import FilledButton from '../ui/FilledButton';
+import InputField from '../ui/InputField';
 import Modal from '../ui/Modal';
+import Toggle from '../ui/Toggle';
 
 /* Create Repo Dialog Props */
 interface CreateRepoDialogProps {
@@ -166,12 +166,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
 
     return (
         <Modal>
-            <CloseCircle
-                size="24"
-                variant="Bold"
-                className="text-neutral-300 cursor-pointer absolute top-2 left-2 transition-colors hover:text-neutral-500 dark:hover:text-neutral-100"
-                onClick={props.onClick}
-            />
+            <CloseCircleIcon onClick={props.onClick} />
             <h3 className="text-2xl font-bold text-center dark:text-neutral-100 text-neutral-700">
                 Create Your Repo
             </h3>

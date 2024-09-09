@@ -5,28 +5,23 @@
  *      - LICENSE: MIT
  */
 
-import { Save2, Link1, Trash } from 'iconsax-react';
-import TextButton from '../ui/TextButton';
-import FileUploadButton from '../ui/FileUploadButton';
-import { useRef, useState } from 'react';
-import { getCookie, setCookie } from 'cookies-next';
-import axios from 'axios';
 import { MEGABYTE, SERVER_URL } from '@/config/constants';
-import { useSearchParams } from 'next/navigation';
-import UploadingFileDialog from './UploadingFileDialog';
+import fetchRepos from '@/queries/fetchRepos';
+import shared from '@/shared/constants';
 import { RepoFile } from '@/types/repoTypes';
-import { File02Icon } from 'hugeicons-react';
+import axios from 'axios';
+import { getCookie, setCookie } from 'cookies-next';
+import { Link1, Save2, Trash } from 'iconsax-react';
+import { useSearchParams } from 'next/navigation';
+import { useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { truncateText } from '@/util/text';
-import shared from '@/shared/constants';
 import FileIcon from '../ui/FileIcon';
-import { useMutation } from '@tanstack/react-query';
-import NetworkConfig from '@/config/network';
-import { ServerResponse } from 'http';
+import FileUploadButton from '../ui/FileUploadButton';
+import TextButton from '../ui/TextButton';
 import DeleteRepoDialog from './DeleteRepoDialog';
-import fetchRepos from '@/queries/fetchRepos';
-import Footer from '../ui/Footer';
+import ShareRepoDialog from './ShareRepoDialog';
+import UploadingFileDialog from './UploadingFileDialog';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -46,6 +41,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
 
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showUploadingDialog, setShowUploadingDialog] = useState(false);
+    const [showShareRepoDialog, setShowShareRepoDialog] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
 
     /**
@@ -213,6 +209,11 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 <UploadingFileDialog progress={uploadProgress} />
             )}
 
+            {/* SHARE REPO DIALOG */}
+            {showShareRepoDialog && (
+                <ShareRepoDialog onClick={() => setShowShareRepoDialog(false)} />
+            )}
+
             <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
                 <section className="col-span-3 w-full p-4 overflow-hidden">
                     <h2 className="text-2xl font-bold mb-4">
@@ -259,7 +260,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         <TextButton
                             text="Share"
                             icon={<Link1 size={24} />}
-                            onClick={() => {}}
+                            onClick={() => setShowShareRepoDialog(true)}
                         />
                         <TextButton
                             text="Delete"
