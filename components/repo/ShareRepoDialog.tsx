@@ -32,10 +32,18 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                     anything you&apos;ve uploaded will be publicly viewable.
                 </p>
                 <section className="flex gap-2 mt-4">
-                    <div className="w-[80%] dark:bg-neutral-700 max-w-md border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[48px] whitespace-nowrap" id="no-scroll">
+                    <div
+                        className="w-[80%] dark:bg-neutral-700 max-w-md border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[48px] whitespace-nowrap"
+                        id="no-scroll"
+                    >
                         <span>{sharingLink}</span>
                     </div>
-                    <button className="flex-grow">
+                    <button
+                        className="flex-grow bg-vibrant-green rounded-lg text-neutral-900"
+                        onClick={() => {
+                            navigator.clipboard.writeText(sharingLink);
+                        }}
+                    >
                         <span>Copy</span>
                     </button>
                 </section>
