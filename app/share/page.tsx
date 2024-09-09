@@ -59,9 +59,7 @@ export default function Page() {
             const serverErr = thisError.response?.data as ServerResponse;
 
             thisError.code == 'ERR_NETWORK'
-                ? showErrorState(
-                      "We're having trouble connecting right now."
-                  )
+                ? showErrorState("We're having trouble connecting right now.")
                 : showErrorState(serverErr.message ?? 'An error occurred.');
         } finally {
             setIsLoading(false);
@@ -87,7 +85,7 @@ export default function Page() {
 
                 {/* METADATA + FILES */}
                 {!isLoading && !errorMsg && numberOfFiles != 0 && repo && (
-                    <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
+                    <>
                         <section className="flex flex-col items-center gap-2 mb-4">
                             <h4 className="text-xs font-bold dark:text-neutral-500 mb-4">
                                 VIEWING SHARED REPO
@@ -97,34 +95,36 @@ export default function Page() {
                                 {repo.description}
                             </p>
                         </section>
-                        <section className="col-span-3 w-full p-4 overflow-hidden">
-                            <h2 className="text-2xl font-bold mb-4">
-                                {numberOfFiles} File
-                                {numberOfFiles == 1 ? '' : 's'} Here
-                            </h2>
-                            {numberOfFiles == 0 && (
-                                <p className="my-2 text-neutral-300">
-                                    No Files Uploaded yet.
-                                </p>
-                            )}
-                            <ul className="my-2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                                {numberOfFiles != 0 &&
-                                    repo.files.map((file) => (
-                                        <li
-                                            key={file.id}
-                                            className="w-full text-neutral-300 col-span-1"
-                                        >
-                                            <div className="w-full">
-                                                <FileIcon
-                                                    filename={file.name}
-                                                    link={file.urlLink}
-                                                />
-                                            </div>
-                                        </li>
-                                    ))}
-                            </ul>
-                        </section>
-                    </main>
+                        <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
+                            <section className="col-span-3 w-full p-4 overflow-hidden">
+                                <h2 className="text-2xl font-bold mb-4">
+                                    {numberOfFiles} File
+                                    {numberOfFiles == 1 ? '' : 's'} Here
+                                </h2>
+                                {numberOfFiles == 0 && (
+                                    <p className="my-2 text-neutral-300">
+                                        No Files Uploaded yet.
+                                    </p>
+                                )}
+                                <ul className="my-2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                    {numberOfFiles != 0 &&
+                                        repo.files.map((file) => (
+                                            <li
+                                                key={file.id}
+                                                className="w-full text-neutral-300 col-span-1"
+                                            >
+                                                <div className="w-full">
+                                                    <FileIcon
+                                                        filename={file.name}
+                                                        link={file.urlLink}
+                                                    />
+                                                </div>
+                                            </li>
+                                        ))}
+                                </ul>
+                            </section>
+                        </main>
+                    </>
                 )}
             </section>
             <Footer />
