@@ -140,7 +140,7 @@ export default function Page() {
                     </header>
                     {loading ? (
                         <section className="w-full grid place-items-center">
-                            <SpinnerText text="We're fetching your files." />
+                            <SpinnerText text="Just a moment." />
                         </section>
                     ) : errorMsg ? (
                         <section className="w-full grid place-items-center mt-8">
