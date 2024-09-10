@@ -94,17 +94,18 @@ export default function Page() {
                 )}
 
                 {/* METADATA + FILES */}
-                {!isLoading && !errorMsg && repo && numberOfFiles != 0 ? (
+                {!isLoading && !errorMsg && repo && (
+                    <section className="flex flex-col items-center gap-2 mb-4">
+                        <h4 className="text-xs font-bold dark:text-neutral-500 mb-4">
+                            VIEWING SHARED REPO
+                        </h4>
+                        <h2 className="font-bold text-3xl">{repo.name}</h2>
+                        <p className="text-neutral-300">{repo.description}</p>
+                    </section>
+                )}
+
+                {repo && numberOfFiles != 0 ? (
                     <>
-                        <section className="flex flex-col items-center gap-2 mb-4">
-                            <h4 className="text-xs font-bold dark:text-neutral-500 mb-4">
-                                VIEWING SHARED REPO
-                            </h4>
-                            <h2 className="font-bold text-3xl">{repo.name}</h2>
-                            <p className="text-neutral-300">
-                                {repo.description}
-                            </p>
-                        </section>
                         <main className="mt-6 w-full md:grid md:grid-cols-4 flex flex-col">
                             <section className="col-span-3 w-full p-4 overflow-hidden">
                                 <h2 className="text-2xl font-bold mb-4">
@@ -135,8 +136,9 @@ export default function Page() {
                             </section>
                         </main>
                     </>
-                ) : !isLoading && !errorMsg && (
-                    <h3>No Files Uploaded.</h3>
+                ) : (
+                    !isLoading &&
+                    !errorMsg && <h3 className="mt-4 text-sm text-center">This user hasn&apos;t uploaded any files yet.</h3>
                 )}
             </section>
             <Footer />
