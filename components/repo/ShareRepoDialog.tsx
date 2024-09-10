@@ -43,18 +43,17 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                     Share this Repo
                 </h3>
                 <p className="my-2 px-2 text-neutral-500 dark:text-neutral-300">
-                    Copy this link to share your repo with anyone! Note that
-                    anything you&apos;ve uploaded will be publicly viewable.
+                    Copy this link to share your repo with anyone!
                 </p>
-                <section className="flex gap-2 mt-4 px-2 max-w-md">
+                <section className="flex flex-col md:flex-row gap-2 mt-4 px-2 max-w-[280px] sm:max-w-md">
                     <div
-                        className="w-[80%] dark:bg-neutral-700 max-w-md border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[44px] whitespace-nowrap"
+                        className="dark:bg-neutral-700 w-full border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[44px] whitespace-nowrap"
                         id="no-scroll"
                     >
                         <span>{sharingLink}</span>
                     </div>
                     <button
-                        className="flex-grow bg-vibrant-green rounded-lg text-neutral-900 font-bold hover:opacity-80 transition-all active:scale-95"
+                        className="flex-grow bg-vibrant-green rounded-lg text-neutral-900 font-bold hover:opacity-80 transition-all active:scale-95 px-3 py-2 md:py-0"
                         onClick={handleCopyEvent}
                     >
                         <span>Copy</span>
@@ -65,6 +64,9 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                         Copied!
                     </h4>
                 )}
+                <p className="text-neutral-500 dark:text-neutral-300 font-bold text-xs mt-6">
+                    Anything you&apos;ve uploaded will be publicly viewable.
+                </p>
             </Modal>
         </>
     );
