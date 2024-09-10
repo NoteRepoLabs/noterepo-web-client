@@ -64,7 +64,7 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                         Copied!
                     </h4>
                 )}
-                <p className="text-neutral-500 dark:text-neutral-300 font-bold text-xs mt-6">
+                <p className="text-neutral-500 dark:text-neutral-300 font-bold text-xs mt-6 px-2">
                     Anything you&apos;ve uploaded will be publicly viewable.
                 </p>
             </Modal>
