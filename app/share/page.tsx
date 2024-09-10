@@ -40,6 +40,7 @@ export default function Page() {
 
         // invalid page state
         if (!repoID) {
+            setIsLoading(false);
             showErrorState('Oops, this link is broken.');
             return;
         }
@@ -93,7 +94,7 @@ export default function Page() {
                 )}
 
                 {/* METADATA + FILES */}
-                {!isLoading && !errorMsg && numberOfFiles != 0 && repo && (
+                {!isLoading && !errorMsg && repo && numberOfFiles != 0 ? (
                     <>
                         <section className="flex flex-col items-center gap-2 mb-4">
                             <h4 className="text-xs font-bold dark:text-neutral-500 mb-4">
@@ -134,6 +135,8 @@ export default function Page() {
                             </section>
                         </main>
                     </>
+                ) : !isLoading && !errorMsg && (
+                    <h3>No Files Uploaded.</h3>
                 )}
             </section>
             <Footer />
