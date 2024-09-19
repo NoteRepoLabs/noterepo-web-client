@@ -16,7 +16,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FileIcon from '../ui/FileIcon';
+import FileListItem from '../ui/FileListItem';
 import FileUploadButton from '../ui/FileUploadButton';
 import TextButton from '../ui/TextButton';
 import DeleteRepoDialog from './DeleteRepoDialog';
@@ -137,7 +137,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     onUploadProgress: (progressEvent) => {
                         const percentCompleted = Math.round(
                             (progressEvent.loaded * 100) /
-                            (progressEvent.total ?? 1)
+                                (progressEvent.total ?? 1)
                         );
                         setUploadProgress(percentCompleted);
                     },
@@ -244,7 +244,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     className="w-full text-neutral-300 col-span-1"
                                 >
                                     <div className="w-full flex items-center">
-                                        <FileIcon
+                                        <FileListItem
                                             filename={file.name}
                                             link={file.urlLink}
                                         />
@@ -268,7 +268,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         <TextButton
                             text="Bookmark"
                             icon={<Save2 size={24} />}
-                            onClick={() => { }}
+                            onClick={() => {}}
                         />
                         {/* ONLY PUBLIC REPOS CAN BE SHARED */}
                         {props.isPublic && (

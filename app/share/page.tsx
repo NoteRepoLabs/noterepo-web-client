@@ -7,7 +7,7 @@
 
 'use client';
 
-import FileIcon from '@/components/ui/FileIcon';
+import FileListItem from '@/components/ui/FileListItem';
 import Footer from '@/components/ui/Footer';
 import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
@@ -125,7 +125,7 @@ export default function Page() {
                                                 className="w-full text-neutral-300 col-span-1"
                                             >
                                                 <div className="w-full">
-                                                    <FileIcon
+                                                    <FileListItem
                                                         filename={file.name}
                                                         link={file.urlLink}
                                                     />
@@ -138,7 +138,11 @@ export default function Page() {
                     </>
                 ) : (
                     !isLoading &&
-                    !errorMsg && <h3 className="mt-4 text-sm text-center">This user hasn&apos;t uploaded any files yet.</h3>
+                    !errorMsg && (
+                        <h3 className="mt-4 text-sm text-center">
+                            This user hasn&apos;t uploaded any files yet.
+                        </h3>
+                    )
                 )}
             </section>
             <Footer />

@@ -8,7 +8,7 @@
 import { Trash } from 'iconsax-react';
 import Image from 'next/image';
 
-interface FileIconProps {
+interface FileListItemProps {
     filename: string;
     link: string;
 }
@@ -17,7 +17,7 @@ interface FileIconProps {
  * Displays a file icon with the file name.
  * @returns a file icon component.
  */
-export default function FileIcon(props: FileIconProps) {
+export default function FileListItem(props: FileListItemProps) {
     const chooseFileIcon = (name: string, v2: boolean) => {
         const base = v2 ? '/img/files/v2' : '/img/files';
         const imgRgx = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
