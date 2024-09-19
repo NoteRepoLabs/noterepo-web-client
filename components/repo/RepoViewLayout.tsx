@@ -279,7 +279,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                             />
                         )}
                         <TextButton
-                            text="Delete"
+                            text="Delete Repo"
                             icon={<Trash size={24} />}
                             onClick={() => setShowDeleteDialog(true)}
                             danger={true}
