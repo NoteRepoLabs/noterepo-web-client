@@ -8,7 +8,7 @@
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
 
-const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
+export const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Caches a repo collection to local storage and tracks cache time.
@@ -26,6 +26,18 @@ export const saveReposToCache = (repos: Repo[]) => {
 export const isCacheExpired = (): boolean => {
     const cacheTime = JSON.parse(
         localStorage.getItem(shared.keys.REPOS_CACHE) || '0'
+    );
+    return Date.now() - cacheTime > CACHE_EXPIRY_TIME;
+};
+
+/**
+ * Responsible for invalidating single repo caches.
+ * @returns true if the current time has exceed single cache validity.
+ */
+export const isSingleCacheExpired = (id: string): boolean => {
+    const cacheTime = JSON.parse(
+        localStorage.getItem(`${shared.keys.SINGLE_REPO_CACHE_TIME}-${id}`) ||
+            '0'
     );
     return Date.now() - cacheTime > CACHE_EXPIRY_TIME;
 };

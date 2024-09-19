@@ -17,6 +17,7 @@ const shared = {
         USER: "__su",
         REPOS: "__reps",
         REPOS_CACHE: "_crp",
+        SINGLE_REPO_CACHE_TIME: "_tsr",
         FORCE_UPDATE: "_forced"
     }
 }

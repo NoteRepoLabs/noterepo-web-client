@@ -14,6 +14,7 @@ import SpinnerText from '@/components/ui/SpinnerText';
 import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
+import { isSingleCacheExpired } from '@/util/cache';
 import axios, { AxiosError } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
@@ -64,6 +65,7 @@ export default function Page() {
 
         if (
             localRepo &&
+            !isSingleCacheExpired(repoID as string) &&
             localStorage.getItem(shared.keys.FORCE_UPDATE) != 'true'
         ) {
             setRepo(localRepo);
@@ -106,6 +108,10 @@ export default function Page() {
 
             const thisRepo = repoData['payload'];
             localStorage.setItem(`_cr-${repoID}`, JSON.stringify(thisRepo));
+            localStorage.setItem(
+                `${shared.keys.SINGLE_REPO_CACHE_TIME}-${repoID}`,
+                JSON.stringify(Date.now())
+            );
             localStorage.setItem(shared.keys.FORCE_UPDATE, 'false');
             // DEBUG: console.log(thisRepo);
             setRepo(thisRepo);
