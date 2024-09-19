@@ -137,7 +137,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                     onUploadProgress: (progressEvent) => {
                         const percentCompleted = Math.round(
                             (progressEvent.loaded * 100) /
-                                (progressEvent.total ?? 1)
+                            (progressEvent.total ?? 1)
                         );
                         setUploadProgress(percentCompleted);
                     },
@@ -243,7 +243,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                     key={file.id}
                                     className="w-full text-neutral-300 col-span-1"
                                 >
-                                    <div className="w-full">
+                                    <div className="w-full flex items-center">
                                         <FileIcon
                                             filename={file.name}
                                             link={file.urlLink}
@@ -268,15 +268,15 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         <TextButton
                             text="Bookmark"
                             icon={<Save2 size={24} />}
-                            onClick={() => {}}
+                            onClick={() => { }}
                         />
                         {/* ONLY PUBLIC REPOS CAN BE SHARED */}
                         {props.isPublic && (
                             <TextButton
-                            text="Share"
-                            icon={<Link1 size={24} />}
-                            onClick={() => setShowShareRepoDialog(true)}
-                        />
+                                text="Share"
+                                icon={<Link1 size={24} />}
+                                onClick={() => setShowShareRepoDialog(true)}
+                            />
                         )}
                         <TextButton
                             text="Delete"

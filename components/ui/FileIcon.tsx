@@ -5,6 +5,7 @@
  *      - LICENSE: MIT
  */
 
+import { Trash } from 'iconsax-react';
 import Image from 'next/image';
 
 interface FileIconProps {
@@ -31,17 +32,17 @@ export default function FileIcon(props: FileIconProps) {
 
     return (
         <>
-            <section className="flex items-center gap-3">
+            <section className="flex items-center gap-3 justify-between group w-full">
                 <Image
                     width={32}
                     height={32}
                     src={chooseFileIcon(props.filename, true)}
                     alt="file-icon"
                     priority={true}
-                    fetchPriority='high'
+                    fetchPriority="high"
                     className="select-none"
                 />
-                <p className="truncate cursor-pointer dark:hover:text-neutral-100 hover:underline underline-offset-4">
+                <p className="truncate cursor-pointer dark:hover:text-neutral-100 hover:underline underline-offset-4 md:!w-[120px] md:!max-w-[120px] w-full max-w-full">
                     <a
                         href={props.link}
                         target="_blank"
@@ -51,6 +52,7 @@ export default function FileIcon(props: FileIconProps) {
                         {props.filename}
                     </a>
                 </p>
+                <Trash className="grow shrink-0 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" />
             </section>
         </>
     );
