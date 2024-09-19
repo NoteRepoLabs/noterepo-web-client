@@ -106,7 +106,7 @@ export default function Page() {
 
             const thisRepo = repoData['payload'];
             localStorage.setItem(`_cr-${repoID}`, JSON.stringify(thisRepo));
-            localStorage.setItem('forceUpdate', 'false');
+            localStorage.setItem(shared.keys.FORCE_UPDATE, 'false');
             // DEBUG: console.log(thisRepo);
             setRepo(thisRepo);
         } catch (err) {

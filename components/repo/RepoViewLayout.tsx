@@ -10,7 +10,7 @@ import fetchRepos from '@/queries/fetchRepos';
 import shared from '@/shared/constants';
 import { RepoFile } from '@/types/repoTypes';
 import axios from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
+import { CookieValueTypes, getCookie, setCookie } from 'cookies-next';
 import { Link1, Save2, Trash } from 'iconsax-react';
 import { useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -22,11 +22,20 @@ import TextButton from '../ui/TextButton';
 import DeleteRepoDialog from './DeleteRepoDialog';
 import ShareRepoDialog from './ShareRepoDialog';
 import UploadingFileDialog from './UploadingFileDialog';
+import { useMutation } from '@tanstack/react-query';
+import NetworkConfig from '@/config/network';
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
     isPublic: boolean;
     repoID: string;
+}
+
+interface IDeleteMutationReq {
+    accessToken: CookieValueTypes;
+    userID: string;
+    repoID: string;
+    fileID: string;
 }
 
 const toastConfig = {
@@ -41,10 +50,35 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
     const searchParams = useSearchParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const [shouldHide, setShouldHide] = useState(false);
+    const [targetID, setTargetID] = useState('');
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showUploadingDialog, setShowUploadingDialog] = useState(false);
     const [showShareRepoDialog, setShowShareRepoDialog] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+
+    const deleteFileMutation = useMutation({
+        mutationFn: (creds: IDeleteMutationReq) => {
+            const { userID, repoID, fileID } = creds;
+            const endpoint = `${SERVER_URL}/users/${userID}/repo/${repoID}/file/${fileID}`;
+            return axios.delete(endpoint, {
+                headers: {
+                    ...NetworkConfig.headers,
+                    Authorization: `Bearer ${creds.accessToken}`,
+                },
+            });
+        },
+        onSuccess: () => {
+            toast.success('File deleted successfully', toastConfig);
+            localStorage.setItem(shared.keys.FORCE_UPDATE, 'true');
+            setShouldHide(true);
+            window.location.reload();
+        },
+        onError: () => {
+            toast.error('Something went wrong.');
+            // window.location.reload();
+        },
+    });
 
     /**
      * Handles when a repo has successfully been modified.
@@ -194,6 +228,54 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
         }
     };
 
+    const handleFileDeletion = async (fileID: string) => {
+        setTargetID(fileID);
+        try {
+            const repoID = searchParams.get('repo');
+            const userID = searchParams.get('user');
+
+            if (!repoID || !userID) {
+                toast.error('This link is broken, cannot delete this file.');
+                window.location.href = '/';
+                return;
+            }
+
+            const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
+            let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
+
+            if (!accessToken) {
+                const { data: tokenData } = await axios.get(
+                    `${SERVER_URL}/auth/refreshToken/${userID}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${refreshToken}`,
+                        },
+                    }
+                );
+
+                accessToken = tokenData.payload['access_token'];
+                setCookie(shared.keys.ACCESS_TOKEN, accessToken, {
+                    maxAge: 20 * 60,
+                    sameSite: 'strict',
+                }); // 20 mins
+            }
+
+            deleteFileMutation.mutate({
+                repoID,
+                userID,
+                accessToken,
+                fileID,
+            });
+        } catch (err) {
+            // DEBUG:
+            console.error(err);
+            toast.error(
+                'Something went wrong while deleting this file',
+                toastConfig
+            );
+        }
+    };
+
     return (
         <>
             <ToastContainer
@@ -247,6 +329,17 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                         <FileListItem
                                             filename={file.name}
                                             link={file.urlLink}
+                                            isPending={
+                                                file.id == targetID &&
+                                                deleteFileMutation.isPending
+                                            }
+                                            onDeleteClick={() =>
+                                                handleFileDeletion(file.id)
+                                            }
+                                            hidden={
+                                                file.id == targetID &&
+                                                shouldHide
+                                            }
                                         />
                                     </div>
                                 </li>
