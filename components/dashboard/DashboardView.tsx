@@ -250,7 +250,7 @@ export default function DashboardView(props: DashboardProps) {
                     </h2>
 
                     {loading && (
-                        <div className="flex md:justify-center items-start px-4">
+                        <div className="flex md:justify-center items-start">
                             <SpinnerText text="Just a moment..." />
                         </div>
                     )}

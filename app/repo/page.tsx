@@ -139,9 +139,9 @@ export default function Page() {
                         </a>
                     </header>
                     {loading ? (
-                        <section className="w-full grid place-items-center">
-                            <SpinnerText text="Just a moment." />
-                        </section>
+                        <div className="flex md:justify-center items-start">
+                            <SpinnerText text="Just a moment..." />
+                        </div>
                     ) : errorMsg ? (
                         <section className="w-full grid place-items-center mt-8">
                             <h3 className="text-neutral-300 text-xl">
