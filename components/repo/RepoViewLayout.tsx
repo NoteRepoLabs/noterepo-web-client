@@ -329,6 +329,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                                         <FileListItem
                                             filename={file.name}
                                             link={file.urlLink}
+                                            shareMode={false}
                                             isPending={
                                                 file.id == targetID &&
                                                 deleteFileMutation.isPending

@@ -14,6 +14,7 @@ import Image from 'next/image';
 interface FileListItemProps {
     filename: string;
     link: string;
+    shareMode: boolean;
     isPending: boolean;
     hidden: boolean;
     onDeleteClick: () => void;
@@ -93,7 +94,7 @@ export default function FileListItem(props: FileListItemProps) {
                         )}
                     </p>
                 </div>
-                {!props.isPending && (
+                {!props.shareMode && !props.isPending && (
                     <Trash
                         className="shrink-0 cursor-pointer opacity-0 group-hover:opacity-100 transition-all hover:text-vibrant-red"
                         onClick={props.onDeleteClick}

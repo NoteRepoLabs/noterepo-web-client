@@ -128,6 +128,10 @@ export default function Page() {
                                                     <FileListItem
                                                         filename={file.name}
                                                         link={file.urlLink}
+                                                        shareMode={true}
+                                                        isPending={false}
+                                                        hidden={false}
+                                                        onDeleteClick={() => {}}
                                                     />
                                                 </div>
                                             </li>
