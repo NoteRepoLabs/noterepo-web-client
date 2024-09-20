@@ -5,13 +5,11 @@
  *      - LICENSE: MIT
  */
 
-import { HambergerMenu, LogoutCurve } from 'iconsax-react';
+import { Cancel01Icon, Menu09Icon, Settings02Icon, UserCircle02Icon } from 'hugeicons-react';
+import { useState } from 'react';
+import IconText from '../ui/IconText';
 import Logo from '../ui/Logo';
 import PublicRepos from './PublicRepos';
-import IconText from '../ui/IconText';
-import { UserTick } from 'iconsax-react';
-import { useState } from 'react';
-import { Cancel01Icon, Menu09Icon, Settings02Icon } from 'hugeicons-react';
 
 export interface DashboardHeaderProps {
     username: string;
@@ -72,19 +70,21 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                         >
                             <IconText
                                 text={props.username}
-                                icon={<UserTick size={24} />}
+                                icon={<UserCircle02Icon size={24} />}
                                 styles={{
-                                    marginRight: '16px'
+                                    marginRight: '16px',
                                 }}
                             />
                             <IconText
                                 text="Settings"
-                                icon={<Settings02Icon size={24} />}
+                                icon={
+                                    <Settings02Icon size={24} />
+                                }
                                 onClick={() =>
                                     (window.location.href = '/settings')
                                 }
                                 styles={{
-                                    marginLeft: '0px'
+                                    marginLeft: '0px',
                                 }}
                             />
                         </div>

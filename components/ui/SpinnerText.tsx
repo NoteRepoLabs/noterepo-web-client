@@ -28,7 +28,7 @@ export default function SpinnerText({ text }: SpinnerTextProps) {
                         }}
                     />
                 </div>
-                <h1 className="text-xl text-center text-neutral-300">
+                <h1 className="text-xl text-center text-neutral-500 dark:text-neutral-300">
                     {text}
                 </h1>
             </div>

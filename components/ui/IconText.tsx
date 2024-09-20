@@ -22,7 +22,7 @@ export default function IconText(props: IconTextProps) {
         <>
             <div
                 className={clsx(
-                    'inline-flex items-center cursor-pointer space-x-2 select-none dark:text-neutral-300 text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-200',
+                    'inline-flex items-center cursor-pointer space-x-2 select-none dark:text-neutral-300 text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-200',
                     props.classStyle
                 )}
                 style={{ ...props.styles }}

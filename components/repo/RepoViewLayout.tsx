@@ -314,7 +314,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
                     {numberOfFiles == 0 && (
-                        <p className="my-2 text-neutral-300">
+                        <p className="my-2 text-neutral-500 dark:text-neutral-300">
                             No Files Uploaded yet.
                         </p>
                     )}
@@ -349,7 +349,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 </section>
 
                 {/* SIDEBAR */}
-                <section className="border border-highlight md:col-span-1 p-4 dark:bg-mod-700 m-2 md:m-0 rounded-lg md:h-[200px] max-h-[200px]">
+                <section className="border border-neutral-300 dark:border-highlight md:col-span-1 p-4 dark:bg-mod-700 bg-mod-200 m-2 md:m-0 rounded-lg md:h-[200px] max-h-[200px]">
                     <h3 className="text-sm font-bold md:text-center mb-2">
                         ACTIONS
                     </h3>

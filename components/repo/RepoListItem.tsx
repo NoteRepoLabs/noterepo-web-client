@@ -40,8 +40,8 @@ export default function RepoListItem(props: RepoListItemProps) {
         >
             <header
                 className={clsx(
-                    'flex items-center justify-between hover:bg-mod-200 dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
-                    isExpanded ? 'dark:!bg-mod-700 !scale-100' : ''
+                    'flex items-center justify-between hover:bg-mod-300 dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
+                    isExpanded ? 'dark:!bg-mod-700 !bg-mod-300 !scale-100' : ''
                 )}
             >
                 <section className="flex items-center gap-2">
@@ -93,7 +93,7 @@ export default function RepoListItem(props: RepoListItemProps) {
 
             <section
                 className={clsx(
-                    'mt-[2px] p-4 dark:bg-mod-700 rounded-lg transition-all',
+                    'mt-[2px] p-4 dark:bg-mod-700 bg-mod-300 rounded-lg transition-all',
                     isExpanded
                         ? 'h-[148px] pointer-events-auto'
                         : 'h-[0px] pointer-events-none'

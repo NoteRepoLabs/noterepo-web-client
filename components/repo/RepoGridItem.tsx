@@ -22,7 +22,7 @@ interface RepoGridItemProps {
  */
 export default function RepoGridItem(props: RepoGridItemProps) {
     return (
-        <div className="w-full p-8 rounded-2xl cursor-pointer border-2 border-neutral-200 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group select-none hover:scale-95">
+        <div className="w-full p-8 rounded-2xl cursor-pointer border-2 border-mod-300 dark:border-highlight transition-all hover:border-vibrant-green dark:hover:border-vibrant-green group select-none hover:scale-95">
             <div className="group-hover:translate-y-[-10px] transition-all flex flex-col justify-between h-[120px]">
                 <div onClick={props.onClick}>
                     <h1 className="flex items-center gap-2 text-xl font-extrabold mb-2 max-w-[200px]">
