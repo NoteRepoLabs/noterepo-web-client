@@ -8,25 +8,25 @@
 'use client';
 
 import { SERVER_URL } from '@/config/constants';
+import fetchRepos from '@/queries/fetchRepos';
+import shared from '@/shared/constants';
+import Repo from '@/types/repoTypes';
 import { UserInterface } from '@/types/userTypes';
+import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
-import { SearchNormal1 } from 'iconsax-react';
+import { Search01Icon } from 'hugeicons-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import CreateRepoDialog from '../repo/CreateRepoDialog';
-import RepoGridItem from '../repo/RepoGridItem';
-import InputField from '../ui/InputField';
-import IconButton from './IconButton';
-import Repo from '@/types/repoTypes';
 import DeleteRepoDialog from '../repo/DeleteRepoDialog';
-import SpinnerText from '../ui/SpinnerText';
-import { isCacheExpired, saveReposToCache } from '@/util/cache';
+import RepoGridItem from '../repo/RepoGridItem';
 import RepoListItem from '../repo/RepoListItem';
-import shared from '@/shared/constants';
-import DashboardSettings from './DashboardSettings';
-import fetchRepos from '@/queries/fetchRepos';
 import Footer from '../ui/Footer';
+import InputField from '../ui/InputField';
+import SpinnerText from '../ui/SpinnerText';
+import DashboardSettings from './DashboardSettings';
+import IconButton from './IconButton';
 
 export interface DashboardProps {
     user: UserInterface;
@@ -47,6 +47,7 @@ export default function DashboardView(props: DashboardProps) {
     const [search, setSearch] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [repoView, setRepoView] = useState<ViewType>('LIST');
+    const [prevAction, setPrevAction] = useState('');
     const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -78,6 +79,13 @@ export default function DashboardView(props: DashboardProps) {
      * @param accessToken Users access token for elevated privileges
      */
     const handleRepoModificationSuccess = (accessToken: string) => {
+        // Delete cache for deleted repos
+        if (prevAction == 'DELETE') {
+            localStorage.removeItem(
+                `_cr-${selectedRepoID}`
+            );
+            setPrevAction('');
+        }
         fetchRepos(
             accessToken,
             (data) => {
@@ -205,10 +213,8 @@ export default function DashboardView(props: DashboardProps) {
                                 iconPos="left"
                                 noMargin={true}
                                 icon={
-                                    <SearchNormal1
+                                    <Search01Icon
                                         size="24"
-                                        color="#A1A7B5"
-                                        variant="TwoTone"
                                         className="absolute left-[16px] top-[50%] transform -translate-y-1/2 cursor-pointer"
                                     />
                                 }
@@ -309,6 +315,7 @@ export default function DashboardView(props: DashboardProps) {
                                             repo={repo}
                                             onDeleteClick={() => {
                                                 setSelectedRepoID(repo.id);
+                                                setPrevAction('DELETE');
                                                 setShowDeleteDialog(true);
                                             }}
                                         />
@@ -316,6 +323,7 @@ export default function DashboardView(props: DashboardProps) {
                                 </section>
                             )
                         ) : (
+                            repos.length != 0 &&
                             !loading &&
                             !errorMsg && (
                                 <h3 className="text-left md:text-center mt-8 text-neutral-500">

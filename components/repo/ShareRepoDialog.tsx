@@ -47,7 +47,7 @@ export default function ShareRepoDialog(props: ShareRepoDialogProps) {
                 </p>
                 <section className="flex flex-col md:flex-row gap-2 mt-4 px-2 max-w-[280px] sm:max-w-md">
                     <div
-                        className="dark:bg-neutral-700 w-full border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[44px] whitespace-nowrap"
+                        className="dark:bg-neutral-700 w-full border-neutral-300 dark:border-highlight border-2 rounded-md p-2 overflow-x-scroll !h-[44px] whitespace-nowrap"
                         id="no-scroll"
                     >
                         <span>{sharingLink}</span>

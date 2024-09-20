@@ -74,7 +74,7 @@ export default function FileListItem(props: FileListItemProps) {
 
                     <p
                         className={clsx(
-                            'truncate cursor-pointer dark:hover:text-neutral-100 hover:underline underline-offset-4 md:!w-[120px] md:!max-w-[120px] w-full max-w-full',
+                            'truncate cursor-pointer text-neutral-500 dark:text-neutral-200 dark:hover:text-neutral-100 hover:underline underline-offset-4 md:!w-[120px] md:!max-w-[120px] w-full max-w-full',
                             props.isPending
                                 ? '!opacity-50 hover:!no-underline'
                                 : ''

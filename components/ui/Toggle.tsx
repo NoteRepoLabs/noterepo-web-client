@@ -23,7 +23,7 @@ export default function Toggle({ text, toggled, onClick }: ToggleProps) {
                 ></div>
                 <div
                     className={`w-[48px] h-[26px] rounded-3xl ${
-                        toggled ? 'bg-vibrant-green' : 'bg-neutral-500'
+                        toggled ? 'bg-vibrant-green' : 'dark:even:bg-neutral-500 bg-neutral-300'
                     }`}
                 ></div>
             </div>

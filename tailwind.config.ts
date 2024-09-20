@@ -25,6 +25,8 @@ const config: Config = {
          'neutral-100':   '#FFFFFF',
          'highlight':     '#282C3A',
          'mod-700':       '#11131A',
+         'mod-200':       '#F3F3F3',
+         'mod-300':       '#DDDDDD',
          'vibrant-green': '#30F094',
          'vibrant-red':   '#FA4E81',
       },

@@ -36,7 +36,7 @@ export default function OutlineButton({
             }`}
             style={{ ...styles }}
         >
-            {icon && <div className="w-8 max-w-8 h-8 max-h-8">{icon}</div>}
+            {icon && <div className="w-6 max-w-6 h-6 max-h-6">{icon}</div>}
             <span className={clsx(tinyText ? '!text-base' : '')}>{text}</span>
         </button>
     );

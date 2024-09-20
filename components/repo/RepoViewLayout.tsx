@@ -24,6 +24,7 @@ import ShareRepoDialog from './ShareRepoDialog';
 import UploadingFileDialog from './UploadingFileDialog';
 import { useMutation } from '@tanstack/react-query';
 import NetworkConfig from '@/config/network';
+import Image from "next/image";
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -314,9 +315,22 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
                     {numberOfFiles == 0 && (
-                        <p className="my-2 text-neutral-300">
-                            No Files Uploaded yet.
-                        </p>
+                        <>
+                            <div className="flex flex-col justify-center mt-12">
+                                <div className="flex justify-center">
+                                    <Image
+                                        src={'/img/EmptyBooks.svg'}
+                                        alt={'empty'}
+                                        width={200}
+                                        height={200}
+                                        priority={true}
+                                    />
+                                </div>
+                                <h3 className="mt-4 text-sm text-center text-neutral-500 dark:text-neutral-300">
+                                    No Files Uploaded yet.
+                                </h3>
+                            </div>
+                        </>
                     )}
                     <ul className="my-2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {numberOfFiles != 0 &&
@@ -349,7 +363,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                 </section>
 
                 {/* SIDEBAR */}
-                <section className="border border-highlight md:col-span-1 p-4 dark:bg-mod-700 m-2 md:m-0 rounded-lg md:h-[200px] max-h-[200px]">
+                <section className="border border-neutral-300 dark:border-highlight md:col-span-1 p-4 dark:bg-mod-700 bg-mod-200 m-2 md:m-0 rounded-lg md:h-[200px] max-h-[200px]">
                     <h3 className="text-sm font-bold md:text-center mb-2">
                         ACTIONS
                     </h3>

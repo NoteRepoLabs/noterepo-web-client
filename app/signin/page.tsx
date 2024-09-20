@@ -135,7 +135,7 @@ export default function Page() {
         <CenteredGridLayout>
             <section className="w-full max-w-lg mx-auto">
                 <Header
-                    content="You're one step away from accessing all your lecture materials, sign in to continue."
+                    content="We're excited to see you again. Your notes and ideas are right where you left them."
                     aside="Sign In"
                 />
                 <form className="my-8 w-full">
@@ -228,9 +228,14 @@ export default function Page() {
                         />
                     </section>
                 </form>
-                <p className='mb-8 text-xs dark:text-neutral-300 text-neutral-500 text-center'>
-                    By signing in, you expressly consent to and agree with NoteRepo&apos;s{' '}
-                    <a href="/privacy-policy" target="_blank" className="dark:hover:text-neutral-100 underline underline-offset-4 transition-all">
+                <p className="mb-8 text-xs dark:text-neutral-300 text-neutral-500 text-center">
+                    By signing in, you expressly consent to and agree with
+                    NoteRepo&apos;s{' '}
+                    <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        className="dark:hover:text-neutral-100 underline underline-offset-4 transition-all"
+                    >
                         privacy policy.
                     </a>
                 </p>

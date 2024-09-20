@@ -135,7 +135,7 @@ export default function DeleteRepoDialog(props: DeleteRepoDialogProps) {
                 It cannot be undone.
             </p>
             {errorMsg && <ErrorText errorMsg={errorMsg} />}
-            <section className="w-full mt-4 flex gap-2 items-center">
+            <section className="w-full max-w-[90%] mt-4 flex gap-2 items-center">
                 <FilledButton
                     text="No, keep it"
                     onClick={props.onCloseClick}
