@@ -5,14 +5,13 @@
  *      - LICENSE: MIT
  */
 
+// import { HashLoader } from 'react-spinners';
 import BarLoader from 'react-spinners/BarLoader';
 
 export default function LoadingSpinner() {
     return (
         <div className="flex">
-            <BarLoader loading={true} color={'#FFFFFF'} />
-
-            {/* <h3 className="ml-4 font-bold">Loading!</h3> */}
+            <BarLoader loading={true} color={"#30F094"} />
         </div>
     );
 }

@@ -40,7 +40,7 @@ export default function RepoListItem(props: RepoListItemProps) {
         >
             <header
                 className={clsx(
-                    'flex items-center justify-between dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
+                    'flex items-center justify-between hover:bg-mod-200 dark:hover:bg-mod-700 p-2 rounded-lg cursor-pointer transition-all hover:scale-[.98] select-none group dark:bg-neutral-900',
                     isExpanded ? 'dark:!bg-mod-700 !scale-100' : ''
                 )}
             >

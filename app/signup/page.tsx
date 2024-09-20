@@ -99,7 +99,7 @@ export default function Page() {
         <CenteredGridLayout>
             <section className="w-full max-w-lg mx-auto">
                 <Header
-                    content="Create a new account to get started."
+                    content="Let's create a new account to get started!"
                     aside="Sign Up"
                 />
                 <form className="my-8 w-full" action="/">
