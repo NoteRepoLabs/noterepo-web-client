@@ -27,7 +27,7 @@ export default function TextButton({
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`flex items-center gap-2 dark:hover:text-neutral-200  border-neutral-300 text-neutral-500 rounded-xl md:rounded-2xl dark:border-highlight dark:text-neutral-300  transition-all disabled:!opacity-70 active:scale-[.98] ${
+            className={`flex items-center gap-2 hover:text-neutral-900 dark:hover:text-neutral-200  border-neutral-300 text-neutral-500 rounded-xl md:rounded-2xl dark:border-highlight dark:text-neutral-300  transition-all disabled:!opacity-70 active:scale-[.98] ${
                 danger ? `hover:!text-vibrant-red` : ''
             }`}
             style={{ ...styles }}

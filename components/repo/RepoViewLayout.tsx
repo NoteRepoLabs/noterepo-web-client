@@ -24,6 +24,7 @@ import ShareRepoDialog from './ShareRepoDialog';
 import UploadingFileDialog from './UploadingFileDialog';
 import { useMutation } from '@tanstack/react-query';
 import NetworkConfig from '@/config/network';
+import Image from "next/image";
 
 interface RepoViewLayoutProps {
     files: RepoFile[];
@@ -314,9 +315,22 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
                         {numberOfFiles} File{numberOfFiles == 1 ? '' : 's'} Here
                     </h2>
                     {numberOfFiles == 0 && (
-                        <p className="my-2 text-neutral-500 dark:text-neutral-300">
-                            No Files Uploaded yet.
-                        </p>
+                        <>
+                            <div className="flex flex-col justify-center mt-12">
+                                <div className="flex justify-center">
+                                    <Image
+                                        src={'/img/EmptyBooks.svg'}
+                                        alt={'empty'}
+                                        width={200}
+                                        height={200}
+                                        priority={true}
+                                    />
+                                </div>
+                                <h3 className="mt-4 text-sm text-center text-neutral-500 dark:text-neutral-300">
+                                    No Files Uploaded yet.
+                                </h3>
+                            </div>
+                        </>
                     )}
                     <ul className="my-2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {numberOfFiles != 0 &&

@@ -47,6 +47,7 @@ export default function DashboardView(props: DashboardProps) {
     const [search, setSearch] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [repoView, setRepoView] = useState<ViewType>('LIST');
+    const [prevAction, setPrevAction] = useState('');
     const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -78,6 +79,13 @@ export default function DashboardView(props: DashboardProps) {
      * @param accessToken Users access token for elevated privileges
      */
     const handleRepoModificationSuccess = (accessToken: string) => {
+        // Delete cache for deleted repos
+        if (prevAction == 'DELETE') {
+            localStorage.removeItem(
+                `_cr-${selectedRepoID}`
+            );
+            setPrevAction('');
+        }
         fetchRepos(
             accessToken,
             (data) => {
@@ -307,6 +315,7 @@ export default function DashboardView(props: DashboardProps) {
                                             repo={repo}
                                             onDeleteClick={() => {
                                                 setSelectedRepoID(repo.id);
+                                                setPrevAction('DELETE');
                                                 setShowDeleteDialog(true);
                                             }}
                                         />

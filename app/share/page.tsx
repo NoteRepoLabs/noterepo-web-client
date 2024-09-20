@@ -17,6 +17,7 @@ import ServerResponse from '@/types/serverTypes';
 import axios, { AxiosError } from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 /**
  * Responsible for listing shared public repositories
@@ -96,11 +97,13 @@ export default function Page() {
                 {/* METADATA + FILES */}
                 {!isLoading && !errorMsg && repo && (
                     <section className="flex flex-col items-center gap-2 mb-4">
-                        <h4 className="text-xs font-bold dark:text-neutral-500 mb-4">
+                        <h4 className="text-xs font-bold text-neutral-500 mb-4">
                             VIEWING SHARED REPO
                         </h4>
                         <h2 className="font-bold text-3xl">{repo.name}</h2>
-                        <p className="text-neutral-300">{repo.description}</p>
+                        <p className="dark:text-neutral-300 text-neutral-500">
+                            {repo.description}
+                        </p>
                     </section>
                 )}
 
@@ -143,9 +146,20 @@ export default function Page() {
                 ) : (
                     !isLoading &&
                     !errorMsg && (
-                        <h3 className="mt-4 text-sm text-center">
-                            This user hasn&apos;t uploaded any files yet.
-                        </h3>
+                        <div className="flex flex-col justify-center mt-12">
+                            <div className="flex justify-center">
+                                <Image
+                                    src={'/img/EmptyBooks.svg'}
+                                    alt={'empty'}
+                                    width={200}
+                                    height={200}
+                                    priority={true}
+                                />
+                            </div>
+                            <h3 className="mt-4 text-sm text-center text-neutral-500 dark:text-neutral-300">
+                                This user hasn&apos;t uploaded any files yet.
+                            </h3>
+                        </div>
                     )
                 )}
             </section>
