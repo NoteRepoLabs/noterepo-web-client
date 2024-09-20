@@ -6,8 +6,6 @@
  */
 
 import clsx from 'clsx';
-import { Tick02Icon } from 'hugeicons-react';
-import Tick from '@/components/svg/tick.svg';
 
 interface CheckboxProps {
     label: string;
