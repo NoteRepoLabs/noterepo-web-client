@@ -10,6 +10,7 @@ import axios from 'axios';
  * Firstly we get the user's ID and refresh token and request for an access token.
  * Then use the access token to request for the repo collection, the request is cached
  * to improve performance.
+ * @param userID user identification
  * @param accessToken Users access token for elevated privileges
  * @param onSuccess Callback to handle the data returned
  * @param cacheFunction Callback to handle data caching

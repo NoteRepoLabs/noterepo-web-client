@@ -89,6 +89,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
      */
     const handleRepoModificationSuccess = (accessToken: string) => {
         fetchRepos(
+            searchParams.get('user')!,
             accessToken,
             () => {
                 localStorage.setItem(shared.keys.FORCE_UPDATE, 'true');
@@ -289,6 +290,7 @@ export default function RepoViewLayout(props: RepoViewLayoutProps) {
             {/* DELETE REPO DIALOG */}
             {showDeleteDialog && (
                 <DeleteRepoDialog
+                    userID={searchParams.get('user')!}
                     repoID={getRepoIDFromParams()}
                     onCloseClick={() => setShowDeleteDialog(false)}
                     onSuccess={handleRepoModificationSuccess}
