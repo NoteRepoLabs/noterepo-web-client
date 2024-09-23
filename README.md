@@ -38,6 +38,16 @@ chmod +x ./clean.sh ./build.sh ./dev.sh
 
 On Windows systems, you can use `npm run dev`.
 
+## Encryption Key
+
+NoteRepo encrypts data it saves on your device to improve security and as such you might encounter errors while trying to build from source. To fix this, generate and store your encryption key in a `.env` file.
+
+```sh
+openssl rand -base64 32
+```
+
+You can paste the key in the `.env.example` file and rename that to `.env`.
+
 ## Bug Reports
 
 The client is still in its early stages, so bugs may be present. You can report any bugs you find using the `issues` tab if it's not already present and being fixed.
