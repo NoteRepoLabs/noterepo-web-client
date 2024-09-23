@@ -22,7 +22,7 @@ export default function Page() {
                     <span>Back</span>
                 </a>
                 <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-300 mb-2">
-                    <h1 className="text-3xl mb-2 font-bold">Account</h1>
+                    <h1 className="text-3xl mb-2 font-bold">My Account</h1>
                 </header>
             </Container>
         </>
