@@ -27,6 +27,7 @@ import InputField from '../ui/InputField';
 import SpinnerText from '../ui/SpinnerText';
 import DashboardSettings from './DashboardSettings';
 import IconButton from './IconButton';
+import { decrypt } from '@/util/encryption';
 
 export interface DashboardProps {
     user: IUser;
@@ -119,9 +120,7 @@ export default function DashboardView(props: DashboardProps) {
             localStorage.getItem(shared.keys.REPOS)
         ) {
             console.log('[INFO]: Cache hit.');
-            const cachedRepos = JSON.parse(
-                localStorage.getItem(shared.keys.REPOS)!
-            );
+            const cachedRepos = decrypt(localStorage.getItem(shared.keys.REPOS));
             setRepos(cachedRepos);
             setLoading(false);
         } else {

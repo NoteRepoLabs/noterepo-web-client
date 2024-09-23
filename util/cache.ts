@@ -7,6 +7,7 @@
 
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
+import { encrypt } from './encryption';
 
 export const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
 
@@ -15,7 +16,7 @@ export const CACHE_EXPIRY_TIME = 5 * 60 * 1000; // 5 minutes
  * @param repos a collection of repos belonging to this user.
  */
 export const saveReposToCache = (repos: Repo[]) => {
-    localStorage.setItem(shared.keys.REPOS, JSON.stringify(repos));
+    localStorage.setItem(shared.keys.REPOS, encrypt(repos));
     localStorage.setItem(shared.keys.REPOS_CACHE, JSON.stringify(Date.now()));
 };
 

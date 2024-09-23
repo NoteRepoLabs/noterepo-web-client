@@ -15,11 +15,7 @@ const key = process.env.NEXT_PUBLIC_ENCRYPTION_KEY ?? '';
  * @returns the encrypted data
  */
 export const encrypt = (data: any): string => {
-    if (!key) {
-        alert('THE KEY IS MISSING!');
-        alert(key);
-        throw new Error('Missing Key');
-    }
+    if (!key) throw new Error('Missing Key');
     const encryptedData = AES.encrypt(JSON.stringify(data), key).toString();
     return encryptedData;
 };
@@ -30,6 +26,7 @@ export const encrypt = (data: any): string => {
  * @returns any valid object resulting from the decryption.
  */
 export const decrypt = (cipherText: any): any => {
+    if (!key) throw new Error('Missing Key');
     const bytes = AES.decrypt(cipherText, key);
     const decryptedData = JSON.parse(bytes.toString(enc.Utf8));
     return decryptedData;
