@@ -18,7 +18,8 @@ const shared = {
         REPOS: "__reps",
         REPOS_CACHE: "_crp",
         SINGLE_REPO_CACHE_TIME: "_tsr",
-        FORCE_UPDATE: "_forced"
+        FORCE_UPDATE: "_forced",
+        REPO_VIEW: "_device_repo_view"
     }
 }
 

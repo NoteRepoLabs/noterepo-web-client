@@ -7,15 +7,39 @@
 
 'use client';
 
+import DropDown from '@/components/ui/DropDown';
 import Footer from '@/components/ui/Footer';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
+import shared from '@/shared/constants';
 import { ArrowLeft02Icon, LinkSquare01Icon } from 'hugeicons-react';
+import { useTheme } from 'next-themes';
+import { useState } from 'react';
 
 /*
     Responsible for displaying and managing user preferences.
 */
 export default function Page() {
+    const { setTheme } = useTheme();
+
+    const [selectedDefaultView, setSelectedDefaultView] = useState(
+        localStorage.getItem(shared.keys.REPO_VIEW) ?? 'list'
+    );
+
+    const [selectedAppTheme, setSelectedAppTheme] = useState(
+        localStorage.getItem('theme') ?? 'dark'
+    );
+
+    const handleSetDefaultView = (view: 'list' | 'grid') => {
+        localStorage.setItem(shared.keys.REPO_VIEW, view);
+        setSelectedDefaultView(view);
+    };
+
+    const handleSetAppTheme = (theme: 'light' | 'dark') => {
+        setTheme(theme);
+        setSelectedAppTheme(theme);
+    };
+
     return (
         <Container>
             <a
@@ -25,8 +49,8 @@ export default function Page() {
                 <ArrowLeft02Icon />
                 <span>Back</span>
             </a>
-            <header className="mt-2 py-2 border-b dark:border-b-highlight mb-4">
-                <h1 className="text-3xl mb-2 font-bold">SETTINGS</h1>
+            <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-300 mb-4">
+                <h1 className="text-3xl mb-2 font-bold">Settings</h1>
             </header>
 
             <BottomBorderContainer>
@@ -35,6 +59,45 @@ export default function Page() {
                     <p className="dark:text-neutral-300 text-neutral-500">
                         Customizations for this device.
                     </p>
+
+                    {/* OPTIONS */}
+                    <section>
+                        {/* REPO VIEW */}
+                        <section className="ml-4">
+                            <h3 className="mt-4 font-bold">
+                                Default Repo View
+                            </h3>
+                            <section className="m-2">
+                                <DropDown
+                                    label="List"
+                                    onClick={() => handleSetDefaultView('list')}
+                                    isSelected={selectedDefaultView == 'list'}
+                                />
+                                <DropDown
+                                    label="Grid"
+                                    onClick={() => handleSetDefaultView('grid')}
+                                    isSelected={selectedDefaultView == 'grid'}
+                                />
+                            </section>
+                        </section>
+
+                        {/* APP THEME */}
+                        <section className="ml-4">
+                            <h3 className="mt-4 font-bold">App Theme</h3>
+                            <section className="m-2">
+                                <DropDown
+                                    label="Light"
+                                    onClick={() => handleSetAppTheme('light')}
+                                    isSelected={selectedAppTheme == 'light'}
+                                />
+                                <DropDown
+                                    label="Dark"
+                                    onClick={() => handleSetAppTheme('dark')}
+                                    isSelected={selectedAppTheme == 'dark'}
+                                />
+                            </section>
+                        </section>
+                    </section>
                 </div>
             </BottomBorderContainer>
 
@@ -116,7 +179,7 @@ export default function Page() {
                                 associated with it by going to the{' '}
                                 <a
                                     href="/account"
-                                    className="dark:hover:text-neutral-200 transition-colors underline underline-offset-4"
+                                    className="dark:hover:text-neutral-200 hover:text-neutral-900 transition-colors underline underline-offset-4"
                                 >
                                     accounts page.
                                 </a>
@@ -145,7 +208,7 @@ export default function Page() {
                         <a
                             href="https://github.com/NoteRepoLabs/issues-and-feature-requests"
                             target="_blank"
-                            className="flex items-center gap-2 dark:hover:text-neutral-100 transition-colors"
+                            className="flex items-center gap-2 dark:hover:text-neutral-100 hover:text-neutral-900 transition-colors"
                         >
                             <span>Make an issue or feature request</span>
                             <LinkSquare01Icon size={16} />

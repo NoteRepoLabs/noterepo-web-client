@@ -13,9 +13,11 @@ interface BottomBorderContainerProps {
  * Responsible for providing a bottom border container layout
  * @returns a bottom border container component
  */
-export default function BottomBorderContainer({ children }: BottomBorderContainerProps) {
+export default function BottomBorderContainer({
+    children,
+}: BottomBorderContainerProps) {
     return (
-        <section className="w-full max-w-screen-md mx-auto px-2 border-b dark:border-highlight">
+        <section className="w-full max-w-screen-md mx-auto px-2 border-b dark:border-highlight border-neutral-300">
             {children}
         </section>
     );
