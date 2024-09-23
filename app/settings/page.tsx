@@ -10,6 +10,7 @@
 import Footer from '@/components/ui/Footer';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
+import { ArrowLeft02Icon } from 'hugeicons-react';
 
 /*
     Responsible for displaying and managing user preferences.
@@ -17,6 +18,10 @@ import Container from '@/layout/Container';
 export default function Page() {
     return (
         <Container>
+            <a href="/" className="flex gap-2 items-center px-2 md:px-0 mt-2 opacity-80 hover:opacity-100 transition-opacity">
+                <ArrowLeft02Icon />
+                <span>Back</span>
+            </a>
             <header className="mt-2 py-2 border-b dark:border-b-highlight mb-4">
                 <h1 className="text-3xl mb-2 font-bold">SETTINGS</h1>
             </header>
@@ -54,7 +59,11 @@ export default function Page() {
                                 Some of my repos or files don&apos;t show up
                             </h3>
                             <p>
-                                One possible cause is creating or deleting a repo or file on one device and trying to access them on another. We automatically sync out-of-date repos every 5 minutes to improve performance.
+                                One possible cause is creating or deleting a
+                                repo or file on one device and trying to access
+                                them on another. We automatically sync
+                                out-of-date repos every 5 minutes to improve
+                                performance.
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
@@ -62,23 +71,36 @@ export default function Page() {
                                 I&apos;m unable to upload some file types
                             </h3>
                             <p>
-                                NoteRepo limits the kinds of files you can upload to our servers to improve security, they&apos;re limited to only word, powerpoint, pdf and image files.
+                                NoteRepo limits the kinds of files you can
+                                upload to our servers to improve security,
+                                they&apos;re limited to only word, powerpoint,
+                                pdf and image files.
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
                             <h3 className="font-bold dark:text-neutral-200">
-                                Keep getting an error when I upload a valid file!
+                                Keep getting an error when I upload a valid
+                                file!
                             </h3>
                             <p>
-                                We limit the file size of any repo to 10MB since most study materials don&apos;t exceed this threshold...and our BLOB store won&apos;t allow it either for the free plan. :)
+                                We limit the file size of any repo to 10MB since
+                                most study materials don&apos;t exceed this
+                                threshold...and our BLOB store won&apos;t allow
+                                it either for the free plan. :)
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
                             <h3 className="font-bold dark:text-neutral-200">
-                                How safe are my files? Can anyone else view them?
+                                How safe are my files? Can anyone else view
+                                them?
                             </h3>
                             <p>
-                               Security is our top priority when developing NoteRepo, by default the server encrypts some of your user and file information and no other entity knows about what you upload unless you compromise your account password. Never share it with anyone by the way.
+                                Security is our top priority when developing
+                                NoteRepo, by default the server encrypts some of
+                                your user and file information and no other
+                                entity knows about what you upload unless you
+                                compromise your account password. Never share it
+                                with anyone by the way.
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
@@ -86,7 +108,15 @@ export default function Page() {
                                 How do I delete my account?
                             </h3>
                             <p>
-                              It&apos;s sad to see you want to go, but you can delete your account and everything else associated with it by going to the <a href="/account" className="dark:hover:text-neutral-200 transition-colors underline underline-offset-4">accounts page.</a>
+                                It&apos;s sad to see you want to go, but you can
+                                delete your account and everything else
+                                associated with it by going to the{' '}
+                                <a
+                                    href="/account"
+                                    className="dark:hover:text-neutral-200 transition-colors underline underline-offset-4"
+                                >
+                                    accounts page.
+                                </a>
                             </p>
                         </li>
                     </ol>
@@ -104,7 +134,8 @@ export default function Page() {
                     </p>
 
                     <p className="dark:text-neutral-300 text-neutral-500 mt-2">
-                        You can also make a feature request by opening an issue on our GitHub Repo.
+                        You can also make a feature request by opening an issue
+                        on our GitHub Repo.
                     </p>
                 </div>
             </BottomBorderContainer>
@@ -121,7 +152,7 @@ export default function Page() {
 
                     <h3 className="my-1 font-bold">Maintainers</h3>
                     <ul className="list-disc">
-                        <li className="ml-4 text-sm dark:text-neutral-300 text-neutral-500 dark:hover:text-neutral-100 transition-colors">
+                        <li className="ml-4 dark:text-neutral-300 text-neutral-500 dark:hover:text-neutral-100 transition-colors">
                             <a
                                 href="https://github.com/dev-xero"
                                 target="_blank"
@@ -129,7 +160,7 @@ export default function Page() {
                                 @dev-xero (frontend)
                             </a>
                         </li>
-                        <li className="ml-4 text-sm dark:text-neutral-300 text-neutral-500 dark:hover:text-neutral-100 transition-colors">
+                        <li className="ml-4 dark:text-neutral-300 text-neutral-500 dark:hover:text-neutral-100 transition-colors">
                             <a
                                 href="https://github.com/Anuolu-2020"
                                 target="_blank"
