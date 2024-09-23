@@ -2,6 +2,7 @@ import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
 import { isCacheExpired } from '@/util/cache';
+import { decrypt } from '@/util/encryption';
 import axios from 'axios';
 
 /**
@@ -29,9 +30,7 @@ const fetchRepos = async (
         });
 
         const fetchedRepos = response.data['payload'];
-        const cachedRepos = JSON.parse(
-            localStorage.getItem(shared.keys.REPOS) || '[]'
-        );
+        const cachedRepos = decrypt(localStorage.getItem(shared.keys.REPOS))
 
         fetchedRepos.sort(
             (a: Repo, b: Repo) =>

@@ -15,6 +15,7 @@ import { SERVER_URL } from '@/config/constants';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
 import { isSingleCacheExpired } from '@/util/cache';
+import { decrypt, encrypt } from '@/util/encryption';
 import axios, { AxiosError } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
@@ -47,7 +48,7 @@ export default function Page() {
     const loadRepoFromLocalStorage = useCallback(() => {
         const identifier = `_cr-${repoID}`;
         if (localStorage.getItem(identifier)) {
-            return JSON.parse(localStorage.getItem(identifier)!);
+            return decrypt(localStorage.getItem(identifier));
         }
         return null;
     }, [repoID]);
@@ -107,7 +108,7 @@ export default function Page() {
             );
 
             const thisRepo = repoData['payload'];
-            localStorage.setItem(`_cr-${repoID}`, JSON.stringify(thisRepo));
+            localStorage.setItem(`_cr-${repoID}`, encrypt(thisRepo));
             localStorage.setItem(
                 `${shared.keys.SINGLE_REPO_CACHE_TIME}-${repoID}`,
                 JSON.stringify(Date.now())
