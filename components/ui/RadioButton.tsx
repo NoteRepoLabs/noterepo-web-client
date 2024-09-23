@@ -7,16 +7,19 @@
 
 import clsx from 'clsx';
 
-interface DropDownProps {
+interface RadioButtonProps {
     label: string;
     isSelected: boolean;
     onClick: () => void;
 }
 
-export default function DropDown(props: DropDownProps) {
+export default function RadioButton(props: RadioButtonProps) {
     return (
         <>
-            <div className="flex gap-2 items-center cursor-pointer group select-none" onClick={props.onClick}>
+            <div
+                className="flex gap-2 items-center cursor-pointer group select-none"
+                onClick={props.onClick}
+            >
                 <div
                     className={clsx(
                         'w-4 h-4 border-2 dark:border-neutral-500 border-neutral-300 rounded-xl relative',

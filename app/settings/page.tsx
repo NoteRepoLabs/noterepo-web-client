@@ -7,7 +7,7 @@
 
 'use client';
 
-import DropDown from '@/components/ui/DropDown';
+import RadioButton from '@/components/ui/RadioButton';
 import Footer from '@/components/ui/Footer';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
@@ -68,12 +68,12 @@ export default function Page() {
                                 Default Repo View
                             </h3>
                             <section className="m-2">
-                                <DropDown
+                                <RadioButton
                                     label="List"
                                     onClick={() => handleSetDefaultView('list')}
                                     isSelected={selectedDefaultView == 'list'}
                                 />
-                                <DropDown
+                                <RadioButton
                                     label="Grid"
                                     onClick={() => handleSetDefaultView('grid')}
                                     isSelected={selectedDefaultView == 'grid'}
@@ -85,12 +85,12 @@ export default function Page() {
                         <section className="ml-4">
                             <h3 className="mt-4 font-bold">App Theme</h3>
                             <section className="m-2">
-                                <DropDown
+                                <RadioButton
                                     label="Light"
                                     onClick={() => handleSetAppTheme('light')}
                                     isSelected={selectedAppTheme == 'light'}
                                 />
-                                <DropDown
+                                <RadioButton
                                     label="Dark"
                                     onClick={() => handleSetAppTheme('dark')}
                                     isSelected={selectedAppTheme == 'dark'}
