@@ -51,7 +51,7 @@ Web client for the NoteRepo backend written with NextJS and Typescript.
 
 We're actively looking for contributers eager to work on NoteRepo, as we're only two engineers working on it at the moment. If you know NextJS and Typescript, feel free to submit pull requests, they're always welcome!
 
-### Building the client in development mode
+### Building the client (dev mode)
 
 To get started, git clone the repository and cd into it.
 
@@ -87,4 +87,8 @@ You can paste the key in the `.env.example` file and rename that to `.env`.
 
 ### Bug Reports
 
-The client is still in its early stages, so bugs may be present. You can report any bugs you find using the `issues` tab if it's not already present and being fixed.
+The client is still in its early stages, so bugs may be present. You can report any bugs you find using the `issues` tab if it's not presently being fixed.
+
+# License
+
+NoteRepo is provided under the [MIT](./LICENSE) Open Source license.
