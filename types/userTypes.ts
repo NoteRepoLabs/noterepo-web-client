@@ -6,10 +6,11 @@
  */
 
 // Defines an interface for interacting with the user object
-export interface UserInterface {
+export interface IUser {
     id: string;
     username: string;
     email: string;
+    bio: string;
     role: string;
     isVerified: boolean;
     search_token: string;

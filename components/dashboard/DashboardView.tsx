@@ -11,7 +11,7 @@ import { SERVER_URL } from '@/config/constants';
 import fetchRepos from '@/queries/fetchRepos';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
-import { UserInterface } from '@/types/userTypes';
+import { IUser } from '@/types/userTypes';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
@@ -29,7 +29,7 @@ import DashboardSettings from './DashboardSettings';
 import IconButton from './IconButton';
 
 export interface DashboardProps {
-    user: UserInterface;
+    user: IUser;
 }
 
 type ViewType = 'LIST' | 'GRID';

@@ -11,7 +11,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import DashboardView from '@/components/dashboard/DashboardView';
 import shared from '@/shared/constants';
-import { UserInterface } from '@/types/userTypes';
+import { IUser } from '@/types/userTypes';
 import { useEffect, useState } from 'react';
 
 const DefaultUserState = {
@@ -29,10 +29,10 @@ const DefaultUserState = {
  * @returns a home (dashboard) component.
  */
 export default function Home() {
-    const [user, setUser] = useState<UserInterface>(DefaultUserState);
+    const [user, setUser] = useState<IUser>(DefaultUserState);
 
     useEffect(() => {
-        const parsedUser: UserInterface = JSON.parse(
+        const parsedUser: IUser = JSON.parse(
             localStorage.getItem(shared.keys.USER) ?? '{}'
         );
         setUser(parsedUser);

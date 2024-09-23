@@ -72,7 +72,8 @@ export default function Page() {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             }); // 5 days
-            localStorage.setItem(shared.keys.USER, JSON.stringify(user));
+            const { email, ...safeUser} = user; // exclude the email address
+            localStorage.setItem(shared.keys.USER, JSON.stringify(safeUser));
             console.log('saved credentials successfully.');
             // Redirect to dashboard
             window.location.href = '/';
