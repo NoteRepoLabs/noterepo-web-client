@@ -49,7 +49,7 @@ export default function Page() {
                 <ArrowLeft02Icon />
                 <span>Back</span>
             </a>
-            <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-300 mb-2">
+            <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-200 mb-2">
                 <h1 className="text-3xl mb-2 font-bold">Settings</h1>
             </header>
 

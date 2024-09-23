@@ -39,10 +39,10 @@ export default function RadioButton(props: RadioButtonProps) {
                 </div>
                 <span
                     className={clsx(
-                        'group-hover:dark:!text-neutral-200 transition-colors',
+                        'group-hover:dark:!text-neutral-200 group-hover:!text-neutral-700 transition-colors',
                         props.isSelected
                             ? 'dark:text-neutral-200 text-neutral-900'
-                            : 'text-neutral-300'
+                            : 'dark:text-neutral-300 text-neutral-500'
                     )}
                 >
                     {props.label}
