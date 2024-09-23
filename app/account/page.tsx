@@ -5,10 +5,10 @@
  *      - LICENSE: MIT
  */
 
-'use client'
+'use client';
 
-import Container from "@/layout/Container"
-import { ArrowLeft02Icon } from "hugeicons-react"
+import Container from '@/layout/Container';
+import { ArrowLeft02Icon } from 'hugeicons-react';
 
 export default function Page() {
     return (
@@ -21,10 +21,10 @@ export default function Page() {
                     <ArrowLeft02Icon />
                     <span>Back</span>
                 </a>
-                <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-300 mb-4">
+                <header className="mt-2 py-2 border-b dark:border-b-highlight border-neutral-300 mb-2">
                     <h1 className="text-3xl mb-2 font-bold">Account</h1>
                 </header>
             </Container>
         </>
-    )
+    );
 }

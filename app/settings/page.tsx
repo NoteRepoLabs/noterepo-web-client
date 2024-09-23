@@ -111,7 +111,7 @@ export default function Page() {
 
                     <ol className="list-decimal mt-2">
                         <li className="ml-4  dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 I&apos;m unable to sign in!
                             </h3>
                             <p>
@@ -121,7 +121,7 @@ export default function Page() {
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 Some of my repos or files don&apos;t show up
                             </h3>
                             <p>
@@ -133,7 +133,7 @@ export default function Page() {
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 I&apos;m unable to upload some file types
                             </h3>
                             <p>
@@ -144,7 +144,7 @@ export default function Page() {
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 Keep getting an error when I upload a valid
                                 file!
                             </h3>
@@ -156,7 +156,7 @@ export default function Page() {
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 How safe are my files? Can anyone else view
                                 them?
                             </h3>
@@ -170,7 +170,7 @@ export default function Page() {
                             </p>
                         </li>
                         <li className="ml-4 dark:text-neutral-300 text-neutral-500 mb-1">
-                            <h3 className="font-bold dark:text-neutral-200">
+                            <h3 className="font-bold dark:text-neutral-200 text-neutral-800">
                                 How do I delete my account?
                             </h3>
                             <p>
