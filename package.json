@@ -16,6 +16,7 @@
     "axios": "^1.7.4",
     "clsx": "^2.1.1",
     "cookies-next": "^4.1.1",
+    "crypto-ts": "^1.0.2",
     "hugeicons-react": "^0.3.0",
     "iconsax-react": "^0.0.8",
     "lottie-react": "^2.4.0",
