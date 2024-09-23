@@ -10,6 +10,17 @@
 Web client for the NoteRepo backend written with NextJS and Typescript.  
 [NoteRepo](https://noterepo-web.vercel.app/) is a collaborative effort to make access to our university course materials easier by uploading them in a central hub.
 
+## Features
+
+1. **Authentication**: Seure user sign up / sign in / sign out.
+2. **Repositories**: Users can create and upload files into their repositories.
+4. **Security is a top priority**: User information and data is encrypted and cleared from device every 5 days.
+5. **Optimized for speed**: Blazingly fast, updates are synchronized across devices seamlessly.
+6. **Uploads**: You can upload, share and delete files, and entire repositories!
+7. **Customization**: The app theme, repository view layout and others can be dynamically changed.
+8. **Global Search**: Find and bookmark cool repositories others have shared.
+9. **Open Source**: We believe software should be free for all, every line of code is free for anyone to checkout.
+
 ## Developer Notes
 
 We're actively looking for contributors as we're only two engineers working on it at the moment. So if you know NextJS and optionally Typescript, feel free to submit pull requests, they're always welcome!
