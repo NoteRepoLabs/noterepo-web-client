@@ -42,11 +42,15 @@ type ViewType = 'LIST' | 'GRID';
  * @returns a dashboard view component
  */
 export default function DashboardView(props: DashboardProps) {
+    const savedRepoView = localStorage
+        .getItem(shared.keys.REPO_VIEW)
+        ?.toUpperCase() as ViewType | undefined;
+
     // Page state
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const [repoView, setRepoView] = useState<ViewType>('LIST');
+    const [repoView, setRepoView] = useState<ViewType>(savedRepoView ?? 'LIST');
     const [prevAction, setPrevAction] = useState('');
     const [selectedRepoID, setSelectedRepoID] = useState('');
     const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -81,9 +85,7 @@ export default function DashboardView(props: DashboardProps) {
     const handleRepoModificationSuccess = (accessToken: string) => {
         // Delete cache for deleted repos
         if (prevAction == 'DELETE') {
-            localStorage.removeItem(
-                `_cr-${selectedRepoID}`
-            );
+            localStorage.removeItem(`_cr-${selectedRepoID}`);
             setPrevAction('');
         }
         fetchRepos(

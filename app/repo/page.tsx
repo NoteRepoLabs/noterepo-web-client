@@ -138,7 +138,7 @@ export default function Page() {
                     <header className="cursor-pointer dark:text-neutral-300 text-neutral-500 dark:hover:text-neutral-200 transition-colors">
                         <a
                             href="/"
-                            className="flex gap-2 items-center px-4 sm:px-0"
+                            className="flex gap-2 items-center px-4 md:px-0"
                         >
                             <ArrowLeft02Icon />
                             <span>Back</span>
