@@ -12,10 +12,12 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import DashboardView from '@/components/dashboard/DashboardView';
 import shared from '@/shared/constants';
 import { IUser } from '@/types/userTypes';
+import { decrypt } from '@/util/encryption';
 import { useEffect, useState } from 'react';
 
 const DefaultUserState = {
     username: '',
+    bio: '',
     id: '',
     email: '',
     isVerified: false,
@@ -32,10 +34,12 @@ export default function Home() {
     const [user, setUser] = useState<IUser>(DefaultUserState);
 
     useEffect(() => {
-        const parsedUser: IUser = JSON.parse(
-            localStorage.getItem(shared.keys.USER) ?? '{}'
-        );
-        setUser(parsedUser);
+        const userKey = localStorage.getItem(shared.keys.USER);
+        if (!userKey) {
+            window.location.href = '/signin';
+        }
+        const decryptedUser = decrypt(userKey);
+        setUser(decryptedUser);
     }, []);
 
     return (

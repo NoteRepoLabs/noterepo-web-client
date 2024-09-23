@@ -26,6 +26,7 @@ import Toggle from '../ui/Toggle';
 
 /* Create Repo Dialog Props */
 interface CreateRepoDialogProps {
+    userID: string;
     onClick: () => void;
     onSuccess: (accessToken: string) => void;
 }
@@ -34,7 +35,7 @@ interface CreateRepoBody {
     name: string;
     description: string;
     tags: string[];
-    isPublic: boolean;
+    isPublic: boolean;    
 }
 
 /* Create Repo Dialog Component */
@@ -58,9 +59,7 @@ export default function CreateRepoDialog(props: CreateRepoDialogProps) {
     // Create repo mutation
     const createRepoMutation = useMutation({
         mutationFn: async (body: CreateRepoBody) => {
-            const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
-                'id'
-            ];
+            const userID = props.userID;
             if (!userID) {
                 showErrorState(
                     'Internal error, cannot create repo at this time.'

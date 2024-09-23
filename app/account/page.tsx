@@ -12,15 +12,17 @@ import BioField from '@/components/account/BioField';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
 import shared from '@/shared/constants';
+import { IUser } from '@/types/userTypes';
+import { decrypt } from '@/util/encryption';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 
 export default function Page() {
     const loggedInUser = localStorage.getItem(shared.keys.USER);
     if (!loggedInUser) {
-        window.location.href = '/signout'
+        window.location.href = '/signout';
     }
 
-    const parsedUserObj = JSON.parse(loggedInUser!);
+    const currentUser: IUser = decrypt(loggedInUser);
 
     return (
         <ProtectedRoute>
@@ -41,12 +43,15 @@ export default function Page() {
                         <h3 className="text-xl mb-1 font-bold">Personal</h3>
                         <p className="dark:text-neutral-300 text-neutral-500 mb-2">
                             Username:{' '}
-                            <span className="dark:text-neutral-200">Alpha</span>
+                            <span className="dark:text-neutral-200">
+                                {currentUser.username}
+                            </span>
                         </p>
                         <p className="dark:text-neutral-300 text-neutral-500 mb-2">
                             Bio:
                         </p>
-                        <BioField />
+                        <BioField bio={currentUser.bio} />
+                        {/* TODO: BUTTON TO UPDATE BIO */}
                     </div>
                 </BottomBorderContainer>
             </Container>

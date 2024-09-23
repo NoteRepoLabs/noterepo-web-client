@@ -7,10 +7,14 @@
 
 'use client';
 
+interface BioFieldProps {
+    bio: string;
+}
+
 /**
  * Responsible for editing and displaying user bio.
  */
-export default function BioField() {
+export default function BioField(props: BioFieldProps) {
     return (
         <>
             <textarea
@@ -18,7 +22,9 @@ export default function BioField() {
                 id="noterepo-bio"
                 placeholder="A few things about myself!"
                 className="w-full min-h-[48px] h-[48px] p-2 border-2 border-highlight dark:bg-neutral-900 bg-neutral-100 outline-none dark:focus:border-neutral-200 transition-all max-h-[80px]"
-            ></textarea>
+            >
+                {props.bio && props.bio}
+            </textarea>
         </>
     );
 }

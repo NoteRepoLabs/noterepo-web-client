@@ -89,6 +89,7 @@ export default function DashboardView(props: DashboardProps) {
             setPrevAction('');
         }
         fetchRepos(
+            props.user.id,
             accessToken,
             (data) => {
                 setRepos(data);
@@ -126,9 +127,7 @@ export default function DashboardView(props: DashboardProps) {
         } else {
             console.log('[INFO]: Cache miss.');
             try {
-                const userID = JSON.parse(
-                    localStorage.getItem(shared.keys.USER)!
-                )['id'];
+                const userID = props.user.id;
                 const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
                 let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
@@ -187,6 +186,7 @@ export default function DashboardView(props: DashboardProps) {
                 {/* CREATE REPO DIALOG */}
                 {showCreateDialog && (
                     <CreateRepoDialog
+                        userID={props.user.id}
                         onClick={() => setShowCreateDialog(false)}
                         onSuccess={handleRepoModificationSuccess}
                     />
@@ -195,6 +195,7 @@ export default function DashboardView(props: DashboardProps) {
                 {/* DELETE REPO DIALOG */}
                 {showDeleteDialog && (
                     <DeleteRepoDialog
+                        userID={props.user.id}
                         repoID={selectedRepoID}
                         onCloseClick={() => setShowDeleteDialog(false)}
                         onSuccess={handleRepoModificationSuccess}

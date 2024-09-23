@@ -15,15 +15,13 @@ import axios from 'axios';
  * @param onFailure Callback to deal with failed requests.
  */
 const fetchRepos = async (
+    userID: string,
     accessToken: string,
     onSuccess: (data: any) => void,
     cacheFunction: ((data: any) => void) | null,
     onFailure: (err: any) => void
 ) => {
-    try {
-        const userID = JSON.parse(localStorage.getItem(shared.keys.USER)!)[
-            'id'
-        ];
+    try {;
         const response = await axios.get(`${SERVER_URL}/users/${userID}/repo`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
