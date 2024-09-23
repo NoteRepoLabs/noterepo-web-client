@@ -10,7 +10,7 @@
 import Footer from '@/components/ui/Footer';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
-import { ArrowLeft02Icon } from 'hugeicons-react';
+import { ArrowLeft02Icon, LinkSquare01Icon } from 'hugeicons-react';
 
 /*
     Responsible for displaying and managing user preferences.
@@ -18,7 +18,10 @@ import { ArrowLeft02Icon } from 'hugeicons-react';
 export default function Page() {
     return (
         <Container>
-            <a href="/" className="flex gap-2 items-center px-2 md:px-0 mt-2 opacity-80 hover:opacity-100 transition-opacity">
+            <a
+                href="/"
+                className="flex gap-2 items-center px-2 md:px-0 mt-2 opacity-80 hover:opacity-100 transition-opacity"
+            >
                 <ArrowLeft02Icon />
                 <span>Back</span>
             </a>
@@ -136,6 +139,17 @@ export default function Page() {
                     <p className="dark:text-neutral-300 text-neutral-500 mt-2">
                         You can also make a feature request by opening an issue
                         on our GitHub Repo.
+                    </p>
+
+                    <p className="dark:text-neutral-300 text-neutral-500 mt-2">
+                        <a
+                            href="https://github.com/NoteRepoLabs/issues-and-feature-requests"
+                            target="_blank"
+                            className="flex items-center gap-2 dark:hover:text-neutral-100 transition-colors"
+                        >
+                            <span>Make an issue or feature request</span>
+                            <LinkSquare01Icon size={16} />
+                        </a>
                     </p>
                 </div>
             </BottomBorderContainer>
