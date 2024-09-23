@@ -7,12 +7,13 @@
 
 'use client';
 
+import ProtectedRoute from '@/components/ProtectedRoute';
 import Container from '@/layout/Container';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 
 export default function Page() {
     return (
-        <>
+        <ProtectedRoute>
             <Container>
                 <a
                     href="/"
@@ -25,6 +26,6 @@ export default function Page() {
                     <h1 className="text-3xl mb-2 font-bold">My Account</h1>
                 </header>
             </Container>
-        </>
+        </ProtectedRoute>
     );
 }
