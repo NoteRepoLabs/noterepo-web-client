@@ -104,11 +104,11 @@ export default function Page() {
 
             err.code == 'ERR_NETWORK'
                 ? showAccountErrorState(
-                      'Could not sign up, check your connection.'
-                  )
+                    'Could not sign up, check your connection.'
+                )
                 : showAccountErrorState(
-                      serverErr.message ?? 'An error occurred.'
-                  );
+                    serverErr.message ?? 'An error occurred.'
+                );
         },
     });
 
@@ -318,7 +318,7 @@ export default function Page() {
                             onClick={() => setShowAccountDeletionDialog(true)}
                             className="w-full m-0 md:!max-w-[200px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
                             danger={true}
-                            disabled={deleteUserAccountMutation.isPending }
+                            disabled={deleteUserAccountMutation.isPending}
                         />
                         {accountDeletionErr && (
                             <ErrorText errorMsg={accountDeletionErr} />
