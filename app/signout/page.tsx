@@ -19,12 +19,13 @@ import { useEffect } from 'react';
  */
 export default function Page() {
     useEffect(() => {
-        deleteCookie(shared.keys.ACCESS_TOKEN);
-        deleteCookie(shared.keys.REFRESH_TOKEN);
+        // deleteCookie(shared.keys.ACCESS_TOKEN);
+        // deleteCookie(shared.keys.REFRESH_TOKEN);
 
-        localStorage.removeItem(shared.keys.USER);
-        localStorage.removeItem(shared.keys.REPOS);
-        localStorage.removeItem(shared.keys.REPOS_CACHE);
+        // localStorage.removeItem(shared.keys.USER);
+        // localStorage.removeItem(shared.keys.REPOS);
+        // localStorage.removeItem(shared.keys.REPOS_CACHE);
+        localStorage.clear()
 
         console.log('Deleted storage and cookies successfully.');
         window.location.href = '/signin';
@@ -38,7 +39,7 @@ export default function Page() {
                         Signing Out
                     </h1>
                     <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mb-12">
-                        We&apos;s signing you out of your account, hope to see
+                        We&apos;re signing you out of your account, hope to see
                         you soon.
                     </p>
                 </section>
