@@ -47,6 +47,7 @@ export default function Page() {
 
     const [thisBio, setThisBio] = useState(currentUser.bio);
     const [errorMsg, setErrorMsg] = useState('');
+    const [accountDeletionErr, setAccountDeletionErr] = useState('');
     const [isDisabled, setIsDisabled] = useState(false);
     const [showAccountDeletionDialog, setShowAccountDeletionDialog] =
         useState(false);
@@ -102,8 +103,12 @@ export default function Page() {
             const serverErr = err.response?.data as ServerResponse;
 
             err.code == 'ERR_NETWORK'
-                ? showErrorState('Could not sign up, check your connection.')
-                : showErrorState(serverErr.message ?? 'An error occurred.');
+                ? showAccountErrorState(
+                      'Could not sign up, check your connection.'
+                  )
+                : showAccountErrorState(
+                      serverErr.message ?? 'An error occurred.'
+                  );
         },
     });
 
@@ -113,8 +118,15 @@ export default function Page() {
         setIsDisabled(false);
     };
 
+    // Account error related state
+    const showAccountErrorState = (msg: string) => {
+        setAccountDeletionErr(msg);
+        setIsDisabled(false);
+    };
+
     const clearErrorState = (isDisabled: boolean) => {
         setErrorMsg('');
+        setAccountDeletionErr('');
         setIsDisabled(isDisabled);
     };
 
@@ -175,6 +187,7 @@ export default function Page() {
     };
 
     const handleAccountDeletionClick = async () => {
+        clearErrorState(true);
         try {
             const accessToken = await fetchAccessToken();
             deleteUserAccountMutation.mutate({
@@ -182,7 +195,7 @@ export default function Page() {
                 id: currentUser.id,
             });
         } catch {
-            setErrorMsg(
+            setAccountDeletionErr(
                 'Something went wrong on our end, contact the engineers.'
             );
         } finally {
@@ -202,7 +215,7 @@ export default function Page() {
                     <DeleteUserAccountDialog
                         onConfirmAction={() => {
                             setShowAccountDeletionDialog(false);
-                            alert('CONFIRMED: WILL DELETE SHORTLY');
+                            handleAccountDeletionClick();
                         }}
                         onCancelAction={() =>
                             setShowAccountDeletionDialog(false)
@@ -248,7 +261,7 @@ export default function Page() {
                                         : 'Update'
                                 }
                                 onClick={handleUpdateBioClick}
-                                className="w-full m-0 md:!max-w-[120px] md:ml-0 mt-2 !py-2 !rounded-md"
+                                className="w-full m-0 md:!max-w-[200px] md:ml-0 mt-2 !py-2 !rounded-md"
                                 disabled={
                                     isDisabled || updateBioMutation.isPending
                                 }
@@ -285,7 +298,7 @@ export default function Page() {
                         <FilledButton
                             text="Sign Out"
                             onClick={() => (window.location.href = '/signout')}
-                            className="w-full m-0 md:!max-w-[120px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
+                            className="w-full m-0 md:!max-w-[200px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
                         />
                     </BottomBorderContainer>
 
@@ -301,11 +314,15 @@ export default function Page() {
                             cannot be undone.
                         </p>
                         <FilledButton
-                            text="Delete My Account"
+                            text={deleteUserAccountMutation.isPending ? "Deleting Everything" : "Delete My Account"}
                             onClick={() => setShowAccountDeletionDialog(true)}
                             className="w-full m-0 md:!max-w-[200px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
                             danger={true}
+                            disabled={deleteUserAccountMutation.isPending }
                         />
+                        {accountDeletionErr && (
+                            <ErrorText errorMsg={accountDeletionErr} />
+                        )}
                     </BottomBorderContainer>
 
                     <Footer />
