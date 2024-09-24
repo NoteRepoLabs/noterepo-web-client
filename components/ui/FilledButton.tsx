@@ -9,6 +9,7 @@ import clsx from 'clsx';
 
 interface FilledButtonProps {
     text: string;
+    className?: string;
     styles?: React.CSSProperties;
     icon?: React.ReactElement | null;
     disabled?: boolean;
@@ -18,6 +19,7 @@ interface FilledButtonProps {
 
 export default function FilledButton({
     text,
+    className,
     onClick,
     icon,
     disabled,
@@ -28,11 +30,13 @@ export default function FilledButton({
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`max-w-lg w-[100%] flex justify-center border-2 items-center font-bold text-lg bg-neutral-900 border-neutral-900 dark:border-neutral-200 text-neutral-200 md:px-3 md:py-4 py-3 rounded-xl md:rounded-2xl mx-auto  dark:bg-neutral-100 dark:text-neutral-900  transition-all disabled:!opacity-70 ${
+            className={clsx(
+                'max-w-lg w-[100%] flex justify-center border-2 items-center font-bold text-lg bg-neutral-900 border-neutral-900 dark:border-neutral-100 text-neutral-200 md:px-3 md:py-4 py-3 rounded-xl md:rounded-2xl mx-auto  dark:bg-neutral-100 dark:text-neutral-900  transition-all disabled:!opacity-70 outline-none',
                 !disabled
                     ? 'hover:bg-neutral-800 dark:hover:bg-neutral-200'
-                    : ''
-            }`}
+                    : '',
+                className
+            )}
             style={{ ...styles }}
         >
             {icon && <div className="w-8 max-w-8 h-8 max-h-8">{icon}</div>}

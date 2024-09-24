@@ -9,6 +9,7 @@
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import BioField from '@/components/account/BioField';
+import FilledButton from '@/components/ui/FilledButton';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
 import Container from '@/layout/Container';
 import shared from '@/shared/constants';
@@ -51,7 +52,11 @@ export default function Page() {
                             Bio:
                         </p>
                         <BioField bio={currentUser.bio} />
-                        {/* TODO: BUTTON TO UPDATE BIO */}
+                        <FilledButton
+                            text="Update"
+                            onClick={() => {}}
+                            className="w-full m-0 md:!max-w-[120px] md:ml-0 mt-2 !py-2 !rounded-md"
+                        />
                     </div>
                 </BottomBorderContainer>
             </Container>
