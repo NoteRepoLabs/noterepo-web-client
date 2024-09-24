@@ -14,6 +14,7 @@ interface FilledButtonProps {
     icon?: React.ReactElement | null;
     disabled?: boolean;
     tinyText?: boolean;
+    danger?: boolean;
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -24,6 +25,7 @@ export default function FilledButton({
     icon,
     disabled,
     tinyText,
+    danger,
     styles,
 }: FilledButtonProps) {
     return (
@@ -35,6 +37,7 @@ export default function FilledButton({
                 !disabled
                     ? 'hover:bg-neutral-800 dark:hover:bg-neutral-200'
                     : '',
+                danger ? '!bg-vibrant-red !text-neutral-100 !border-vibrant-red' : '',
                 className
             )}
             style={{ ...styles }}

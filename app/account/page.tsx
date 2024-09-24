@@ -12,6 +12,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import BioField from '@/components/account/BioField';
 import ErrorText from '@/components/ui/ErrorText';
 import FilledButton from '@/components/ui/FilledButton';
+import Footer from '@/components/ui/Footer';
 import { SERVER_URL } from '@/config/constants';
 import NetworkConfig from '@/config/network';
 import BottomBorderContainer from '@/layout/BottomBorderContainer';
@@ -199,6 +200,45 @@ export default function Page() {
                             {errorMsg && <ErrorText errorMsg={errorMsg} />}
                         </div>
                     </BottomBorderContainer>
+
+                    {/* SIGN OUT */}
+                    <BottomBorderContainer>
+                        <h3 className="text-xl mb-1 font-bold mt-4">
+                            Sign Out
+                        </h3>
+                        <p className="dark:text-neutral-300 text-neutral-500 mb-2">
+                            Sign out of your account. We&apos;ll remove any
+                            saved data stored on this device and sign you out of
+                            this account. Your data will still remain intact on
+                            our servers.
+                        </p>
+                        <FilledButton
+                            text="Sign Out"
+                            onClick={() => {}}
+                            className="w-full m-0 md:!max-w-[120px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
+                        />
+                    </BottomBorderContainer>
+
+                    {/* ACCOUNT DELETION */}
+                    <BottomBorderContainer>
+                        <h3 className="text-xl mb-1 font-bold mt-4 text-vibrant-red">
+                            Delete My Account
+                        </h3>
+                        <p className="dark:text-neutral-300 text-neutral-500 mb-2">
+                            It&apos;s sad to see you want to leave, but
+                            we&apos;re glad you were a part of NoteRepo. This
+                            will proceed to delete all of your repositories and
+                            files from our servers. It cannot be undone.
+                        </p>
+                        <FilledButton
+                            text="Delete My Account"
+                            onClick={() => {}}
+                            className="w-full m-0 md:!max-w-[200px] md:ml-0 mt-2 !py-2 !rounded-md mb-4"
+                            danger={true}
+                        />
+                    </BottomBorderContainer>
+
+                    <Footer />
                 </Container>
             </ProtectedRoute>
         </>

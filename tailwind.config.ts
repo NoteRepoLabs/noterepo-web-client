@@ -28,7 +28,7 @@ const config: Config = {
          'mod-200':       '#F3F3F3',
          'mod-300':       '#DDDDDD',
          'vibrant-green': '#30F094',
-         'vibrant-red':   '#FA4E81',
+         'vibrant-red':   '#FF3958',
       },
       extend: {
          fontFamily: {
