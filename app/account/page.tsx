@@ -97,7 +97,7 @@ export default function Page() {
 
         // Must be different
         if (thisBio == currentUser.bio) {
-            showErrorState('It\'s the same as your current bio.');
+            showErrorState("It's the same as your current bio.");
             return;
         }
 
@@ -165,10 +165,17 @@ export default function Page() {
                             </p>
                             <BioField
                                 bio={thisBio}
-                                onChange={(value) => setThisBio(value)}
+                                onChange={(value) => {
+                                    clearErrorState(false);
+                                    setThisBio(value);
+                                }}
                             />
                             <FilledButton
-                                text={isDisabled || updateBioMutation.isPending ? 'Updating' : 'Update'}
+                                text={
+                                    isDisabled || updateBioMutation.isPending
+                                        ? 'Updating'
+                                        : 'Update'
+                                }
                                 onClick={handleUpdateBioClick}
                                 className="w-full m-0 md:!max-w-[120px] md:ml-0 mt-2 !py-2 !rounded-md"
                                 disabled={
