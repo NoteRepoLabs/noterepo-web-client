@@ -17,7 +17,7 @@ export default function BottomBorderContainer({
     children,
 }: BottomBorderContainerProps) {
     return (
-        <section className="w-full max-w-screen-md mx-auto px-2 border-b dark:border-highlight border-neutral-300">
+        <section className="w-full max-w-screen-md mx-auto px-2 border-b dark:border-highlight border-neutral-200">
             {children}
         </section>
     );

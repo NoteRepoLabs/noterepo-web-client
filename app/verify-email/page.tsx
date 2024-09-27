@@ -20,42 +20,40 @@ import CenteredGridLayout from '@/layout/CenteredGridLayout';
  * @returns a verify email component
  */
 export default function Page() {
-    const { resolvedTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
-    const [fallback, setFallback] = useState(lightAnimData);
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [fallback, setFallback] = useState(lightAnimData);
 
-    useEffect(() => {
-        setMounted(true);
-        setFallback(resolvedTheme == 'dark' ? darkAnimData : lightAnimData);
-    }, [resolvedTheme]);
+  useEffect(() => {
+    setMounted(true);
+    setFallback(resolvedTheme == 'dark' ? darkAnimData : lightAnimData);
+  }, [resolvedTheme]);
 
-    console.log(resolvedTheme);
-
-    return (
-        <>
-            {mounted && (
-                <CenteredGridLayout>
-                    <section className="mt-8 w-full max-w-lg mx-auto text-center">
-                        <div className="w-[164px] h-[96px] inline-block">
-                            <Lottie
-                                animationData={fallback}
-                                loop={true}
-                                autoplay={true}
-                                rendererSettings={{
-                                    preserveAspectRatio: 'xMidYMid slice',
-                                }}
-                            />
-                        </div>
-                        <h1 className="font-bold text-3xl mt-12 mb-6 text-neutral-900 dark:text-neutral-100">
-                            Verify Your Email
-                        </h1>
-                        <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mb-12">
-                            We&apos;ve sent you a link to verify your email
-                            address. Please check your inbox.
-                        </p>
-                    </section>
-                </CenteredGridLayout>
-            )}
-        </>
-    );
+  return (
+    <>
+      {mounted && (
+        <CenteredGridLayout>
+          <section className="mt-8 w-full max-w-lg mx-auto text-center">
+            <div className="w-[164px] h-[96px] inline-block">
+              <Lottie
+                animationData={fallback}
+                loop={true}
+                autoplay={true}
+                rendererSettings={{
+                  preserveAspectRatio: 'xMidYMid slice',
+                }}
+              />
+            </div>
+            <h1 className="font-bold text-3xl mt-12 mb-6 text-neutral-900 dark:text-neutral-100">
+              Verify Your Email
+            </h1>
+            <p className="text-center text-base text-neutral-500 dark:text-neutral-300 mb-12">
+              We&apos;ve sent you a link to verify your email
+              address. Please check your inbox.
+            </p>
+          </section>
+        </CenteredGridLayout>
+      )}
+    </>
+  );
 }

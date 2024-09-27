@@ -6,21 +6,21 @@
  */
 
 /**
- * Extracting local storage and cookie keys to increase
+ * Extracting local storage and cookie keys to increase code
  * obfuscation.
  */
 const shared = {
-    fileLimit: 50,
-    keys: {
-        REFRESH_TOKEN: "__rfs",
-        ACCESS_TOKEN: "__acs",
-        USER: "__su",
-        REPOS: "__reps",
-        REPOS_CACHE: "_crp",
-        SINGLE_REPO_CACHE_TIME: "_tsr",
-        FORCE_UPDATE: "_forced",
-        REPO_VIEW: "_device_repo_view"
-    }
+  fileLimit: 10,
+  keys: {
+    REFRESH_TOKEN: "__rfs",
+    ACCESS_TOKEN: "__acs",
+    USER: "__su",
+    REPOS: "__reps",
+    REPOS_CACHE: "_crp",
+    SINGLE_REPO_CACHE_TIME: "_tsr",
+    FORCE_UPDATE: "_forced",
+    REPO_VIEW: "_device_repo_view"
+  }
 }
 
 export default shared;

@@ -5,6 +5,8 @@
  *      - LICENSE: MIT
  */
 
+import clsx from 'clsx';
+
 interface InputFieldProps {
     name: string;
     type: string;
@@ -12,6 +14,7 @@ interface InputFieldProps {
     value: string;
     placeholder: string;
     required: boolean;
+    className?: string;
     error?: boolean;
     icon?: React.ReactNode;
     style?: React.CSSProperties;
@@ -39,11 +42,13 @@ export default function InputField(props: InputFieldProps) {
                 autoComplete="off"
                 spellCheck="false"
                 inputMode={props.type === 'email' ? 'email' : 'text'}
-                className={`w-[100%] border-[1.5px] py-3 pl-4 pr-12  md:py-4 tracking-wide rounded-xl focus:outline-none font-normal text-base bg-neutral-100 dark:bg-[#11131A] transition-colors placeholder:text-neutral-500 dark:placeholder:text-neutral-300  ${
+                className={clsx(
+                    'w-[100%] border-[1.5px] py-3 pl-4 pr-12  md:py-4 tracking-wide rounded-xl focus:outline-none font-normal text-base bg-neutral-100 dark:bg-[#11131A] transition-colors placeholder:text-neutral-500 dark:placeholder:text-neutral-300',
                     props.error
                         ? 'border-vibrant-red'
-                        : ' focus:border-neutral-700 border-neutral-300 dark:border-highlight dark:focus:border-neutral-200 dark:focus:border-opacity-70'
-                }`}
+                        : ' focus:border-neutral-700 border-neutral-300 dark:border-highlight dark:focus:border-neutral-200 dark:focus:border-opacity-70',
+                    props.className
+                )}
                 style={{ ...props.style }}
             />
             <div

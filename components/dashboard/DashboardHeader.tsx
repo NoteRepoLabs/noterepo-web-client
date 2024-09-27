@@ -5,7 +5,12 @@
  *      - LICENSE: MIT
  */
 
-import { Cancel01Icon, Menu09Icon, Settings02Icon, UserCircle02Icon } from 'hugeicons-react';
+import {
+    Cancel01Icon,
+    Menu09Icon,
+    Settings02Icon,
+    UserCircle02Icon,
+} from 'hugeicons-react';
 import { useState } from 'react';
 import IconText from '../ui/IconText';
 import Logo from '../ui/Logo';
@@ -71,15 +76,16 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
                             <IconText
                                 text={props.username}
                                 icon={<UserCircle02Icon size={24} />}
+                                onClick={() =>
+                                    (window.location.href = '/account')
+                                }
                                 styles={{
                                     marginRight: '16px',
                                 }}
                             />
                             <IconText
                                 text="Settings"
-                                icon={
-                                    <Settings02Icon size={24} />
-                                }
+                                icon={<Settings02Icon size={24} />}
                                 onClick={() =>
                                     (window.location.href = '/settings')
                                 }

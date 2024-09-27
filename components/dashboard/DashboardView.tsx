@@ -11,7 +11,7 @@ import { SERVER_URL } from '@/config/constants';
 import fetchRepos from '@/queries/fetchRepos';
 import shared from '@/shared/constants';
 import Repo from '@/types/repoTypes';
-import { UserInterface } from '@/types/userTypes';
+import { IUser } from '@/types/userTypes';
 import { isCacheExpired, saveReposToCache } from '@/util/cache';
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
@@ -27,9 +27,10 @@ import InputField from '../ui/InputField';
 import SpinnerText from '../ui/SpinnerText';
 import DashboardSettings from './DashboardSettings';
 import IconButton from './IconButton';
+import { decrypt } from '@/util/encryption';
 
 export interface DashboardProps {
-    user: UserInterface;
+    user: IUser;
 }
 
 type ViewType = 'LIST' | 'GRID';
@@ -89,6 +90,7 @@ export default function DashboardView(props: DashboardProps) {
             setPrevAction('');
         }
         fetchRepos(
+            props.user.id,
             accessToken,
             (data) => {
                 setRepos(data);
@@ -118,17 +120,13 @@ export default function DashboardView(props: DashboardProps) {
             localStorage.getItem(shared.keys.REPOS)
         ) {
             console.log('[INFO]: Cache hit.');
-            const cachedRepos = JSON.parse(
-                localStorage.getItem(shared.keys.REPOS)!
-            );
+            const cachedRepos = decrypt(localStorage.getItem(shared.keys.REPOS));
             setRepos(cachedRepos);
             setLoading(false);
         } else {
             console.log('[INFO]: Cache miss.');
             try {
-                const userID = JSON.parse(
-                    localStorage.getItem(shared.keys.USER)!
-                )['id'];
+                const userID = props.user.id;
                 const refreshToken = getCookie(shared.keys.REFRESH_TOKEN);
                 let accessToken = getCookie(shared.keys.ACCESS_TOKEN);
 
@@ -187,6 +185,7 @@ export default function DashboardView(props: DashboardProps) {
                 {/* CREATE REPO DIALOG */}
                 {showCreateDialog && (
                     <CreateRepoDialog
+                        userID={props.user.id}
                         onClick={() => setShowCreateDialog(false)}
                         onSuccess={handleRepoModificationSuccess}
                     />
@@ -195,6 +194,7 @@ export default function DashboardView(props: DashboardProps) {
                 {/* DELETE REPO DIALOG */}
                 {showDeleteDialog && (
                     <DeleteRepoDialog
+                        userID={props.user.id}
                         repoID={selectedRepoID}
                         onCloseClick={() => setShowDeleteDialog(false)}
                         onSuccess={handleRepoModificationSuccess}

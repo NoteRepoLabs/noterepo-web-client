@@ -19,6 +19,7 @@ import CenteredGridLayout from '@/layout/CenteredGridLayout';
 import shared from '@/shared/constants';
 import { AuthCredentials } from '@/types/authTypes';
 import ServerResponse from '@/types/serverTypes';
+import { encrypt } from '@/util/encryption';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { setCookie } from 'cookies-next';
@@ -66,9 +67,13 @@ export default function Page() {
                 sameSite: 'strict',
             }); // 5 days
 
-            localStorage.setItem(shared.keys.USER, JSON.stringify(user));
-            console.log('saved credentials successfully.');
+            const { email, ...safeUser } = user; // exclude the email address
 
+            // Encrypt and save the user info
+            const encryptedUser = encrypt(safeUser);
+            localStorage.setItem(shared.keys.USER, encryptedUser);
+
+            console.log('saved credentials successfully.');
             // Redirect to dashboard
             window.location.href = '/';
         },
