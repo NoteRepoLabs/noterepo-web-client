@@ -338,7 +338,6 @@ export default function Page() {
               <ErrorText errorMsg={accountDeletionErr} />
             )}
           </BottomBorderContainer>
-
           <Footer />
         </Container>
       </ProtectedRoute>
