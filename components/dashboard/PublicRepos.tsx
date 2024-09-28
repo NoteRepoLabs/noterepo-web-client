@@ -8,6 +8,7 @@ export default function PublicRepos() {
             <IconText
                 text="Public Repos"
                 icon={<GlobalSearch size="24" />}
+                onClick={() => (window.location.href = '/global')}
             />
         </>
     );
