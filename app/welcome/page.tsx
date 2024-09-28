@@ -38,9 +38,9 @@ export default function Page() {
     const searchParams = useSearchParams();
 
     /**
-     * Mutation queries for configuring usernames.  
+     * Mutation queries for configuring usernames.
      * On success: Save the access and refresh tokens as cookies,
-     * then save the user instance to local storage and redirect.  
+     * then save the user instance to local storage and redirect.
      * On failure: Display a message telling the user why the configuration
      * attempt failed.
      */
@@ -49,7 +49,7 @@ export default function Page() {
             return axios.post(
                 `${SERVER_URL}/auth/setInitialUsername/${creds.userID}`,
                 { username: creds.username },
-                { headers: NetworkConfig.headers }
+                { headers: NetworkConfig.headers },
             );
         },
         onError: (err: AxiosError) => {
@@ -73,12 +73,12 @@ export default function Page() {
                 maxAge: 5 * 24 * 60 * 60,
                 sameSite: 'strict',
             }); // 5 days
-            const { email, ...safeUser} = user; // exclude the email address
-            
+            const { email, ...safeUser } = user; // exclude the email address
+
             // Encrypt and save the user info
             const encryptedUser = encrypt(safeUser);
             localStorage.setItem(shared.keys.USER, encryptedUser);
-            
+
             console.log('saved credentials successfully.');
             window.location.href = '/';
         },
