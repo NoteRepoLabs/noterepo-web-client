@@ -37,14 +37,14 @@ export default function FileListItem(props: FileListItemProps) {
         return `${base}/file-other.svg`;
     };
 
-    if (props.hidden) return <></>
+    if (props.hidden) return <></>;
 
     return (
         <>
             <section
                 className={clsx(
                     'flex items-center gap-3 justify-between group w-full',
-                    props.isPending ? 'pointer-events-none' : ''
+                    props.isPending ? 'pointer-events-none' : '',
                 )}
             >
                 <div className="flex items-center gap-2">
@@ -74,10 +74,10 @@ export default function FileListItem(props: FileListItemProps) {
 
                     <p
                         className={clsx(
-                            'truncate cursor-pointer text-neutral-500 dark:text-neutral-200 dark:hover:text-neutral-100 hover:underline underline-offset-4 md:!w-[120px] md:!max-w-[120px] w-full max-w-full',
+                            'truncate cursor-pointer text-neutral-500 dark:text-neutral-200 dark:hover:text-neutral-100 hover:underline underline-offset-4 md:!w-[120px] md:!max-w-[120px] w-full max-w-[300px]',
                             props.isPending
                                 ? '!opacity-50 hover:!no-underline'
-                                : ''
+                                : '',
                         )}
                     >
                         {props.isPending ? (
