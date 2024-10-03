@@ -28,7 +28,7 @@ import axios, { AxiosError } from 'axios';
 import { CookieValueTypes, getCookie, setCookie } from 'cookies-next';
 import { ArrowLeft02Icon } from 'hugeicons-react';
 import Lottie from 'lottie-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface IUpdateBioDTO {
@@ -48,9 +48,14 @@ const toastConfig = {
 };
 
 export default function Page() {
-    const loggedInUser = localStorage.getItem(shared.keys.USER);
-    if (!loggedInUser) window.location.href = '/signout';
-    const currentUser: IUser = decrypt(loggedInUser);
+    const [currentUser, setCurrentUser] = useState<IUser>({} as IUser);
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem(shared.keys.USER);
+        if (!loggedInUser) window.location.href = '/signout';
+        const decryptedUser = decrypt(loggedInUser);
+        setCurrentUser(decryptedUser);
+    }, []);
 
     const [thisBio, setThisBio] = useState(currentUser.bio);
     const [errorMsg, setErrorMsg] = useState('');
